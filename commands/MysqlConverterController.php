@@ -43,7 +43,16 @@ class MysqlConverterController extends Controller
     		'$this->createTable(\'{{%' , $tableName, '}}\', [' . "\n";
 
     	if($fields['primary']) {
-    		echo "\t'".$fields['primary']."' => \$this->primaryKey()->unsigned(),\n";
+            $unsigned = false;
+            foreach($fields['columns'] as $field) {
+                if($field['name'] == $fields['primary']) {
+                    if($field['unsigned']) {
+                        $unsigned = true;
+                    }
+                    break;
+                }
+            }
+    		echo "\t'".$fields['primary']."' => \$this->primaryKey()".($unsigned ? '->unsigned()' : '').",\n";
     	}
 
     	foreach($fields['columns'] as $field) {
@@ -56,6 +65,10 @@ class MysqlConverterController extends Controller
     		if($field['isNotNull']) {
     			echo '->notNull()';
     		}
+
+            if($field['unsigned']) {
+                echo '->unsigned()';
+            }
 
     		if(isset($field['isUnique'])) {
     			echo '->unique()';
@@ -170,6 +183,7 @@ class MysqlConverterController extends Controller
     			];
 
     			$type = null;
+                $unsigned = false;
     			foreach($typeMapping as $orig => $map) {
     				if(stripos($line, $orig) !== false) {
     					$type = $map;
@@ -181,7 +195,7 @@ class MysqlConverterController extends Controller
     					}
 
                         if(stripos($line, 'unsigned')!==false) {
-                            $type .= '->unsigned()';
+                            $unsigned = true;
                         }
                         break;
     				}
@@ -198,7 +212,8 @@ class MysqlConverterController extends Controller
     				'name' => $name,
     				'isNotNull' => stripos($line, 'not null') !== false,
     				'default' => null,
-    				'type' => $type
+    				'type' => $type,
+                    'unsigned' => $unsigned
     			];
     		}
     	}
