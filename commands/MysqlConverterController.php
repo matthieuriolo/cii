@@ -39,11 +39,11 @@ class MysqlConverterController extends Controller
     }
 
     protected function printTable($tableName, $fields) {
-    	echo "/* table ", $tableName, "*/\n",
+    	echo "/* table ", $tableName, " */\n",
     		'$this->createTable(\'{{%' , $tableName, '}}\', [' . "\n";
 
     	if($fields['primary']) {
-    		echo "\t'".$fields['primary']."' => \$this->primaryKey(),\n";
+    		echo "\t'".$fields['primary']."' => \$this->primaryKey()->unsigned(),\n";
     	}
 
     	foreach($fields['columns'] as $field) {
@@ -180,6 +180,9 @@ class MysqlConverterController extends Controller
     						$type .= '()';
     					}
 
+                        if(stripos($line, 'unsigned')!==false) {
+                            $type .= '->unsigned()';
+                        }
                         break;
     				}
     			}

@@ -12,19 +12,19 @@ class Index extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        /* table Cii_Class*/
+        /* table Cii_Classname*/
         $this->createTable('{{%Cii_Classname}}', [
-            'id' => $this->primaryKey(),
-            'path' => $this->string()->notNull()->unique(),
+            'id' => $this->primaryKey()->unsigned(),
+            'path' => $this->string(255)->notNull()->unique(),
         ], $tableOptions);
 
         /* table Cii_Content*/
         $this->createTable('{{%Cii_Content}}', [
-            'id' => $this->primaryKey(),
-            'name' => $this->string()->notNull(),
-            'enabled' => $this->integer()->notNull(),
+            'id' => $this->primaryKey()->unsigned(),
+            'name' => $this->string(45)->notNull()->unique(),
+            'enabled' => $this->boolean()->notNull(),
             'created' => $this->dateTime()->notNull(),
-            'classname_id' => $this->integer()->notNull(),
+            'classname_id' => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -43,22 +43,42 @@ class Index extends Migration
             'classname_id'
         );
 
+        $this->createIndex(
+            'enabled_idx',
+            'Cii_Content',
+            'enabled'
+        );
+
+        $this->createIndex(
+            'created_idx',
+            'Cii_Content',
+            'created'
+        );
+
         /* table Cii_Language*/
         $this->createTable('{{%Cii_Language}}', [
-            'id' => $this->primaryKey(),
-            'name' => $this->string()->notNull(),
-            'enabled' => $this->integer()->notNull(),
-            'code' => $this->string()->notNull()->unique(),
-            'shortCode' => $this->string(),
+            'id' => $this->primaryKey()->unsigned(),
+            'name' => $this->string(45)->notNull(),
+            'enabled' => $this->boolean()->notNull(),
+            'code' => $this->string(6)->notNull()->unique(),
+            'shortcode' => $this->string(2),
         ], $tableOptions);
+
+        $this->createIndex(
+            'enabled_idx',
+            'Cii_Language',
+            'enabled'
+        );
 
         /* table Cii_Route*/
         $this->createTable('{{%Cii_Route}}', [
-            'id' => $this->primaryKey(),
-            'slug' => $this->string()->notNull(),
-            'language_id' => $this->integer(),
-            'parent_id' => $this->integer(),
-            'classname_id' => $this->integer()->notNull(),
+            'id' => $this->primaryKey()->unsigned(),
+            'slug' => $this->string(45)->notNull()->unique(),
+            'enabled' => $this->boolean()->notNull(),
+            'created' => $this->dateTime()->notNull(),
+            'language_id' => $this->integer()->unsigned(),
+            'parent_id' => $this->integer()->unsigned(),
+            'classname_id' => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -109,15 +129,133 @@ class Index extends Migration
             'classname_id'
         );
 
+        $this->createIndex(
+            'slug_idx',
+            'Cii_Route',
+            'slug'
+        );
 
+        $this->createIndex(
+            'created_idx',
+            'Cii_Route',
+            'created'
+        );
+
+        $this->createIndex(
+            'enabled_idx',
+            'Cii_Route',
+            'enabled'
+        );
+
+        /* table Menu_Type*/
+        $this->createTable('{{%Menu_Type}}', [
+            'id' => $this->primaryKey()->unsigned(),
+            'name' => $this->string(45)->notNull(),
+        ], $tableOptions);
+
+        /* table Menu_Item*/
+        $this->createTable('{{%Menu_Item}}', [
+            'id' => $this->primaryKey()->unsigned(),
+            'name' => $this->string(45)->notNull(),
+            'type_id' => $this->integer()->unsigned()->notNull(),
+            'route_id' => $this->integer(),
+            'parent_id' => $this->integer()->unsigned(),
+        ], $tableOptions);
+
+        $this->addForeignKey(
+            'fk_MenuItem_MenuType1',
+            'Menu_Item',
+            'type_id',
+            'Menu_Type',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'fk_MenuItem_CoreSitemap1',
+            'Menu_Item',
+            'route_id',
+            'Cii_Route',
+            'id',
+            'SET NULL',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'fk_MenuItem_MenuItem1',
+            'Menu_Item',
+            'parent_id',
+            'Menu_Item',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
+
+        $this->createIndex(
+            'fk_MenuItem_MenuType1_idx',
+            'Menu_Item',
+            'type_id'
+        );
+
+        $this->createIndex(
+            'fk_MenuItem_CoreSitemap1_idx',
+            'Menu_Item',
+            'route_id'
+        );
+
+        $this->createIndex(
+            'fk_MenuItem_MenuItem1_idx',
+            'Menu_Item',
+            'parent_id'
+        );
+
+        /* table Menu_TypeContent*/
+        $this->createTable('{{%Menu_TypeContent}}', [
+            'id' => $this->primaryKey()->unsigned(),
+            'content_id' => $this->integer()->unsigned()->notNull(),
+            'type_id' => $this->integer()->unsigned()->notNull(),
+        ], $tableOptions);
+
+        $this->addForeignKey(
+            'fk_MenuSnippet_CoreSnippet1',
+            'Menu_TypeContent',
+            'content_id',
+            'Cii_Content',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'fk_MenuTypeSnippet_MenuType1',
+            'Menu_TypeContent',
+            'type_id',
+            'Menu_Type',
+            'id',
+            'RESTRICT',
+            'CASCADE'
+        );
+
+        $this->createIndex(
+            'fk_MenuSnippet_CoreSnippet1_idx',
+            'Menu_TypeContent',
+            'content_id'
+        );
+
+        $this->createIndex(
+            'fk_MenuTypeSnippet_MenuType1_idx',
+            'Menu_TypeContent',
+            'type_id'
+        );
 
         /* table Cii_Extension*/
         $this->createTable('{{%Cii_Extension}}', [
-            'id' => $this->primaryKey(),
-            'name' => $this->string()->notNull(),
+            'id' => $this->primaryKey()->unsigned(),
+            'name' => $this->string(255)->notNull(),
             'installed' => $this->dateTime()->notNull(),
-            'enabled' => $this->integer()->notNull(),
-            'classname_id' => $this->integer()->notNull(),
+            'enabled' => $this->boolean()->notNull(),
+            'classname_id' => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -136,12 +274,24 @@ class Index extends Migration
             'classname_id'
         );
 
+        $this->createIndex(
+            'installed_idx',
+            'Cii_Extension',
+            'installed'
+        );
+
+        $this->createIndex(
+            'enabled_idx',
+            'Cii_Extension',
+            'enabled'
+        );
+
         /* table Cii_Configuration*/
         $this->createTable('{{%Cii_Configuration}}', [
-            'id' => $this->primaryKey(),
-            'name' => $this->string()->notNull()->unique(),
-            'value' => $this->string(),
-            'extension_id' => $this->integer(),
+            'id' => $this->primaryKey()->unsigned(),
+            'name' => $this->string(45)->notNull()->unique(),
+            'value' => $this->string(45),
+            'extension_id' => $this->integer()->unsigned(),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -162,8 +312,8 @@ class Index extends Migration
 
         /* table Cii_Layout*/
         $this->createTable('{{%Cii_Layout}}', [
-            'id' => $this->primaryKey(),
-            'extension_id' => $this->integer()->notNull(),
+            'id' => $this->primaryKey()->unsigned(),
+            'extension_id' => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -184,17 +334,18 @@ class Index extends Migration
 
         /* table Cii_User*/
         $this->createTable('{{%Cii_User}}', [
-            'id' => $this->primaryKey(),
+            'id' => $this->primaryKey()->unsigned(),
             'created' => $this->dateTime()->notNull(),
             'activated' => $this->dateTime(),
-            'username' => $this->string()->notNull(),
-            'email' => $this->string()->notNull()->unique(),
-            'password' => $this->string(),
-            'enabled' => $this->integer()->notNull(),
-            'language_id' => $this->integer(),
-            'layout_id' => $this->integer(),
-            'reset_token' => $this->string(),
-            'activation_token' => $this->string(),
+            'username' => $this->string(255)->notNull(),
+            'email' => $this->string(255)->notNull()->unique(),
+            'password' => $this->string(64),
+            'superadmin' => $this->boolean()->notNull(),
+            'enabled' => $this->boolean()->notNull(),
+            'timezone' => $this->string(45),
+            'language_id' => $this->integer()->unsigned(),
+            'layout_id' => $this->integer()->unsigned(),
+            'token' => $this->string(64),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -229,17 +380,62 @@ class Index extends Migration
             'layout_id'
         );
 
+        $this->createIndex(
+            'enabled_idx',
+            'Cii_User',
+            'enabled'
+        );
+
+        $this->createIndex(
+            'created_idx',
+            'Cii_User',
+            'created'
+        );
+
+        $this->createIndex(
+            'activated_idx',
+            'Cii_User',
+            'activated'
+        );
+
+        $this->createIndex(
+            'username_idx',
+            'Cii_User',
+            'username'
+        );
+
+        $this->createIndex(
+            'superadmin_idx',
+            'Cii_User',
+            'superadmin'
+        );
+
         /* table Cii_Group*/
         $this->createTable('{{%Cii_Group}}', [
-            'id' => $this->primaryKey(),
-            'name' => $this->string()->notNull()->unique(),
+            'id' => $this->primaryKey()->unsigned(),
+            'name' => $this->string(255)->notNull()->unique(),
+            'enabled' => $this->boolean()->notNull(),
+            'created' => $this->dateTime()->notNull(),
         ], $tableOptions);
+
+        $this->createIndex(
+            'created_idx',
+            'Cii_Group',
+            'created'
+        );
+
+        $this->createIndex(
+            'enabled_idx',
+            'Cii_Group',
+            'enabled'
+        );
 
         /* table Cii_GroupMembers*/
         $this->createTable('{{%Cii_GroupMembers}}', [
-            'id' => $this->primaryKey(),
-            'user_id' => $this->integer()->notNull(),
-            'group_id' => $this->integer()->notNull(),
+            'id' => $this->primaryKey()->unsigned(),
+            'user_id' => $this->integer()->unsigned()->notNull(),
+            'group_id' => $this->integer()->unsigned()->notNull(),
+            'created' => $this->dateTime()->notNull(),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -274,10 +470,16 @@ class Index extends Migration
             'group_id'
         );
 
+        $this->createIndex(
+            'created_idx',
+            'Cii_GroupMembers',
+            'created'
+        );
+
         /* table Cii_Package*/
         $this->createTable('{{%Cii_Package}}', [
-            'id' => $this->primaryKey(),
-            'extension_id' => $this->integer()->notNull(),
+            'id' => $this->primaryKey()->unsigned(),
+            'extension_id' => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -298,11 +500,10 @@ class Index extends Migration
 
         /* table Cii_Permission*/
         $this->createTable('{{%Cii_Permission}}', [
-            'id' => $this->primaryKey(),
-            'name' => $this->string()->notNull(),
-            'enabled' => $this->integer()->notNull(),
-            'group_id' => $this->integer()->notNull(),
-            'module_id' => $this->integer()->notNull(),
+            'id' => $this->primaryKey()->unsigned(),
+            'permission_id' => $this->integer()->unsigned()->notNull()->unique(),
+            'group_id' => $this->integer()->unsigned()->notNull(),
+            'package_id' => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -318,7 +519,7 @@ class Index extends Migration
         $this->addForeignKey(
             'fk_CorePermission_CoreModule1',
             'Cii_Permission',
-            'module_id',
+            'package_id',
             'Cii_Package',
             'id',
             'CASCADE',
@@ -334,19 +535,27 @@ class Index extends Migration
         $this->createIndex(
             'fk_CorePermission_CoreModule1_idx',
             'Cii_Permission',
-            'module_id'
+            'package_id'
         );
 
-        /* table Cii_AuthContent*/
-        $this->createTable('{{%Cii_AuthContent}}', [
-            'id' => $this->primaryKey(),
-            'type' => $this->string()->notNull(),
-            'content_id' => $this->integer()->notNull(),
+        $this->createIndex(
+            'fk_permission',
+            'Cii_Permission',
+            'permission_id'
+        );
+
+        /* table Cii_UserLoginContent*/
+        $this->createTable('{{%Cii_UserLoginContent}}', [
+            'id' => $this->primaryKey()->unsigned(),
+            'content_id' => $this->integer()->unsigned()->notNull(),
+            'redirect_id' => $this->integer()->unsigned(),
+            'register_id' => $this->integer()->unsigned(),
+            'forgot_id' => $this->integer()->unsigned(),
         ], $tableOptions);
 
         $this->addForeignKey(
             'fk_CoreAuthView_CoreView1',
-            'Cii_AuthContent',
+            'Cii_UserLoginContent',
             'content_id',
             'Cii_Content',
             'id',
@@ -354,20 +563,68 @@ class Index extends Migration
             'CASCADE'
         );
 
+        $this->addForeignKey(
+            'fk_Cii_AuthContent_Cii_Route1',
+            'Cii_UserLoginContent',
+            'redirect_id',
+            'Cii_Route',
+            'id',
+            'SET NULL',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'fk_Cii_AuthContent_Cii_Route2',
+            'Cii_UserLoginContent',
+            'register_id',
+            'Cii_Route',
+            'id',
+            'SET NULL',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'fk_Cii_AuthContent_Cii_Route3',
+            'Cii_UserLoginContent',
+            'forgot_id',
+            'Cii_Route',
+            'id',
+            'SET NULL',
+            'CASCADE'
+        );
+
         $this->createIndex(
             'fk_CoreAuthView_CoreView1_idx',
-            'Cii_AuthContent',
+            'Cii_UserLoginContent',
             'content_id'
+        );
+
+        $this->createIndex(
+            'fk_Cii_AuthContent_Cii_Route1_idx',
+            'Cii_UserLoginContent',
+            'redirect_id'
+        );
+
+        $this->createIndex(
+            'fk_Cii_AuthContent_Cii_Route2_idx',
+            'Cii_UserLoginContent',
+            'register_id'
+        );
+
+        $this->createIndex(
+            'fk_Cii_AuthContent_Cii_Route3_idx',
+            'Cii_UserLoginContent',
+            'forgot_id'
         );
 
         /* table Cii_ContentVisibilities*/
         $this->createTable('{{%Cii_ContentVisibilities}}', [
-            'id' => $this->primaryKey(),
-            'content_id' => $this->integer()->notNull(),
-            'route_id' => $this->integer(),
-            'language_id' => $this->integer(),
-            'ordering' => $this->integer()->notNull(),
-            'position' => $this->string(),
+            'id' => $this->primaryKey()->unsigned(),
+            'content_id' => $this->integer()->unsigned()->notNull(),
+            'route_id' => $this->integer()->unsigned(),
+            'language_id' => $this->integer()->unsigned(),
+            'ordering' => $this->integer()->unsigned()->notNull(),
+            'position' => $this->string(45),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -418,10 +675,22 @@ class Index extends Migration
             'language_id'
         );
 
+        $this->createIndex(
+            'ordering_idx',
+            'Cii_ContentVisibilities',
+            'ordering'
+        );
+
+        $this->createIndex(
+            'position_idx',
+            'Cii_ContentVisibilities',
+            'position'
+        );
+
         /* table Cii_BackendRoute*/
         $this->createTable('{{%Cii_BackendRoute}}', [
-            'id' => $this->primaryKey(),
-            'route_id' => $this->integer()->notNull(),
+            'id' => $this->primaryKey()->unsigned(),
+            'route_id' => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -442,9 +711,9 @@ class Index extends Migration
 
         /* table Cii_ContentRoute*/
         $this->createTable('{{%Cii_ContentRoute}}', [
-            'id' => $this->primaryKey(),
-            'route_id' => $this->integer()->notNull(),
-            'content_id' => $this->integer()->notNull(),
+            'id' => $this->primaryKey()->unsigned(),
+            'route_id' => $this->integer()->unsigned()->notNull(),
+            'content_id' => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -481,8 +750,8 @@ class Index extends Migration
 
         /* table Cii_GiiRoute*/
         $this->createTable('{{%Cii_GiiRoute}}', [
-            'id' => $this->primaryKey(),
-            'route_id' => $this->integer()->notNull(),
+            'id' => $this->primaryKey()->unsigned(),
+            'route_id' => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -503,8 +772,8 @@ class Index extends Migration
 
         /* table Cii_DocRoute*/
         $this->createTable('{{%Cii_DocRoute}}', [
-            'id' => $this->primaryKey(),
-            'route_id' => $this->integer()->notNull(),
+            'id' => $this->primaryKey()->unsigned(),
+            'route_id' => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -525,9 +794,9 @@ class Index extends Migration
 
         /* table Cii_LanguageMessages*/
         $this->createTable('{{%Cii_LanguageMessages}}', [
-            'id' => $this->primaryKey(),
-            'language_id' => $this->integer()->notNull(),
-            'extension_id' => $this->integer()->notNull(),
+            'id' => $this->primaryKey()->unsigned(),
+            'language_id' => $this->integer()->unsigned()->notNull(),
+            'extension_id' => $this->integer()->unsigned()->notNull(),
         ], $tableOptions);
 
         $this->addForeignKey(
@@ -562,16 +831,353 @@ class Index extends Migration
             'extension_id'
         );
 
+        /* table Cii_UserLogoutContent*/
+        $this->createTable('{{%Cii_UserLogoutContent}}', [
+            'id' => $this->primaryKey()->unsigned(),
+            'content_id' => $this->integer()->unsigned()->notNull(),
+            'redirect_id' => $this->integer()->unsigned(),
+        ], $tableOptions);
+
+        $this->addForeignKey(
+            'fk_CoreAuthView_CoreView10',
+            'Cii_UserLogoutContent',
+            'content_id',
+            'Cii_Content',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'fk_Cii_AuthContent_Cii_Route10',
+            'Cii_UserLogoutContent',
+            'redirect_id',
+            'Cii_Route',
+            'id',
+            'SET NULL',
+            'CASCADE'
+        );
+
+        $this->createIndex(
+            'fk_CoreAuthView_CoreView1_idx',
+            'Cii_UserLogoutContent',
+            'content_id'
+        );
+
+        $this->createIndex(
+            'fk_Cii_AuthContent_Cii_Route1_idx',
+            'Cii_UserLogoutContent',
+            'redirect_id'
+        );
+
+        /* table Cii_UserRegisterContent*/
+        $this->createTable('{{%Cii_UserRegisterContent}}', [
+            'id' => $this->primaryKey()->unsigned(),
+            'content_id' => $this->integer()->unsigned()->notNull(),
+            'activate_id' => $this->integer()->unsigned()->notNull(),
+            'redirect_id' => $this->integer()->unsigned(),
+            'login_id' => $this->integer()->unsigned(),
+            'forgot_id' => $this->integer()->unsigned(),
+        ], $tableOptions);
+
+        $this->addForeignKey(
+            'fk_CoreAuthView_CoreView11',
+            'Cii_UserRegisterContent',
+            'content_id',
+            'Cii_Content',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'fk_Cii_AuthContent_Cii_Route11',
+            'Cii_UserRegisterContent',
+            'redirect_id',
+            'Cii_Route',
+            'id',
+            'SET NULL',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'fk_Cii_AuthContent_Cii_Route20',
+            'Cii_UserRegisterContent',
+            'login_id',
+            'Cii_Route',
+            'id',
+            'SET NULL',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'fk_Cii_AuthContent_Cii_Route30',
+            'Cii_UserRegisterContent',
+            'forgot_id',
+            'Cii_Route',
+            'id',
+            'SET NULL',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'fk_Cii_UserRegisterContent_Cii_Route1',
+            'Cii_UserRegisterContent',
+            'activate_id',
+            'Cii_Route',
+            'id',
+            'RESTRICT',
+            'CASCADE'
+        );
+
+        $this->createIndex(
+            'fk_CoreAuthView_CoreView1_idx',
+            'Cii_UserRegisterContent',
+            'content_id'
+        );
+
+        $this->createIndex(
+            'fk_Cii_AuthContent_Cii_Route1_idx',
+            'Cii_UserRegisterContent',
+            'redirect_id'
+        );
+
+        $this->createIndex(
+            'fk_Cii_AuthContent_Cii_Route2_idx',
+            'Cii_UserRegisterContent',
+            'login_id'
+        );
+
+        $this->createIndex(
+            'fk_Cii_AuthContent_Cii_Route3_idx',
+            'Cii_UserRegisterContent',
+            'forgot_id'
+        );
+
+        $this->createIndex(
+            'fk_Cii_UserRegisterContent_Cii_Route1_idx',
+            'Cii_UserRegisterContent',
+            'activate_id'
+        );
+
+        /* table Cii_UserActivateContent*/
+        $this->createTable('{{%Cii_UserActivateContent}}', [
+            'id' => $this->primaryKey()->unsigned(),
+            'content_id' => $this->integer()->unsigned()->notNull(),
+            'redirect_id' => $this->integer()->unsigned(),
+            'login_id' => $this->integer()->unsigned(),
+            'register_id' => $this->integer()->unsigned(),
+        ], $tableOptions);
+
+        $this->addForeignKey(
+            'fk_CoreAuthView_CoreView110',
+            'Cii_UserActivateContent',
+            'content_id',
+            'Cii_Content',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'fk_Cii_AuthContent_Cii_Route110',
+            'Cii_UserActivateContent',
+            'redirect_id',
+            'Cii_Route',
+            'id',
+            'SET NULL',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'fk_Cii_AuthContent_Cii_Route200',
+            'Cii_UserActivateContent',
+            'login_id',
+            'Cii_Route',
+            'id',
+            'SET NULL',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'fk_Cii_UserRegisterContent_Cii_Route10',
+            'Cii_UserActivateContent',
+            'register_id',
+            'Cii_Route',
+            'id',
+            'NO ACTION',
+            'NO ACTION'
+        );
+
+        $this->createIndex(
+            'fk_CoreAuthView_CoreView1_idx',
+            'Cii_UserActivateContent',
+            'content_id'
+        );
+
+        $this->createIndex(
+            'fk_Cii_AuthContent_Cii_Route1_idx',
+            'Cii_UserActivateContent',
+            'redirect_id'
+        );
+
+        $this->createIndex(
+            'fk_Cii_AuthContent_Cii_Route2_idx',
+            'Cii_UserActivateContent',
+            'login_id'
+        );
+
+        $this->createIndex(
+            'fk_Cii_UserRegisterContent_Cii_Route1_idx',
+            'Cii_UserActivateContent',
+            'register_id'
+        );
+
+        /* table Cii_UserForgotContent*/
+        $this->createTable('{{%Cii_UserForgotContent}}', [
+            'id' => $this->primaryKey()->unsigned(),
+            'content_id' => $this->integer()->unsigned()->notNull(),
+            'redirect_id' => $this->integer()->unsigned(),
+            'login_id' => $this->integer()->unsigned(),
+            'register_id' => $this->integer()->unsigned(),
+        ], $tableOptions);
+
+        $this->addForeignKey(
+            'fk_CoreAuthView_CoreView12',
+            'Cii_UserForgotContent',
+            'content_id',
+            'Cii_Content',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'fk_Cii_AuthContent_Cii_Route12',
+            'Cii_UserForgotContent',
+            'redirect_id',
+            'Cii_Route',
+            'id',
+            'SET NULL',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'fk_Cii_AuthContent_Cii_Route21',
+            'Cii_UserForgotContent',
+            'register_id',
+            'Cii_Route',
+            'id',
+            'SET NULL',
+            'CASCADE'
+        );
+
+        $this->addForeignKey(
+            'fk_Cii_AuthContent_Cii_Route31',
+            'Cii_UserForgotContent',
+            'login_id',
+            'Cii_Route',
+            'id',
+            'SET NULL',
+            'CASCADE'
+        );
+
+        $this->createIndex(
+            'fk_CoreAuthView_CoreView1_idx',
+            'Cii_UserForgotContent',
+            'content_id'
+        );
+
+        $this->createIndex(
+            'fk_Cii_AuthContent_Cii_Route1_idx',
+            'Cii_UserForgotContent',
+            'redirect_id'
+        );
+
+        $this->createIndex(
+            'fk_Cii_AuthContent_Cii_Route2_idx',
+            'Cii_UserForgotContent',
+            'register_id'
+        );
+
+        $this->createIndex(
+            'fk_Cii_AuthContent_Cii_Route3_idx',
+            'Cii_UserForgotContent',
+            'login_id'
+        );
+
+        /* table Cii_MailTemplate*/
+        $this->createTable('{{%Cii_MailTemplate}}', [
+            'id' => $this->primaryKey()->unsigned(),
+            'name' => $this->string(255)->notNull(),
+            'package_id' => $this->integer()->unsigned()->notNull(),
+            'subject' => $this->string(255)->notNull(),
+            'content_text' => $this->text()->notNull(),
+            'content_html' => $this->text()->notNull(),
+            'language_id' => $this->integer()->unsigned()->notNull(),
+        ], $tableOptions);
+
+        $this->addForeignKey(
+            'fk_Cii_MailTemplate_Cii_Package1',
+            'Cii_MailTemplate',
+            'package_id',
+            'Cii_Package',
+            'id',
+            'NO ACTION',
+            'NO ACTION'
+        );
+
+        $this->addForeignKey(
+            'fk_Cii_MailTemplate_Cii_Language1',
+            'Cii_MailTemplate',
+            'language_id',
+            'Cii_Language',
+            'id',
+            'NO ACTION',
+            'NO ACTION'
+        );
+
+        $this->createIndex(
+            'fk_Cii_MailTemplate_Cii_Package1_idx',
+            'Cii_MailTemplate',
+            'package_id'
+        );
+
+        $this->createIndex(
+            'fk_Cii_MailTemplate_Cii_Language1_idx',
+            'Cii_MailTemplate',
+            'language_id'
+        );
+
+        /* table Cii_ProfileRoute*/
+        $this->createTable('{{%Cii_ProfileRoute}}', [
+            'id' => $this->primaryKey()->unsigned(),
+            'route_id' => $this->integer()->unsigned()->notNull(),
+            'show_groups' => $this->boolean()->notNull(),
+            'can_change_layout' => $this->boolean()->notNull(),
+            'can_change_language' => $this->boolean()->notNull(),
+        ], $tableOptions);
+
+        $this->addForeignKey(
+            'fk_Cii_UserProfileRoute_Cii_Route1',
+            'Cii_ProfileRoute',
+            'route_id',
+            'Cii_Route',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
+
+        $this->createIndex(
+            'fk_Cii_UserProfileRoute_Cii_Route1_idx',
+            'Cii_ProfileRoute',
+            'route_id'
+        );
+
 
 
         //add default data
         /*
-        $this->insert('Core_Language', [
-            'name' => 'English',
-            'code' => 'en-GB',
-            'shortCode' => 'en',
-        ]);
-
         $this->insert('Core_Route', [
             'slug' => 'admin',
             'language_id' => ,
