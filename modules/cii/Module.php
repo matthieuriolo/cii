@@ -182,11 +182,6 @@ class Module extends \cii\backend\Package {
         		'default' => false
         	],
 
-        	'email' => [
-        		'label' => Yii::t('app', 'Website email'),
-        		'type' => 'email'
-        	],
-
         	'rememberduration' => [
         		'label' => Yii::t('app', 'Remember login duration'),
         		'type' => 'integer',
