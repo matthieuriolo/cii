@@ -6,7 +6,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-index">
     <h1>Administration!</h1>
     <p class="lead">Welcome to the administration panel from cii</p>
-
+    
     <hr>
 
     <div class="row">

@@ -187,15 +187,16 @@ class Module extends \cii\backend\Package {
         		'type' => 'email'
         	],
 
-        	'sender' => [
-        		'label' => Yii::t('app', 'Sending address'),
-        		'type' => 'email',
-        		'default' => 'my@website.local'
+        	'rememberduration' => [
+        		'label' => Yii::t('app', 'Remember login duration'),
+        		'type' => 'integer',
+        		'default' => 3600 * 24 * 30
         	],
 
         	'transport.type' => [
         		'label' => Yii::t('app', 'Mail Transport type'),
         		'type' => 'in',
+        		'default' => 'file',
         		'values' => [
         			'file' => Yii::t('app', 'File'),
         			'sendmail' => Yii::t('app', 'Local mail system'),
@@ -232,6 +233,12 @@ class Module extends \cii\backend\Package {
         			'tls' => Yii::t('app', 'TLS'),
         		],
         		'default' => 'ssl'
+        	],
+
+        	'sender' => [
+        		'label' => Yii::t('app', 'Sending address'),
+        		'type' => 'email',
+        		'default' => 'my@website.local'
         	],
         ];
     }

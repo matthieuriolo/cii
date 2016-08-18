@@ -42,6 +42,7 @@ class Configuration extends \yii\db\ActiveRecord {
         $value = $this->$attribute;
 
         switch($this->type) {
+            case 'email':
             case 'float':
             case 'boolean':
                 $validator = Validator::createValidator($this->type, $this, ['value']);
@@ -64,12 +65,6 @@ class Configuration extends \yii\db\ActiveRecord {
                     $model->addError('value', 'No valid image path or not an image');
                 }
                 break;
-            case 'email':
-                $validator = Validator::createValidator('email', $this, ['value'], ['allowName' => true]);
-                $validator->validateAttributes($this, ['value']);
-                break;
-
-
             default:
                 throw new InvalidConfigException();
         }

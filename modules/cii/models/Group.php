@@ -42,7 +42,7 @@ class Group extends \yii\db\ActiveRecord {
         ];
     }
 
-    public function getGroupMembers() {
+    public function getMembers() {
         return $this->hasMany(GroupMember::className(), ['group_id' => 'id']);
     }
 
