@@ -11,17 +11,27 @@ class Application extends \yii\web\Application {
 		//$this->setModules(Yii::$app->cii->packages->all(true));
 		//$pkg->name, 'app\modules\\' . $pkg->name . '\Module');
 		
+        //set up mailer according to the settings (default is sendmail)
+        if($this->cii->setting('cii', 'transport.type') == 'file') {
+            $this->mailer->useFileTransport = true;
+        }else if($this->cii->setting('cii', 'transport.type') == 'smtp') {
+            $this->mailer->transport = Yii::createObject([
+                'class' => 'Swift_SmtpTransport',
+                'host' => $this->cii->setting('cii', 'transport.smtp.host'),
+                'username' => $this->cii->setting('cii', 'transport.smtp.user'),
+                'password' => $this->cii->setting('cii', 'transport.smtp.password'),
+                'port' => $this->cii->setting('cii', 'transport.smtp.port'),
+                'encryption' => $this->cii->setting('cii', 'transport.smtp.encryption'),
+            ]);
+        }
+
+
 		return parent::init();
 	}
-
 
     public function getModulePath() {
         return $this->basePath . '/' . 'modules';
     }
-
-
-
-
 
     public function handleRequest($request) {
         $seo = null;

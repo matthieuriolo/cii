@@ -14,9 +14,13 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="user-view">
-    <?php if(!$model->superadmin) { ?>
-        <p class="pull-right">
-            <?= Html::a(Yii::t('app', 'Update'), [Yii::$app->seo->relativeAdminRoute('modules/cii/user/update'), 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+    <p class="pull-right">
+        <?= Html::a(Yii::t('app', 'Update'), [Yii::$app->seo->relativeAdminRoute('modules/cii/user/update'), 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Send mail'), [Yii::$app->seo->relativeAdminRoute('modules/cii/user/mail'), 'id' => $model->id], ['class' => 'btn btn-default']) ?>
+        <?php if(!$model->superadmin) { ?>
+            <?php if(Yii::$app->user->getIdentity()->id != $model->id) { ?>
+                <?= Html::a(Yii::t('app', 'Login as'), [Yii::$app->seo->relativeAdminRoute('modules/cii/user/switch'), 'id' => $model->id], ['class' => 'btn btn-default']) ?>
+            <?php } ?>
             <?= Html::a(Yii::t('app', 'Delete'), [Yii::$app->seo->relativeAdminRoute('modules/cii/user/delete'), 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
@@ -24,8 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'method' => 'post',
                 ],
             ]) ?>
-        </p>
-    <?php } ?>
+        <?php } ?>
+    </p>
 
     <h1><?= Html::encode($this->title) ?></h1>
 

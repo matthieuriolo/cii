@@ -12,6 +12,7 @@ use app\modules\cii\models\GroupMember;
 use app\modules\cii\models\UserCreateForm;
 use app\modules\cii\models\UserUpdateForm;
 
+use app\modules\cii\models\UserMailForm;
 
 use app\modules\cii\models\UserLoginContent;
 use app\modules\cii\models\UserLogoutContent;
@@ -25,6 +26,8 @@ use app\modules\cii\models\Route;
 use app\modules\cii\models\ContentRoute;
 
 use cii\backend\BackendController;
+use cii\web\SecurityException;
+
 
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -34,6 +37,7 @@ use yii\helpers\ArrayHelper;
 
 
 use app\modules\cii\Permission;
+
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -179,9 +183,42 @@ class UserController extends BackendController
      * @return mixed
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if($model->superadmin) {
+            throw new SecurityException();
+        }
+
+        $model->delete();
         $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/user/index')]);
         return;
+    }
+
+
+    public function actionSwitch($id) {
+        $model = $this->findModel($id);
+        if($model->superadmin) {
+            throw new SecurityException();
+        }
+
+        Yii::$app->user->login($model, 0);
+        Yii::$app->session->setFlash('success', 'Successfully changed user');
+        $this->goHome();
+    }
+
+    public function actionMail($id) {
+        if(!($model = UserMailForm::findOne($id))) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        if($model->load(Yii::$app->request->post()) && $model->send()) {
+            Yii::$app->session->setFlash('success', 'Successfully send mail');
+            $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/user/view'), 'id' => $id]);
+            return;
+        }
+
+        return $this->render('mail', [
+            'model' => $model
+        ]);
     }
 
     /**

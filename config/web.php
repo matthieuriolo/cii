@@ -62,16 +62,7 @@ $config = [
 
             'useFileTransport' => false,
             'transport' => [
-                //'class' => 'Swift_SendmailTransport',
-                /*
-                'class' => 'Swift_SmtpTransport',
-                'host' => 'localhost',
-                'username' => '',
-                'password' => '',
-                'port' => '587',
-                'encryption' => 'tls',
-                */
-
+                'class' => 'Swift_SendmailTransport',
             ],
         ],
 
