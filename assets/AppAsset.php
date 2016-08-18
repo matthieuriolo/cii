@@ -19,7 +19,9 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+        'css/bootstrap-wysihtml5.css',
     ];
+
     public $js = [
         'js/tabhack.js',
         'js/rivets.min.js',

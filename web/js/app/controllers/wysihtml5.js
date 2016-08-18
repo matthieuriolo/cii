@@ -2,7 +2,7 @@
 define(['js/bootstrap-wysihtml5.js'], function() {
 	return function WysiwygConstructor(node) {
 
-		var loc = App.locale.code == 'en' ? null : (App.locale.code + '-' + App.locale.code.toUpperCase())
+		var loc = null;//App.locale.code == 'en' ? null : (App.locale.code + '-' + App.locale.code.toUpperCase())
 		var deps = []
 
 		if(loc)
