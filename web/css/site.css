@@ -1,0 +1,304 @@
+html,
+body {
+    height: 100%;
+}
+
+.no-padding {
+    padding: 0px;
+}
+
+.no-margin {
+    margin: 0px;
+}
+
+
+.wrap {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0 0 60px;
+}
+
+.wrap > .container {
+    padding: 70px 15px 20px;
+}
+
+.footer {
+    height: 60px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+
+.jumbotron {
+    text-align: center;
+    background-color: transparent;
+}
+
+.jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+}
+
+.not-set {
+    color: #c55;
+    font-style: italic;
+}
+
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    padding-left: 5px;
+}
+
+a.asc:after {
+    content: /*"\e113"*/ "\e151";
+}
+
+a.desc:after {
+    content: /*"\e114"*/ "\e152";
+}
+
+.sort-numerical a.asc:after {
+    content: "\e153";
+}
+
+.sort-numerical a.desc:after {
+    content: "\e154";
+}
+
+.sort-ordinal a.asc:after {
+    content: "\e155";
+}
+
+.sort-ordinal a.desc:after {
+    content: "\e156";
+}
+
+.grid-view th {
+    white-space: nowrap;
+}
+
+.hint-block {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+}
+
+.error-summary {
+    color: #a94442;
+    background: #fdf7f7;
+    border-left: 3px solid #eed3d7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
+
+
+
+
+
+.list-group-margin-top {
+    margin-top: 25px;
+}
+
+
+.list-group .list-group-indented {
+    padding: 0px;
+    border-top: none;
+    border-bottom: none;
+}
+
+.list-group .list-group-indented .list-group-item {
+    border-radius: 0px;
+    border-left: none;
+    border-right: none;
+}
+
+span.list-group-item {
+    color: #666;
+}
+
+.list-group .list-group-indented > .list-group-item:not(.list-group-indented) { padding-left: 30px; }
+.list-group .list-group-indented > .list-group-indented > .list-group-item:not(.list-group-indented) { padding-left: 60px; }
+.list-group .list-group-indented > .list-group-indented > .list-group-indented > .list-group-item:not(.list-group-indented) { padding-left: 90px; }
+
+
+
+
+
+
+/* tab */
+
+.tab-pane {
+    padding-top: 10px;
+}
+
+
+/* toggler extension (bootstrap like) */
+
+.toggler {
+    position: relative;
+    display: inline-block;
+    
+    -webkit-transition: opacity ease-in-out .3s;
+    transition: opacity ease-in-out .3s;
+    
+    /*overflow: hidden;
+    border-radius: 4px;
+    border: 1px solid;
+    border-color: #ccc;*/
+    
+    /*
+    without js we can not make the div focused...
+    
+    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    */
+    
+    /* belongs to the class large
+    min-width: 120px;
+     */
+    /* belongs to the class 
+    background: #428bca;*/
+}
+
+
+.toggler .toggler-background {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    
+    overflow: hidden;
+    border-radius: 4px;
+    border: 1px solid;
+    border-color: #ccc;
+    
+    pointer-events: none;
+    
+    z-index: 0px;
+    
+    /*default color*/
+    background: #428bca;
+    -webkit-transition: background ease-in-out .3s;
+    transition: background ease-in-out .3s;
+    
+}
+
+/* without js we can not make the div focused...*/
+.toggler input[type="checkbox"]:focus ~ .toggler-background,
+.toggler input[type="checkbox"]:hover ~ .toggler-background {
+    box-shadow: 0 0 8px rgba(102,175,233,.6);
+}
+
+.toggler .toggler-item {
+    padding: 2px 8px;
+    color: white;
+    text-align: center;
+    transition: background-color ease .3s;
+    border-radius: 4px 0px 0px 4px;
+    font-size: 85%;
+    line-height: 1;
+}
+
+.toggler .toggler-item:last-child {
+    border-radius: 0px 4px 4px 0px;
+}
+
+.toggler .toggler-separator {
+    cursor: pointer;
+    
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    
+    margin: 0px;
+    padding: 0px;
+    
+    background: #FFF;
+    
+    border: 1px solid #ccc;
+    
+    border-radius: 4px;
+    
+    -webkit-transition: left ease .3s;
+    transition: left ease .3s;
+    
+    z-index: 3;
+}
+
+.toggler input[type="checkbox"] {
+    cursor: pointer;
+    
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    
+    margin: 0px;
+    padding: 0px;
+    opacity: 0;
+    z-index: 4;
+}
+
+.toggler input[type="checkbox"]:checked + .toggler-separator {
+    left: 0%;
+}
+
+
+
+.toggler.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
+.toggler.toggler-style-yes-no input[type="checkbox"] ~ .toggler-background {
+    background: red;
+}
+
+.toggler.toggler-style-yes-no input[type="checkbox"]:checked ~ .toggler-background {
+    background: green;
+}
+
+.form-group .toggler-middle-pos {
+    height: 34px;
+}
+
+.form-group .toggler-middle-pos .portlet-content {
+    margin-top: 8px;
+}
+
+
+
+
+
+
+/* navbar logo and text */
+
+.navbar .navbar-brand .brand-logo {
+    margin-top: -10px;
+    height: 40px;
+    margin-right: 15px;
+}
+
+.navbar .navbar-brand .brand-logo img {
+    height: 100%;
+    opacity: 0.7;
+}
+
+
+.navbar .navbar-brand:hover .brand-logo img {
+    opacity: 1;
+}

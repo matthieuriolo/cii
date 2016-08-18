@@ -5,3 +5,7 @@ Cii provides an extendable systems for routes, contents. Cii has furthermore a b
 
 # Version
 This project is still in early development phase!! Not recommanded to use in productive environment
+
+
+# Yii
+The original code of yii has a few changes. Those changes will be provided with a patch in the future. The biggest change is that the vendor folder is placed inside the module cii 

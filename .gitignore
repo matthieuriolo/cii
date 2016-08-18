@@ -1,0 +1,21 @@
+# ignoring temp mac file
+.DS_store
+
+
+# ignoring original yii files
+
+modules/cii/vendor/autoload.php
+modules/cii/vendor/bin
+modules/cii/vendor/bower
+modules/cii/vendor/cebe
+modules/cii/vendor/composer
+modules/cii/vendor/exyang
+modules/cii/vendor/fzaninotto
+modules/cii/vendor/phpspec
+modules/cii/vendor/swiftmailer
+modules/cii/vendor/yiisoft
+
+# ignoring runtime folders
+
+runtime
+uploads

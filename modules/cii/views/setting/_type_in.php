@@ -1,0 +1,1 @@
+<?= $form->field($model, 'value')->dropDownList($model->values) ?>
