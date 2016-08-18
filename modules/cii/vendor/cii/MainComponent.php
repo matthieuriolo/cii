@@ -73,7 +73,7 @@ class MainComponent extends Component {
 		$msg->setTextBody($info->getText($data));
 		$msg->setTo($to);
 
-		$msg->setFrom('admin@cii.local');
+		$msg->setFrom(Yii::$app->cii->setting('cii', 'sender'));
 		return $msg->send();
     }
 
