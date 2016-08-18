@@ -6,8 +6,14 @@ use yii\widgets\ActiveForm;
 $this->title = Yii::t('app', 'Update {modelClass} - ', [
     'modelClass' => 'User',
 ]) . $model->username;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->username, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = [
+    'label' => Yii::t('app', 'Users'),
+    'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/user/index')]
+];
+$this->params['breadcrumbs'][] = [
+    'label' => $model->username,
+    'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/user/view'), 'id' => $model->id]
+];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="user-update">
