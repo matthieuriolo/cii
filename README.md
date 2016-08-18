@@ -1,11 +1,20 @@
 # Cii
-CMS based on Yii2 inspired by joomla.
+A PHP CMS based on Yii 2 inspired by joomla.
 
-Cii provides an extendable systems for routes, contents. Cii has furthermore a basic user&group system and a module installer. The website can be configured with a web installer as well.
+Cii provides an extendable systems for routes and contents. Cii has a basic user&group system and a module installer. The website can be configured with a web installer as well.
 
 # Version
 This project is still in early development phase!! Not recommanded to use in productive environment
 
 
-# Yii
-The original code of yii has a few changes. Those changes will be provided with a patch in the future. The biggest change is that the vendor folder is placed inside the module cii 
+# Yii 2
+The original code of yii 2 has a few changes. Those changes will be provided with a patch in the future. The biggest change is that the vendor folder is placed inside the module cii
+
+# Features
+- Web installer (init and extensions)
+- User management based on groups and permissions per Module
+- Type based setting managment
+- Extensions (Modules, Language, Layouts)
+- Extendable basic object (routes and contents)
+- Gii support
+- MySQL to migrate
