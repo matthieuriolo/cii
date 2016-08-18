@@ -6,6 +6,7 @@ use Yii;
 
 class Controller extends \yii\web\Controller {
 	protected $_package;
+	public $layout = '@core/views/layouts/main';
 
 	public function init() {
 		$this->setView(Yii::createObject('cii\web\view', []));

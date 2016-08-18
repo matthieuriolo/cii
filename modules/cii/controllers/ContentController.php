@@ -102,6 +102,7 @@ class ContentController extends BackendController {
                 if($modelValid && $topmodelValid && $model->save()) {
                     $attr = $type::getOutboxAttribute($model->className());
                     $topmodel->$attr = $model->id;
+                    
                     if($topmodel->save()) {
                         Yii::$app->cii->layout->clearCache();
                         $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/content/view'), ['id' => $model->id]]);

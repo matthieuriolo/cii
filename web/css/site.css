@@ -130,7 +130,9 @@ span.list-group-item {
 .list-group .list-group-indented > .list-group-indented > .list-group-indented > .list-group-item:not(.list-group-indented) { padding-left: 90px; }
 
 
-
+.wysihtml5-sandbox {
+    resize: vertical;
+}
 
 
 
@@ -193,7 +195,7 @@ span.list-group-item {
     
 }
 
-/* without js we can not make the div focused...*/
+/* without js we can not make the div focused... */
 .toggler input[type="checkbox"]:focus ~ .toggler-background,
 .toggler input[type="checkbox"]:hover ~ .toggler-background {
     box-shadow: 0 0 8px rgba(102,175,233,.6);

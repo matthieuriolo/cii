@@ -4,7 +4,7 @@ use cii\helpers\Html;
 
 $reflection = $model->getReflection();
 
-$this->title = $modelType . ': ' . $reflection->getName();
+$this->title = $modelType . ' - ' . $reflection->getName();
 
 $this->params['breadcrumbs'][] = [
     'label' => $modelType,

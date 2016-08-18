@@ -8,8 +8,9 @@ class Application extends \yii\web\Application {
 
 
 	public function init() {
-		//$this->setModules(Yii::$app->cii->packages->all(true));
-		//$pkg->name, 'app\modules\\' . $pkg->name . '\Module');
+		$this->setModules(Yii::$app->cii->package->moduleInitializerList());
+        
+        //$pkg->name, 'app\modules\\' . $pkg->name . '\Module');
 		
         //set up mailer according to the settings (default is sendmail)
         if($this->cii->setting('cii', 'transport.type') == 'file') {

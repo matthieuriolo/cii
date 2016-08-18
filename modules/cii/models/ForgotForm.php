@@ -6,6 +6,7 @@ namespace app\modules\cii\models;
 use Yii;
 use yii\base\Model;
 use yii\captcha\Captcha;
+use cii\web\SecurityException;
 
 class ForgotForm extends Model {
     
@@ -46,6 +47,10 @@ class ForgotForm extends Model {
 
     public function forgot() {
         $user = $this->getUser();
+        if($user->superadmin) {
+            throw new SecurityException();
+        }
+
         $user->token = Yii::$app->getSecurity()->generateRandomString(64);
 
         if(!$user->save() || !Yii::$app->cii->mail(

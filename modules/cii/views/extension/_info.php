@@ -10,17 +10,17 @@ $reflection = $model->getReflection();
     'model' => $model,
     'attributes' => [
         [	
-        	'label' => 'name',
+        	'label' => 'Name',
         	'value' => $reflection->getName()
         ],
 
         [	
-        	'label' => 'version',
+        	'label' => 'Version',
         	'value' => $reflection->getVersion()
         ],
 
         [   
-            'label' => 'type',
+            'label' => 'Type',
             'value' => $reflection->getType()
         ],
         
@@ -35,7 +35,7 @@ $reflection = $model->getReflection();
         ],
 
         [	
-        	'label' => 'enabled',
+        	'label' => 'Enabled',
         	'format' => 'html',
         	'value' => Html::boolean($reflection->isEnabled())
         ],

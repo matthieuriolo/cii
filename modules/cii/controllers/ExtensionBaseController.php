@@ -3,8 +3,10 @@
 namespace app\modules\cii\controllers;
 
 use Yii;
+
 use cii\backend\BackendController as Controller;
 use cii\base\PackageReflection;
+use cii\web\SecurityException;
 
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
@@ -13,6 +15,9 @@ use yii\data\ActiveDataProvider;
 
 use app\modules\cii\models\Configuration as Core_Settings;
 use app\modules\cii\models\UploadExtensionForm;
+use app\modules\cii\models\Extension;
+
+
 
 abstract class ExtensionBaseController extends Controller {
     const FILENAME = 'extension.zip';
@@ -90,7 +95,17 @@ abstract class ExtensionBaseController extends Controller {
                     if(count($files)) {
                         $pkg = new PackageReflection();
                         $pkg->load(dirname($files[0]));
-                        $pkg->install();
+
+                        if(($ret = $pkg->install()) !== true) {
+                            if(is_array($ret)) {
+                                foreach($ret as $error) {
+                                    Yii::$app->session->setFlash('danger', $error);
+                                }
+                            }
+                        }else {
+                            $this->redirect($this->getModelUrl());
+                            return;
+                        }
                     }
                 }
             }
@@ -105,7 +120,7 @@ abstract class ExtensionBaseController extends Controller {
 
 
     public function actionEnable($id, $back) {
-        $module = Core_Module::find()->where(['name' => $name])->one();
+        $module = Extension::findOne($id);
         $module->enabled = true;
         $module->save();
 
@@ -114,11 +129,11 @@ abstract class ExtensionBaseController extends Controller {
     }
 
     public function actionDisable($id, $back) {
+        $module = Extension::findOne($id);
         if($name == 'cii') {
-            throw new \Exception('The package cii cannot be disabled');
+            throw new SecurityException();
         }
 
-        $module = Core_Module::find()->where(['name' => $name])->one();
         $module->enabled = false;
         $module->save();
 

@@ -26,8 +26,11 @@ define([], function() {
 
 				App.postJSON(url, {'class': selection}).done(function(data) {
 					cleanAddedTabs();
-					tabUl.append('<li><a href="#' + tabUl.prop('id') + '-tab' + startCount + '" data-toggle="tab">' + data.label + '</a></li>')
-					tabContent.append('<div id="' + tabUl.prop('id') + '-tab' + startCount + '" class="tab-pane">' + data.content + '</div>')
+					var name = tabUl.prop('id') + '-tab' + startCount;
+					tabUl.append('<li><a href="#' + name + '" data-toggle="tab">' + data.label + '</a></li>')
+					tabContent.append('<div id="' + name + '" class="tab-pane">' + data.content + '</div>')
+					
+					App.loadControllersFromDOM($('#' + name))
 				}).fail(function() {
 					cleanAddedTabs()
 				})

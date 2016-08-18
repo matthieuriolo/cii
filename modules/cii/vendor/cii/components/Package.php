@@ -61,6 +61,20 @@ class Package extends Component {
 		$this->cache->delete(__CLASS__ . '_settingTypes');
 	}
 
+	public function moduleInitializerList() {
+		$names = $this->namesFromDB(true);
+		$ret = [];
+		
+		foreach($names as $name) {
+			$class = 'app\modules\\' . $name . '\Module';
+			if(class_exists($class)) {
+				$ret[$name] = ['class' => $class];
+			}
+		}
+
+		return $ret;
+	}
+
 	public function all($enabled = true) {
 		$data = $this->namesFromDB($enabled);
 		$data = array_map(function($name) {
