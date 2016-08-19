@@ -70,4 +70,9 @@ class ControllerRoute extends DBRoute {
         
         return [$this->baseRoute . $suffix, [], $this];
     }
+
+
+    public function increaseCounter() {
+        $this->parentRoute->increaseCounter();
+    }
 }

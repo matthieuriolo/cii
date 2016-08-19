@@ -82,16 +82,63 @@ class Route extends ActiveRecord {
 
     public function attributeLabels() {
         return [
-            'id' => 'ID',
-            'slug' => 'Address path',
-            'title' => 'Website title',
-            'enabled' => 'Enabled',
-            'classname' => 'Type',
-            'language_id' => 'Language',
-            'parent_id' => 'Parent',
-            'breadcrumb' => 'Breadcrumb',
+            'slug' => Yii::t('app', 'Address path'),
+            'title' => Yii::t('app', 'Website title'),
+            'enabled' => Yii::t('app', 'Enabled'),
+            'classname' => Yii::t('app', 'Type'),
+            'language_id' => Yii::t('app', 'Language'),
+            'parent_id' => Yii::t('app', 'Parent'),
+            'breadcrumb' => Yii::t('app', 'Breadcrumb'),
+
+            'hits' => Yii::t('app', 'Total accesses'),
+            'averageHits' => Yii::t('app', 'Average accesses'),
+            'dailyHits' => Yii::t('app', 'Daily accesses'),
+            'weeklyHits' => Yii::t('app', 'Weekly accesses'),
+            'monthlyHits' => Yii::t('app', 'Monthly accesses'),
+            'yearlyHits' => Yii::t('app', 'Yearly accesses'),
         ];
     }
+
+    public function getHits() {
+        return $this->countHits();
+    }
+
+    public function getDailyHits() {
+        return $this->countHits('1D');
+    }
+
+    public function getWeeklyHits() {
+        return $this->countHits('7D');
+    }
+
+    public function getMonthlyHits() {
+        return $this->countHits('1M');
+    }
+
+    public function getYearlyHits() {
+        return $this->countHits('1Y');
+    }
+
+    public function getAverageHits() {
+        return $this->avgHits();
+    }
+
+    protected function avgHits($sub = null) {
+        return $this->countHits($sub, 'average');
+    }
+
+    protected function countHits($sub = null, $func = 'sum') {
+        $query = CountAccess::find()->where(['route_id' => $this->id]);
+        if(!is_null($sub)) {
+            $date = new \DateTime("now", new \DateTimeZone('UTC'));
+            $date->sub(new \DateInterval('P'.$sub));
+            $query->andWhere('created >= :date', [':date' => $date->format('Y-m-d')]);
+        }
+
+        return $query->$func('hits') ?: 0;
+    }
+
+
 
     public function behaviors() {
         return [

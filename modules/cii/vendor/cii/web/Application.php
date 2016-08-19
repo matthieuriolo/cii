@@ -2,6 +2,7 @@
 namespace cii\web;
 
 use Yii;
+use cii\web\routes\DBRoute;
 
 class Application extends \yii\web\Application {
 	public $seo = null;
@@ -54,8 +55,12 @@ class Application extends \yii\web\Application {
             $this->requestedRoute = $route;
             $this->seo = $seo;
             //Yii::setAlias('@seo', $seo->getBaseRoute());
-
             
+            if($seo) {
+                $model = $seo->findRoute(DBRoute::className());
+                $model->increaseCounter();
+            }
+
             $result = $this->runAction($route, $params);
             if ($result instanceof Response) {
                 return $result;

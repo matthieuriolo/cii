@@ -6,10 +6,17 @@ use yii\base\Object;
 use yii\base\InvalidConfigException;
 
 use app\modules\cii\models\Route;
+use app\modules\cii\models\CountAccess;
+
+
+use cii\helpers\UTC;
 
 class DBRoute extends AbstractRoute {
     protected function getRouteName() {
     	$route = $this->route;
+        if(!is_string($route)) {
+            die('weird');
+        }
         if(($pos = strpos($route, '/', $this->offset)) !== false) {
         	$name = substr($route, $this->offset, $pos);
 		}else if($this->offset < strlen($route)) {
@@ -52,5 +59,21 @@ class DBRoute extends AbstractRoute {
         ]);
 
         return $route->parseRoute($manager, $request);
+    }
+
+    public function increaseCounter() {
+        $model = CountAccess::findOne([
+            'created' => UTC::date(),
+            'route_id' => $this->getDBModel()->id
+        ]);
+
+        if(!$model) {
+            $model = new CountAccess();
+            $model->route_id = $this->getDBModel()->id;
+            $model->created = UTC::date();
+        }
+
+        $model->hits++;
+        $model->save();
     }
 }
