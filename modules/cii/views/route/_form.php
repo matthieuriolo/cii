@@ -30,11 +30,15 @@ use cii\widgets\Toggler;
     </div>
 
 	<div class="col-md-6">
-		<?php echo $form->field($model, 'language_id')->dropDownList($languages); ?>
+		<?php echo $form->field($model, 'title')->textInput(['maxlength' => true]); ?>
 	</div>
 </div>
 
 <div class="row">
+	<div class="col-md-6">
+		<?php echo $form->field($model, 'language_id')->dropDownList($languages); ?>
+	</div>
+
 	<div class="col-md-6">
 		<?php echo $form->field($model, 'parent_id')->dropDownList($parentRoutes); ?>
 	</div>

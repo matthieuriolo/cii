@@ -14,6 +14,7 @@ echo DetailView::widget([
             'value' => $model->classname->typename
         ],
 
+        'title',
         'created',
         
         [

@@ -12,5 +12,11 @@ use cii\widgets\DetailView;
         	'format' => 'html',
         	'value' => Html::a($model->content->name, [Yii::$app->seo->relativeAdminRoute('modules/cii/content/view'), 'id' => $model->content->id])
         ],
+
+        'keys',
+        'description',
+        'robots',
+        'image',
+        'type',
     ],
 ]) ?>

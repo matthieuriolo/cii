@@ -17,7 +17,8 @@ class Route extends ActiveRecord {
     public function rules() {
         return [
             [['slug', 'enabled', 'type'], 'required'],
-            [['slug'], 'string', 'max' => 45],
+            [['slug', 'title'], 'string', 'max' => 255],
+
             [['parent_id', 'language_id'], 'integer'],
             [['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => self::className(), 'targetAttribute' => ['parent_id' => 'id']],
             [['language_id'], 'exist', 'skipOnError' => true, 'targetClass' => Language::className(), 'targetAttribute' => ['language_id' => 'id']],
@@ -82,7 +83,8 @@ class Route extends ActiveRecord {
     public function attributeLabels() {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'slug' => 'Address path',
+            'title' => 'Website title',
             'enabled' => 'Enabled',
             'classname' => 'Type',
             'language_id' => 'Language',
