@@ -1,0 +1,41 @@
+diff -Naur modules/cii/vendor/yiisoft/yii2_original/data/Sort.php modules/cii/vendor/yiisoft/yii2/data/Sort.php
+--- modules/cii/vendor/yiisoft/yii2_original/data/Sort.php	2016-07-11 15:36:42.000000000 +0200
++++ modules/cii/vendor/yiisoft/yii2/data/Sort.php	2016-08-20 00:47:05.000000000 +0200
+@@ -340,6 +340,14 @@
+         }
+         $params[$this->sortParam] = $this->createSortParam($attribute);
+         $params[0] = $this->route === null ? Yii::$app->controller->getRoute() : $this->route;
++        
++        if(isset($params['r'])) {
++            $url = $params['r'];
++            unset($params['r']);
++        }
++
++        $params = [$url, $params];
++
+         $urlManager = $this->urlManager === null ? Yii::$app->getUrlManager() : $this->urlManager;
+         if ($absolute) {
+             return $urlManager->createAbsoluteUrl($params);
+diff -Naur modules/cii/vendor/yiisoft/yii2_original/helpers/Html.php modules/cii/vendor/yiisoft/yii2/helpers/Html.php
+--- modules/cii/vendor/yiisoft/yii2_original/helpers/Html.php	2016-07-11 15:36:42.000000000 +0200
++++ modules/cii/vendor/yiisoft/yii2/helpers/Html.php	2016-08-18 04:35:17.000000000 +0200
+@@ -17,6 +17,6 @@
+  * @author Qiang Xue <qiang.xue@gmail.com>
+  * @since 2.0
+  */
+-class Html extends BaseHtml
++class Html extends \cii\helpers\Html
+ {
+ }
+diff -Naur modules/cii/vendor/yiisoft/yii2_original/web/Request.php modules/cii/vendor/yiisoft/yii2/web/Request.php
+--- modules/cii/vendor/yiisoft/yii2_original/web/Request.php	2016-07-11 15:36:42.000000000 +0200
++++ modules/cii/vendor/yiisoft/yii2/web/Request.php	2016-08-18 04:32:30.000000000 +0200
+@@ -458,7 +458,7 @@
+         }
+     }
+ 
+-    private $_queryParams;
++    protected $_queryParams;
+ 
+     /**
+      * Returns the request parameters given in the [[queryString]].
