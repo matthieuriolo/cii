@@ -142,7 +142,7 @@ class ContentController extends BackendController {
         $transaction = $connection->beginTransaction();
 
         $topmodel = $model->outbox();
-        $old_type = $model->type = $model->classname->path;
+        $old_type = $model->classname->path;
         $types = Yii::$app->cii->layout->getContentTypes();
         $data = Yii::$app->request->post();
 

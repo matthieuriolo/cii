@@ -38,6 +38,11 @@ class Content extends \yii\db\ActiveRecord {
         ];
     }
 
+    public function afterFind() {
+        $this->type = $this->classname->path;
+        return parent::afterFind();
+    }
+    
     /**
      * @inheritdoc
      */

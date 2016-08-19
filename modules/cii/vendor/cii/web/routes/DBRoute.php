@@ -62,9 +62,10 @@ class DBRoute extends AbstractRoute {
     }
 
     public function increaseCounter() {
+        $db = $this->getDBModel();
         $model = CountAccess::findOne([
             'created' => UTC::date(),
-            'route_id' => $this->getDBModel()->id
+            'route_id' => $db->id
         ]);
 
         if(!$model) {
@@ -75,5 +76,8 @@ class DBRoute extends AbstractRoute {
 
         $model->hits++;
         $model->save();
+
+        $db->hits++;
+        $db->save();
     }
 }

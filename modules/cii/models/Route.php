@@ -25,6 +25,7 @@ class Route extends ActiveRecord {
             [['slug'], 'valideSlug'],
             [['enabled'], 'boolean'],
 
+            [['hits'], 'integer'],
 
             [['type'], 'in', 'range' => Yii::$app->cii->route->getTypeValues()]
         ];
@@ -38,6 +39,11 @@ class Route extends ActiveRecord {
 
         $this->addError($attribute, $this->getAttributeLabel($attribute) . ' can only consist of A-Z, 0-9, -, . or _');
         return false;
+    }
+
+    public function afterFind() {
+        $this->type = $this->classname->path;
+        return parent::afterFind();
     }
 
     /* belongs to an own behaviour */
@@ -97,10 +103,6 @@ class Route extends ActiveRecord {
             'monthlyHits' => Yii::t('app', 'Monthly accesses'),
             'yearlyHits' => Yii::t('app', 'Yearly accesses'),
         ];
-    }
-
-    public function getHits() {
-        return $this->countHits();
     }
 
     public function getDailyHits() {

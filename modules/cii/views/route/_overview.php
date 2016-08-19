@@ -30,8 +30,7 @@ echo DetailView::widget([
         	'value' => Html::a($model->getBreadcrumbs(), ['//'.$model->getBreadcrumbs()])
         ]
     ],
-]);
-?>
+]);?>
 <hr>
 <?php
 echo DetailView::widget([

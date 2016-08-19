@@ -38,6 +38,8 @@ class RouteController extends Controller {
 			'sort' => [
             	'attributes' => [
                     'slug',
+                    'hits',
+
                     'language' => [
                         'asc' => ['language.name' => SORT_ASC],
                         'desc' => ['language.name' => SORT_DESC],
@@ -153,7 +155,7 @@ class RouteController extends Controller {
         $transaction = $connection->beginTransaction();
 
         $topmodel = $model->outbox();
-        $old_type = $model->type = $model->classname->path;
+        $old_type = $model->classname->path;
         $types = Yii::$app->cii->route->getTypes();
         $data = Yii::$app->request->post();
 

@@ -51,17 +51,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'slug',
             
             [
-                'attribute' => 'language',
-                'value' => 'language.name',
-            ],
-
-            'enabled:boolean',
-
-            [
                 'attribute' => 'classname',
                 'value' => 'classname.typename',
             ],
 
+            [
+                'attribute' => 'language',
+                'value' => 'language.name',
+            ],
+
+            'hits',
+            'enabled:boolean',
+            
             [
                 'class' => ActionColumn::className(),
                 'template' => '{view}{update}{delete}{children}',
