@@ -1,7 +1,7 @@
 <?php
 
 
-$this->title = 'My Yii Application';
+$this->title = Yii::$app->cii->setting('cii', 'name');
 ?>
 <div class="site-index">
 
