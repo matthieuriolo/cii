@@ -3,8 +3,7 @@
 use yii\helpers\Html;
 use cii\widgets\DetailView;
 use yii\bootstrap\Tabs;
-/* @var $this yii\web\View */
-/* @var $model app\modules\core\models\Language */
+use yii\widgets\ActiveForm;
 
 $this->title = 'Language - ' . $model->name;
 $this->params['breadcrumbs'][] = [
@@ -34,6 +33,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'encode' => false,
                     'label' => '<i class="glyphicon glyphicon-question-sign"></i> Information',
                     'content' => $this->render('_overview', ['model' => $model]),
+                    //'active' => true
+                ],
+
+                [
+                    'encode' => false,
+                    'label' => '<i class="glyphicon glyphicon-adjust"></i> Examples',
+                    'content' => $this->render('_examples', ['model' => $formatterExample]),
                     //'active' => true
                 ],
                 

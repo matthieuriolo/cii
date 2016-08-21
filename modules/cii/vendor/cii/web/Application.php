@@ -27,6 +27,12 @@ class Application extends \yii\web\Application {
             ]);
         }
 
+        //set up language
+        
+        if($language = Yii::$app->cii->language->getActiveLanguage()) {
+            $this->formatter->initValuesFromLanguage($language);
+        }
+
 
 		return parent::init();
 	}

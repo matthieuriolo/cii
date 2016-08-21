@@ -4,13 +4,19 @@ namespace cii\components;
 use Yii;
 use yii\base\Component;
 use app\modules\cii\models\Language as MLanguage;
+use yii\base\InvalidConfigException;
 
 class Language extends Component {
 	public $cache = 'cache';
+	public $session = 'session';
 
 	public function init() {
-		if (is_string($this->cache)) {
+		if(is_string($this->cache)) {
             $this->cache = Yii::$app->get($this->cache, false);
+        }
+
+        if(is_string($this->session)) {
+            $this->session = Yii::$app->get($this->session, false);
         }
 
         parent::init();
@@ -46,5 +52,33 @@ class Language extends Component {
 
 		$this->cache->set($cacheKey, $data);
 		return $data;
+	}
+
+	public function getActiveLanguage() {
+		if($language = $this->session->get('activeLanguage')) {
+			return MLanguage::findOne($language);
+		}
+		
+		if($language = Yii::$app->user->getIdentity()->language) {
+			return $language;
+		}
+
+		if($language = Yii::$app->cii->setting('cii', 'language')) {
+			return MLanguage::findOne($language);
+		}
+
+		return null;
+	}
+
+	public function setActiveLanguage($language) {
+		if(is_object($language)) {
+			if(!($language instanceof MLanguage)) {
+				throw new InvalidConfigException();
+			}
+
+			$language = $language->id;
+		}
+
+		$this->session->set('activeLanguage', $language);
 	}
 }

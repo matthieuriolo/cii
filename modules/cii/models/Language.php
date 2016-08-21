@@ -3,21 +3,9 @@
 namespace app\modules\cii\models;
 
 use Yii;
+use DateTime;
 
-/**
- * This is the model class for table "Core_Language".
- *
- * @property integer $id
- * @property string $name
- * @property string $code
- * @property string $shortCode
- *
- * @property CoreContentVisibilities[] $coreContentVisibilities
- * @property CoreRoute[] $coreRoutes
- * @property CoreUser[] $coreUsers
- */
-class Language extends \yii\db\ActiveRecord
-{
+class Language extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
@@ -36,7 +24,22 @@ class Language extends \yii\db\ActiveRecord
             [['code'], 'string', 'max' => 6],
             [['code'], 'unique'],
             [['enabled'], 'boolean'],
+
+            [['removeZeros', 'currencyRemoveZeros', 'currencySymbolPlace'], 'boolean'],
+            [['currencySymbol', 'thousandSeparator', 'decimalSeparator', 'time'], 'string', 'max' => 8],
+            [['datetime', 'date'], 'string', 'max' => 12],
+            [['currencySmallestUnit'], 'number', 'min' => 0.000001],
+            [['decimals'], 'number', 'min' => 0, 'integerOnly' => true],
+
+            [['datetime', 'time', 'date'], 'validatePHPFormat'],
         ];
+    }
+
+    public function validatePHPFormat($attribute, $params) {
+        $val = $this->$attribute;
+        if(@date($val) === false) {
+            $this->addError($attribute, 'Incorrect format');
+        }
     }
 
     /**
@@ -44,11 +47,25 @@ class Language extends \yii\db\ActiveRecord
      */
     public function attributeLabels() {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'code' => 'Code',
-            'shortCode' => 'Short Code',
-            'enabled' => 'Enabled',
+            'name' => Yii::t('app', 'Name'),
+            'code' => Yii::t('app', 'Code'),
+            'shortCode' => Yii::t('app', 'Short Code'),
+            'enabled' => Yii::t('app', 'Enabled'),
+
+            'date' => Yii::t('app', 'Date format'),
+            'time' => Yii::t('app', 'Time format'),
+            'datetime' => Yii::t('app', 'Datetime format'),
+
+            'decimalSeparator' => Yii::t('app', 'Decimal separator'),
+            'thousandSeparator' => Yii::t('app', 'Thousand separator'),
+            'decimals' => Yii::t('app', 'Decimals digits'),
+            'removeZeros' => Yii::t('app', 'Remove tailing zeros'),
+            
+            'currencySymbol' => Yii::t('app', 'Currency symbol'),
+            'currencySymbolPlace' => Yii::t('app', 'Symbol as suffix'),
+            'currencySmallestUnit' => Yii::t('app', 'Smallest unit'),
+            'currencyRemoveZeros' => Yii::t('app', 'Remove tailing zeros'),
+            
         ];
     }
 

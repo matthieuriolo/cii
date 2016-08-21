@@ -22,10 +22,7 @@ $config = [
         ],
 
         'formatter' => [
-            'booleanFormat' => [
-                '<i class="glyphicon glyphicon-remove text-danger" alt="no"></i>',
-                '<i class="glyphicon glyphicon-ok text-success" alt="yes"></i>',
-            ]
+            'class' => 'cii\i18n\Formatter'
         ],
 
         'request' => [

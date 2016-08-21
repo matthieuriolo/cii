@@ -5,6 +5,8 @@ namespace app\modules\cii\controllers;
 use Yii;
 use app\modules\cii\models\Language;
 use app\modules\cii\models\LanguageSearch;
+use app\modules\cii\models\FormatterExample;
+
 use yii\web\NotFoundHttpException;
 use yii\data\ActiveDataProvider;
 /**
@@ -89,8 +91,16 @@ class LanguageController extends ExtensionBaseController {
     */
 
     public function actionView($id) {
+        $language = $this->findModel($id);
+        
+        $model = new FormatterExample();
+        $model->load(Yii::$app->request->post());
+        $model->validate();
+        $model->setLanguage($language);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $language,
+            'formatterExample' => $model,
         ]);
     }
 }
