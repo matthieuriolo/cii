@@ -24,6 +24,26 @@ class Settings {
                 'default' => false
             ],
 
+            /*
+            'timezone' => [
+                'label' => Yii::t('app', 'Website default timezone'),
+                'type' => 'in',
+                'default' => 'UTC'
+            ],
+            */
+
+            'multilanguage' => [
+                'label' => Yii::t('app', 'Website is multilanguage'),
+                'type' => 'boolean',
+                'default' => false
+            ],
+
+            'language' => [
+                'label' => Yii::t('app', 'Website language'),
+                'type' => 'in',
+                'values' => Yii::$app->cii->language->getLanguagesForDropdown()
+            ],
+
             'metakeys' => [
                 'label' => Yii::t('app', 'Website metakeys'),
                 'type' => 'text',

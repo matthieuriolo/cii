@@ -13,7 +13,7 @@ class Configuration extends Model {
 	public $default = null;
 	public $type = 'text';
 	public $values = null;
-
+    
 	public function init() {
 		if(!$this->key || !$this->id) {
 			throw new InvalidConfigException();
@@ -36,7 +36,45 @@ class Configuration extends Model {
         ];
     }
 
+    public function getPreparedDefault() {
+    	switch($this->type) {
+    		case 'password':
+    		case 'image':
+    		case 'text':
+    		case 'in':
+    		case 'email':
+    			return Yii::$app->formatter->asText($this->default);
+    		case 'boolean':
+    			return Yii::$app->formatter->asBoolean($this->default);
+    		case 'float':
+    			return Yii::$app->formatter->asDecimals($this->default);
+    		case 'integer':
+    			return Yii::$app->formatter->asInteger($this->default);
+    		default:
+    			throw new InvalidConfigException();
+    	}
+    }
+    
+    protected function getValues() {
+        $module = Yii::$app->getModule($this->id);
+        $types = $module->getSettingTypes();
+        if(!isset($types[$this->key], $types[$this->key]['values'])) {
+            return [];
+        }
+
+        return $types[$this->key]['values'];
+    }
+
 	public function getValue() {
-		return Yii::$app->cii->setting($this->id, $this->key, null);
+		$val = Yii::$app->cii->setting($this->id, $this->key, null);
+		//protected passwords
+		if($this->type == 'password') {
+			return str_pad('', strlen($val) * 3, '●');
+		}else if($this->type == 'in') {
+            $values = $this->getValues();
+            return $values[$val];
+        }
+
+		return $val;
 	}
 }

@@ -75,25 +75,16 @@ class Configuration extends \yii\db\ActiveRecord {
         switch($this->type) {
             case 'float':
                 return floatval($this->value);
-                break;
             case 'integer':
                 return intval($this->value);
-                break;
+            case 'in':
             case 'password':
-                return str_pad('', strlen($this->value) * 3, '●');
-                break;
             case 'text':
             case 'image':
             case 'email':
                 return $this->value;
-                break;
             case 'boolean':
                 return $this->value == '0' ? false : true;
-                break;
-            case 'in':
-                $values = $this->getValues();
-                return $values[$this->value];
-                break;
             default:
                 throw new InvalidConfigException();
         }

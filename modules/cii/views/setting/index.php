@@ -22,7 +22,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'label',
         'id',
         'type',
-        'default',
+        
+        [
+            'attribute' => 'default',
+            'format' => 'html',
+            'value' => 'preparedDefault',
+        ],
+
         'value',
 
         [
