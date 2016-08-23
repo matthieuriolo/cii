@@ -53,10 +53,7 @@ $config = [
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             //'useFileTransport' => YII_ENV_DEV ? true : false,
-
-            'htmlLayout' => '@app/modules/cii/views/layouts/mail-html',
-            'textLayout' => '@app/modules/cii/views/layouts/mail-text',
-
+            
             'useFileTransport' => false,
             'transport' => [
                 'class' => 'Swift_SendmailTransport',

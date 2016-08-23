@@ -44,6 +44,28 @@ class Settings {
                 'values' => Yii::$app->cii->language->getLanguagesForDropdown()
             ],
 
+
+            'frontend_layout' => [
+                'label' => Yii::t('app', 'Frontend layout'),
+                'default' => 'cii',
+                'type' => 'in',
+                'values' => Yii::$app->cii->layout->getBackendLayoutsForDropdown()
+            ],
+
+            'backend_layout' => [
+                'label' => Yii::t('app', 'Backend layout'),
+                'default' => 'cii',
+                'type' => 'in',
+                'values' => Yii::$app->cii->layout->getFrontendLayoutsForDropdown()
+            ],
+
+            'mail_layout' => [
+                'label' => Yii::t('app', 'Mail layout'),
+                'default' => 'cii',
+                'type' => 'in',
+                'values' => Yii::$app->cii->layout->getMailLayoutsForDropdown()
+            ],
+
             'metakeys' => [
                 'label' => Yii::t('app', 'Website metakeys'),
                 'type' => 'text',
