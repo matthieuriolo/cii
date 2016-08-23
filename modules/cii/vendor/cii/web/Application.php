@@ -5,14 +5,22 @@ use Yii;
 use cii\web\routes\DBRoute;
 
 class Application extends \yii\web\Application {
-	public $seo = null;
-
+	public $seo;
+    public $modulePath;
+    public $layoutBasePath;
 
 	public function init() {
+        if(!$this->modulePath) {
+            $this->modulePath = $this->basePath . '/' . 'modules';
+        }
+
+        if(!$this->layoutBasePath) {
+            $this->layoutBasePath = $this->basePath . '/' . 'layouts';
+        }
+
+        //set active modules
 		$this->setModules(Yii::$app->cii->package->moduleInitializerList());
         
-        //$pkg->name, 'app\modules\\' . $pkg->name . '\Module');
-		
         //set up mailer according to the settings (default is sendmail)
         if($this->cii->setting('cii', 'transport.type') == 'file') {
             $this->mailer->useFileTransport = true;
@@ -36,10 +44,6 @@ class Application extends \yii\web\Application {
 
 		return parent::init();
 	}
-
-    public function getModulePath() {
-        return $this->basePath . '/' . 'modules';
-    }
 
     public function handleRequest($request) {
         $seo = null;

@@ -22,7 +22,7 @@ class Package extends Component {
 
 	public function getReflection($name) {
 		$pkg = new PackageReflection();
-		if($pkg->load(Yii::$app->getModulePath() . '/' . $name)) {
+		if($pkg->load(Yii::$app->modulePath . '/' . $name)) {
 			return $pkg;
 		}
 		
