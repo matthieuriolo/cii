@@ -19,11 +19,13 @@ use cii\widgets\DetailView;
 
         [   
             'label' => 'Created',
+            'format' => 'datetime',
             'value' => $package->created
         ],
 
         [   
             'label' => 'Installed',
+            'format' => 'datetime',
             'value' => $package->getInstalledVersion()->installed
         ],
 

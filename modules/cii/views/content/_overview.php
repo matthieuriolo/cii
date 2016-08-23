@@ -9,7 +9,7 @@ echo DetailView::widget([
     'attributes' => [
         'name',
         'enabled:boolean',
-        'created',
+        'created:datetime',
         
         [
             'attribute' => 'classname',

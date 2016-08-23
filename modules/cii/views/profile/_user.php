@@ -8,7 +8,7 @@ echo DetailView::widget([
     'attributes' => [
         'username',
         'email:email',
-        'created',
+        'created:datetime',
         'language_id',
         'layout_id',
     ],

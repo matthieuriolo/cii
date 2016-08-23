@@ -26,11 +26,13 @@ $reflection = $model->getReflection();
         
         [   
             'label' => 'Created',
+            'format' => 'datetime',
             'value' => $reflection->created
         ],
 
         [   
             'label' => 'Installed',
+            'format' => 'datetime',
             'value' => $model->installed
         ],
 

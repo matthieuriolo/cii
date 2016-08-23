@@ -8,8 +8,8 @@ echo DetailView::widget([
     'attributes' => [
         'username',
         'email:email',
-        'created',
-        'activated',
+        'created:datetime',
+        'activated:datetime',
         'enabled:boolean',
 
         [
