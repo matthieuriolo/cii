@@ -68,11 +68,8 @@ class Extension extends \yii\db\ActiveRecord {
 
 
     public function getType() {
-        if($refl = $this->getReflection()) {
-            return Yii::t('app', $refl->getType());
-        }
-
-        return null;
+        $model = $this->outbox()->className();
+        return $model::getTypename();
     }
 
     public function behaviors() {
