@@ -6,9 +6,13 @@ use Yii;
 
 class Controller extends \yii\web\Controller {
 	protected $_package;
-	public $layout = '@core/views/layouts/main';
-
+	
 	public function init() {
+		$this->layout = Yii::$app->layoutBasePath .
+			'/' .
+			Yii::$app->cii->setting('cii', 'frontend_layout') .
+			'/frontend'
+		;
 		$this->setView(Yii::createObject('cii\web\view', []));
 	}
 

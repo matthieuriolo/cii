@@ -7,7 +7,14 @@ use yii\filters\AccessControl;
 
 class BackendController extends Controller {
 	public $package;
-	public $layout = '@core/views/layouts/backend';
+	
+	public function init() {
+		$this->layout = Yii::$app->layoutBasePath .
+			'/' .
+			Yii::$app->cii->setting('cii', 'backend_layout') .
+			'/backend'
+		;
+	}
 
 	public function getAccessRoles() {
 		return ['@'];

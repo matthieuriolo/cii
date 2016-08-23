@@ -11,15 +11,15 @@ class Application extends \yii\web\Application {
 
 	public function init() {
         if(!$this->modulePath) {
-            $this->modulePath = $this->basePath . '/' . 'modules';
+            $this->modulePath = '@app/modules';
         }
 
         if(!$this->layoutBasePath) {
-            $this->layoutBasePath = $this->basePath . '/' . 'layouts';
+            $this->layoutBasePath = '@app/layouts';
         }
 
         //set active modules
-		$this->setModules(Yii::$app->cii->package->moduleInitializerList());
+		$this->setModules($this->cii->package->moduleInitializerList());
         
         //set up mailer according to the settings (default is sendmail)
         if($this->cii->setting('cii', 'transport.type') == 'file') {
@@ -36,10 +36,14 @@ class Application extends \yii\web\Application {
         }
 
         //set up language
-        
-        if($language = Yii::$app->cii->language->getActiveLanguage()) {
+        if($language = $this->cii->language->getActiveLanguage()) {
             $this->formatter->initValuesFromLanguage($language);
         }
+
+        //set up mail layout
+        $layout = $this->cii->setting('cii', 'mail_layout');
+        $this->mailer->htmlLayout = $this->layoutBasePath . '/' . $layout . '/mail-html';
+        $this->mailer->textLayout = $this->layoutBasePath . '/' . $layout . '/mail-text';
 
 
 		return parent::init();
