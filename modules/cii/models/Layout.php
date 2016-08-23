@@ -14,21 +14,12 @@ use Yii;
  * @property CoreConfiguration[] $coreConfigurations
  * @property CoreUser[] $coreUsers
  */
-class Layout extends \yii\db\ActiveRecord
-{
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
+class Layout extends \yii\db\ActiveRecord {
+    public static function tableName() {
         return '{{%Cii_Layout}}';
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['name', 'enabled'], 'required'],
             [['enabled'], 'integer'],
@@ -37,11 +28,7 @@ class Layout extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'name' => 'Name',
@@ -49,19 +36,28 @@ class Layout extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getConfigurations()
-    {
-        return $this->hasMany(Configuration::className(), ['layout_id' => 'id']);
+    public function getExtension() {
+        return $this->owner->hasOne(Extension::className(), ['id' => 'extension_id'])->inverseOf('layout');
+    }
+    
+    static public function getTypename() {
+        return 'Cii:Layout';
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsers()
-    {
-        return $this->hasMany(User::className(), ['layout_id' => 'id']);
+    static public function getOutboxAttribute($class) {
+      return 'extension_id';
+    }
+
+    public function behaviors() {
+        return [
+            [
+                'class' => 'cii\behavior\InheritableBehavior',
+                'inheritProperties' => [
+                    'name' => 'extension.name',
+                    'enabled' => 'extension.enabled',
+                    'installed' => 'extension.installed'
+                ]
+            ]
+        ];
     }
 }

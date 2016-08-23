@@ -44,20 +44,23 @@ class Extension extends \yii\db\ActiveRecord {
     }
 
     public function getPackage() {
-        return $this->hasOne(Package::className(), ['id' => 'extension_id'])->inverseOf('extension');
+        return $this->hasOne(Package::className(), ['extension_id' => 'id'])->inverseOf('extension');
     }
 
     public function getLayout() {
-        return $this->hasOne(Layout::className(), ['id' => 'extension_id'])->inverseOf('extension');
+        return $this->hasOne(Layout::className(), ['extension_id' => 'id'])->inverseOf('extension');
     }
     
 
     public function getReflection() {
         $str = substr($this->classname->path, strlen('app\modules\cii\models') + 1);
         $str = strtolower($str);
+
         switch($str) {
             case 'package':
                 return Yii::$app->cii->package->getReflection($this->name);
+            case 'layout':
+                return Yii::$app->cii->layout->getReflection($this->name);
         }
 
         return null;
@@ -66,10 +69,10 @@ class Extension extends \yii\db\ActiveRecord {
 
     public function getType() {
         if($refl = $this->getReflection()) {
-            return $refl->getType();
+            return Yii::t('app', $refl->getType());
         }
 
-        return '-';
+        return null;
     }
 
     public function behaviors() {

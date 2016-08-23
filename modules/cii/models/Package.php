@@ -30,7 +30,7 @@ class Package extends ActiveRecord implements ExtendableInterface {
     }
 
     static public function getTypename() {
-      return 'Cii:Package';
+        return 'Cii:Package';
     }
 
     static public function getOutboxAttribute($class) {

@@ -34,6 +34,7 @@ class LanguageController extends ExtensionBaseController {
                     'code',
                     'shortcode',
                     'enabled',
+                    'created'
                 ],
             ],
         ]);
