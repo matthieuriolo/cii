@@ -57,7 +57,7 @@ class ContentSearch extends Content
                         'asc' => ['classname.path' => SORT_ASC],
                         'desc' => ['classname.path' => SORT_DESC],
                     ],
-
+                    'created',
                     'enabled'
                 ],
             ],

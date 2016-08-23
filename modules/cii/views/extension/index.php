@@ -25,10 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
 
         'dataProvider' => $data,
-        
+        'rowOptions' => function($model, $key, $index, $grid) {
+            return $model->name == 'cii' & ($model->package || $model->layout) ? ['class' => "warning"] : [];
+        },
+
         'columns' => [
             'name',
-            'installed',
+            'installed:datetime',
             'type',
             'enabled:boolean',
             [
@@ -50,7 +53,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'buttons' => [
                     'disable' => function($url, $model, $key) {
-                        if(!$model->enabled || $model->id == 'cii') {
+                        if(
+                            !$model->enabled
+                            ||
+                            ($model->name == 'cii' && $model->package)
+                            ||
+                            ($model->name == 'cii' && $model->layout)
+                        ) {
                             return '';
                         }
 
@@ -64,7 +73,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
 
                     'enable' => function($url, $model, $key) {
-                        if($model->enabled || $model->id == 'cii') {
+                        if(
+                            $model->enabled
+                            ||
+                            ($model->name == 'cii' && $model->package)
+                            ||
+                            ($model->name == 'cii' && $model->layout)
+                        ) {
                             return '';
                         }
 
@@ -77,15 +92,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
 
                     'deinstall' => function($url, $model, $key) {
-                        if($model->id == 'core') {
+                        if(
+                            ($model->name == 'cii' && $model->package)
+                            ||
+                            ($model->name == 'cii' && $model->layout)
+                        ) {
                             return '';
                         }
 
                         $options = [
-                            'title' => Yii::t('yii', 'Update'),
-                            'aria-label' => Yii::t('yii', 'Update'),
+                            'title' => Yii::t('yii', 'Deinstall'),
+                            'aria-label' => Yii::t('yii', 'Deinstall'),
                             'data-pjax' => '0',
                         ];
+
                         return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, $options);
                     }
                 ]

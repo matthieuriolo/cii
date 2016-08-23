@@ -24,17 +24,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'data-controller' => 'singlerowclick'
         ],
 
-        'dataProvider' => $data,/*new ArrayDataProvider([
-            'allModels' => \Yii::$app->cii->package->all(null),
-            
-            'sort' => [
-                'attributes' => ['name', 'version', 'enabled'],
-            ],
-        ]),*/
+        'dataProvider' => $data,
         
+        'rowOptions' => function($model, $key, $index, $grid) {
+            return $model->name == 'cii' ? ['class' => "warning"] : [];
+        },
+
         'columns' => [
             'name',
-            'installed',
+            'installed:datetime',
             'enabled:boolean',
             [
                 'class' => ActionColumn::className(),
@@ -55,7 +53,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'buttons' => [
                     'disable' => function($url, $model, $key) {
-                        if(!$model->getEnabled() || $model->id == 'cii') {
+                        if(
+                            !$model->enabled
+                            ||
+                            $model->name == 'cii'
+                        ) {
                             return '';
                         }
 
@@ -69,7 +71,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
 
                     'enable' => function($url, $model, $key) {
-                        if($model->getEnabled() || $model->id == 'core') {
+                        if(
+                            $model->enabled
+                            ||
+                            $model->name == 'cii'
+                        ) {
                             return '';
                         }
 
@@ -82,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
 
                     'deinstall' => function($url, $model, $key) {
-                        if($model->id == 'core') {
+                        if($model->name == 'cii') {
                             return '';
                         }
 

@@ -25,10 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
 
         'dataProvider' => $data,
+        'rowOptions' => function($model, $key, $index, $grid) {
+            return $model->name == 'cii' ? ['class' => "warning"] : [];
+        },
         
         'columns' => [
             'name',
-            'installed',
+            'installed:datetime',
             'enabled:boolean',
             [
                 'class' => ActionColumn::className(),

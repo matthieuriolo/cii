@@ -30,10 +30,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
         'columns' => [
             'name',
-            'enabled:boolean',
             'code',
             'shortcode',
-
+            'created:datetime',
+            'enabled:boolean',
+            
             [
                 'class' => 'cii\grid\ActionColumn',
                 'appendixRoute' => 'modules/cii/language'

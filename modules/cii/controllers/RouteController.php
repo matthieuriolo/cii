@@ -39,7 +39,7 @@ class RouteController extends Controller {
             	'attributes' => [
                     'slug',
                     'hits',
-
+                    'created',
                     'language' => [
                         'asc' => ['language.name' => SORT_ASC],
                         'desc' => ['language.name' => SORT_DESC],

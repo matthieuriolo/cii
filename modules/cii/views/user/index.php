@@ -34,8 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'username',
             'email:email',
-            'created',
-            'activated',
+            'created:datetime',
+            'activated:datetime',
             'enabled:boolean',
             // 'password',
             // 'enabled',

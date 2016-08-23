@@ -61,6 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
             'hits',
+            'created:datetime',
             'enabled:boolean',
             
             [
