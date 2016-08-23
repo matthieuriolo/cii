@@ -36,6 +36,10 @@ abstract class BaseReflection extends Object {
         return false;
     }
 
+    public function loadByName($name) {
+        return $this->load($this->getInstallationPath() . '/' . $name);
+    }
+
     public function getType() {
         return $this->data['type'];
     }

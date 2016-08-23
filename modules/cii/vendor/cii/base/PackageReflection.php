@@ -71,7 +71,7 @@ class PackageReflection extends BaseReflection {
     
 
     protected function getInstallationPath() {
-        return Yii::$app->modulePath;
+        return Yii::getAlias(Yii::$app->modulePath);
     }
     
     public function checkDependencies() {

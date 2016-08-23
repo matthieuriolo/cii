@@ -8,7 +8,7 @@ use app\modules\cii\models\Layout;
 
 class LayoutReflection extends BaseReflection {
     protected function getInstallationPath() {
-        return Yii::$app->layoutBasePath;
+        return Yii::getAlias(Yii::$app->layoutBasePath);
     }
     
     protected function getExtensionClassName() {
