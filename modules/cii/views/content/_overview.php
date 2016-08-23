@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use cii\widgets\DetailView;
+use yii\widgets\ActiveForm;
 
 echo DetailView::widget([
     'model' => $model,
@@ -15,4 +16,4 @@ echo DetailView::widget([
             'value' => $model->classname->typename
         ],
     ],
-]) ?>
+]); ?>

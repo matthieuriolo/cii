@@ -22,9 +22,21 @@ $items = [
         'encode' => false,
         'label' => '<i class="glyphicon glyphicon-file"></i> Content',
         'content' => $this->render('_overview', [
-            'model' => $model
+            'model' => $model,
         ])
-    ]
+    ],
+
+    [
+        'encode' => false,
+        'label' => '<i class="glyphicon glyphicon-blackboard"></i> Positions',
+        'content' => $this->render('_positions', [
+            'visibilities' => $visibilities,
+            'visibleModel' => $visibleModel,
+            'routes' => $routes,
+            //'positions' => $positions,
+            'languages' => $languages,
+        ])
+    ],
 ];
 
 $info = $outbox->className();

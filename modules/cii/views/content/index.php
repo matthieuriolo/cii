@@ -3,9 +3,6 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
-/* @var $this yii\web\View */
-/* @var $searchModel app\modules\core\models\ContentSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Contents');
 $this->params['breadcrumbs'][] = $this->title;
@@ -20,7 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
 
-<?php Pjax::begin(); ?>    <?= GridView::widget([
+<?php Pjax::begin(); ?>
+    <?= GridView::widget([
         'tableOptions' => [
             'class' => "table table-striped table-bordered table-hover",
             'data-controller' => 'singlerowclick'
@@ -29,12 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
         //'filterModel' => $searchModel,
         'columns' => [
             'name',
-            'enabled:boolean',
-
             [
                 'attribute' => 'classname',
                 'value' => 'classname.typename',
             ],
+            
+            'created:datetime',
+            'enabled:boolean',
 
             [
                 'class' => 'cii\grid\ActionColumn',
@@ -42,4 +41,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-<?php Pjax::end(); ?></div>
+<?php Pjax::end(); ?>
+</div>

@@ -34,7 +34,7 @@ class ContentVisibilities extends \yii\db\ActiveRecord
     {
         return [
             [['content_id'], 'required'],
-            [['content_id', 'route_id', 'language_id'], 'integer'],
+            [['content_id', 'route_id', 'language_id', 'ordering'], 'integer'],
             [['position'], 'string', 'max' => 255],
             [['language_id'], 'exist', 'skipOnError' => true, 'targetClass' =>Language::className(), 'targetAttribute' => ['language_id' => 'id']],
             [['route_id'], 'exist', 'skipOnError' => true, 'targetClass' => Route::className(), 'targetAttribute' => ['route_id' => 'id']],
@@ -45,14 +45,12 @@ class ContentVisibilities extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
-            'id' => 'ID',
-            'content_id' => 'Content ID',
-            'route_id' => 'Route ID',
-            'language_id' => 'Language ID',
-            'position' => 'Position',
+            'content_id' => Yii::t('app', 'Content'),
+            'route_id' => Yii::t('app', 'Route'),
+            'language_id' => Yii::t('app', 'Language'),
+            'position' => Yii::t('app', 'Position'),
         ];
     }
 

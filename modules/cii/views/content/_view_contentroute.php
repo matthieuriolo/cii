@@ -15,7 +15,12 @@ use cii\widgets\DetailView;
 
         'keys',
         'description',
-        'robots',
+
+        [
+            'attribute' => 'robots',
+            'value' => is_null($model->robots) ? null : $model->getRobotTypesForDropdown()[$model->robots],
+        ],
+
         'image',
         'type',
     ],

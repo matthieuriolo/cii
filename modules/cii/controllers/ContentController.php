@@ -7,18 +7,20 @@ use app\modules\cii\models\ContentRoute;
 use app\modules\cii\models\Content;
 use app\modules\cii\models\ContentSearch;
 use app\modules\cii\models\Classname;
+use app\modules\cii\models\ContentVisibilities;
 
 use cii\web\SecurityException;
 use cii\backend\BackendController;
+
 
 use yii\web\ServerErrorHttpException;
 use yii\web\NotFoundHttpException;
 
 use yii\filters\VerbFilter;
 use yii\widgets\ActiveForm;
+use yii\data\ActiveDataProvider;
 
 use yii\helpers\Json;
-
 use cii\helpers\SPL;
 
 
@@ -62,8 +64,32 @@ class ContentController extends BackendController {
      * @return mixed
      */
     public function actionView($id) {
+        $visibleModel = new ContentVisibilities();
+
+        if($visibleModel->load(Yii::$app->request->post())) {
+            $visibleModel->content_id = $id;
+
+        }
+
+        $visibilities = new ActiveDataProvider([
+            'query' => ContentVisibilities::find()->where([
+                'content_id' => $id
+            ]),
+            'sort' => [
+                'attributes' => [
+                    
+                ],
+            ],
+        ]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'visibilities' => $visibilities,
+
+            'visibleModel' => $visibleModel,
+            'routes' => Yii::$app->cii->route->getRoutesForDropdown(),
+            //'positions' => Yii::$app->cii->route->getRoutesForDropdown(),
+            'languages' => Yii::$app->cii->language->getLanguagesForDropdown(),
         ]);
     }
 

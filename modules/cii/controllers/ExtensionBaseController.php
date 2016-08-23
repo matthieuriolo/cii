@@ -130,7 +130,7 @@ abstract class ExtensionBaseController extends Controller {
 
     public function actionDisable($id, $back) {
         $module = Extension::findOne($id);
-        if($name == 'cii') {
+        if($name == 'cii' && ($module->layout || $module->package)) {
             throw new SecurityException();
         }
 
