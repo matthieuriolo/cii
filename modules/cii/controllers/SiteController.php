@@ -24,8 +24,6 @@ use app\modules\cii\models\GroupMember;
 
 
 class SiteController extends Controller {
-    public $layout = '@app/modules/cii/views/layouts/main';
-
     public function actions() {
         $url = null;
         if(Yii::$app->seo) {

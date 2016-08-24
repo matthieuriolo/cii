@@ -16,32 +16,12 @@ class BackendController extends Controller {
     }
 
     public function actionPackage($name) {
-    	$pkg = Yii::$app->cii->package->getReflection($name);
+        $pkg = Yii::$app->cii->package->getReflection($name);
     	if(!$pkg) {
     		throw new \Exception("The package " . $name . " could not be found");
     	}
-
-        $module = Core_Module::find()
-            ->joinWith('extension as ext')
-            ->where(['ext.name' => $pkg->getName()])
-            ->one();
         
-        $settings = new ArrayDataProvider([
-            'allModels' => Yii::$app->cii->package->getSettingTypes($name),
-            'sort' => [
-                'attributes' => [
-                    'label',
-                    'type',
-                    'default',
-                    'value'
-                ]
-            ]
-        ]);
-
-    	return $this->render('package', [
-        	'package' => $pkg,
-            'settings' => $settings
-        ]);
+        return Yii::$app->runAction('cii/package/view', ['id' => $pkg->getInstalledVersion()->id]);
     }
 
     public function actionLog() {

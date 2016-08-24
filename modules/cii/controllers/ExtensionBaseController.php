@@ -8,10 +8,15 @@ use cii\backend\BackendController as Controller;
 use cii\base\PackageReflection;
 use cii\web\SecurityException;
 
-use yii\filters\VerbFilter;
+
 use yii\web\UploadedFile;
+use yii\web\NotFoundHttpException;
+
+use yii\filters\VerbFilter;
 use yii\helpers\FileHelper;
+
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 
 use app\modules\cii\models\Configuration as Core_Settings;
 use app\modules\cii\models\UploadExtensionForm;
@@ -51,19 +56,20 @@ abstract class ExtensionBaseController extends Controller {
             'modelType' => $this->getModelType(),
             'modelUrl' => $this->getModelUrl(),
             'model' => $model,
-            'settings' => $this->getExtensionSettings($id)
+            'settings' => new ArrayDataProvider([
+                'allModels' => $model->settings,
+                'sort' => [
+                    'attributes' => [
+                        'label',
+                        'id',
+                        'type',
+                        'default',
+                        'value'
+                    ]
+                ]
+            ])
         ]);
     }
-
-    protected function getExtensionSettings($id) {
-        return new ActiveDataProvider([
-            'query' => Core_Settings::find()->where(['extension_id' => $id]), 
-            'sort' => [
-                'attributes' => ['name', 'value'],
-            ],
-        ]);
-    }
-
 
     public function actionInstall() {
         $model = new UploadExtensionForm();
@@ -120,7 +126,7 @@ abstract class ExtensionBaseController extends Controller {
 
 
     public function actionEnable($id, $back) {
-        $module = Extension::findOne($id);
+        $module = $this->findExtension($id);
         $module->enabled = true;
         $module->save();
 
@@ -129,8 +135,8 @@ abstract class ExtensionBaseController extends Controller {
     }
 
     public function actionDisable($id, $back) {
-        $module = Extension::findOne($id);
-        if($name == 'cii' && ($module->layout || $module->package)) {
+        $module = $this->findExtension($id);
+        if($module->name == 'cii' && ($module->layout || $module->package)) {
             throw new SecurityException();
         }
 
@@ -139,5 +145,13 @@ abstract class ExtensionBaseController extends Controller {
 
         Yii::$app->cii->package->clearCache();
         $this->redirect($back);
+    }
+
+    protected function findExtension($id) {
+        if(($model = Extension::findOne($id)) !== null) {
+            return $model;
+        }else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 }

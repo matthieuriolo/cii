@@ -9,9 +9,7 @@ use app\modules\cii\models\FormatterExample;
 
 use yii\web\NotFoundHttpException;
 use yii\data\ActiveDataProvider;
-/**
- * LanguageController implements the CRUD actions for Language model.
- */
+
 class LanguageController extends ExtensionBaseController {
     protected function getModelType() {
         return 'Language';
