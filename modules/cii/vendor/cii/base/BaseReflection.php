@@ -16,6 +16,8 @@ use yii\base\Object;
 
 abstract class BaseReflection extends Object {
     const INFORMATION_FILE = 'index.php';
+    const SETTING_FILE = 'settings.php';
+
     protected $data;
     protected $basePath;
 
@@ -195,5 +197,16 @@ abstract class BaseReflection extends Object {
         $model = new $model();
         $model->extension_id = $ext->id;
         $model->save();
+    }
+
+
+    public function getSettingTypes() {
+        $path = $this->basePath . '/' . static::SETTING_FILE;
+        
+        if(is_file($path)) {
+            return include($path);
+        }
+
+        return [];
     }
 }

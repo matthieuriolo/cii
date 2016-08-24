@@ -14,4 +14,8 @@ class LayoutReflection extends BaseReflection {
     protected function getExtensionClassName() {
         return Layout::className();
     }
+
+    public function getPositions() {
+    	return isset($this->data['positions']) ? $this->data['positions'] : [];
+    }
 }

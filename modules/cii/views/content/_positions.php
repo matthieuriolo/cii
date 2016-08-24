@@ -9,7 +9,7 @@ $form = ActiveForm::begin(); ?>
 
 <div class="row">
     <div class="col-md-3">
-        <?= $form->field($visibleModel, 'position')->textInput(); ?>
+        <?= $form->field($visibleModel, 'position')->dropDownList($positions); ?>
     </div>
     
     <div class="col-md-3">

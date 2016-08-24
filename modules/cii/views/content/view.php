@@ -33,7 +33,7 @@ $items = [
             'visibilities' => $visibilities,
             'visibleModel' => $visibleModel,
             'routes' => $routes,
-            //'positions' => $positions,
+            'positions' => $positions,
             'languages' => $languages,
         ])
     ],

@@ -11,4 +11,9 @@ return [
         'email' => 'matthieu.riolo@gmail.com',
         'website' => 'http://www.ocsource.ch',
     ],
+
+    'positions' => [
+        'left' => Yii::t('app', 'Left'),
+        'right' => Yii::t('app', 'Right'),
+    ],
 ];

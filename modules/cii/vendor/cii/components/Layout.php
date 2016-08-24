@@ -2,25 +2,15 @@
 namespace cii\components;
 
 use Yii;
-use yii\base\Component;
 
 use app\modules\cii\models\Content;
 use app\modules\cii\models\Layout as MLayout;
 
+use cii\base\LayoutReflection;
 
 use yii\helpers\ArrayHelper;
 
-class Layout extends Component {
-	public $cache = 'cache';
-
-
-	public function init() {
-		if (is_string($this->cache)) {
-            $this->cache = Yii::$app->get($this->cache, false);
-        }
-
-        parent::init();
-	}
+class Layout extends BaseExtension {
 /*
 	public function getTemplates($enabled = true, $backend = false) {
 		$cacheKey = __CLASS__ . '_contents_' . ($name ?: '');
@@ -63,24 +53,36 @@ class Layout extends Component {
 			$data[null] = Yii::t('app', 'No selection');
 		}
 
-		$data += ArrayHelper::map(MLayout::find()->all(), 'id', 'name');
+		$data += ArrayHelper::map($this->all(), 'id', 'name');
 
 		$this->cache->set($cacheKey, $data);
 		return $data;
 	}
 
+	public function all($enabled = true) {
+		$query = MLayout::find();
+		if(!is_null($enabled)) {
+			$query = $query
+				->joinWith('extension as extension')
+				->where(['extension.enabled' => $enabled]);
+		}
+
+		return $query->all();
+	}
+
 	public function getContents($name = null) {
+		/*
 		$cacheKey = __CLASS__ . '_contents_' . ($name ?: '');
 		if(($data = $this->cache->get($cacheKey)) !== false) {
 			return $data;
-		}
+		}*/
 
 
 		$models = Content::find()
-			->with(['contentVisibilities'])
-			->where(['contentVisibilities.position' => $name])
+			->joinWith(['contentVisibilities as c'])
+			->where(['c.position' => $name])
 			->all();
-		$this->cache->set($cacheKey, $models);
+		//$this->cache->set($cacheKey, $models);
 		return $models;
 	}
 
@@ -112,5 +114,35 @@ class Layout extends Component {
 		$ret += ArrayHelper::map($models, 'id', 'name');
 		$this->cache->set($cacheKey, $ret);
 		return $ret;
+	}
+
+
+	public function getReflection($name) {
+		$pkg = new LayoutReflection();
+		if($pkg->loadByName($name)) {
+			return $pkg;
+		}
+		
+		return null;
+	}
+
+
+	public function getBackendLayoutsForDropdown() {
+		return [];
+	}
+
+	public function getFrontendLayoutsForDropdown() {
+		return [];
+	}
+
+	public function getMailLayoutsForDropdown() {
+		return [];
+	}
+
+	public function getPositionsForDropdown() {
+		$data = [null => Yii::t('app', 'No selection')];
+		$refl = $this->getReflection(Yii::$app->cii->setting('cii', 'frontend_layout'));
+
+		return $data + $refl->getPositions();
 	}
 }
