@@ -5,7 +5,7 @@ use yii\grid\ActionColumn;
 use yii\data\ArrayDataProvider;
 use cii\helpers\Html;
 use yii\widgets\ActiveForm;
-$this->title = 'Install ' . $modelType;
+$this->title = $modelType;
 $this->params['breadcrumbs'][] = [
     'label' => $this->title,
     'url' => $modelUrl,

@@ -8,7 +8,7 @@ echo DetailView::widget([
     'attributes' => [
         'name',
         'code',
-        'shortcode'
+        'shortcode',
         'enabled:boolean'
     ],
 ]) ?>
