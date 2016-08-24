@@ -33,8 +33,4 @@ class Module extends \cii\backend\Package {
     public function getPermissionTypes() {
     	return Permission::getPermissions();
     }
-
-    public function getSettingTypes() {
-        return Settings::getSettingTypes();
-    }
 }

@@ -66,6 +66,10 @@ class Extension extends \yii\db\ActiveRecord {
         return null;
     }
 
+    public function getSettings() {
+        return $this->outbox()->settings;
+    }
+
 
     public function getType() {
         $model = $this->outbox()->className();

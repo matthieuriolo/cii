@@ -2,49 +2,22 @@
 namespace cii\components;
 
 use Yii;
-use yii\base\Component;
 use yii\helpers\ArrayHelper;
 use app\modules\cii\models\Package as MPackage;
 use cii\web\controllers\BackendCon;
 use cii\base\PackageReflection;
 
-class Package extends Component {
-	public $cache = 'cache';
-
-
-	public function init() {
-		if (is_string($this->cache)) {
-            $this->cache = Yii::$app->get($this->cache, false);
-        }
-
-        parent::init();
-	}
-
+class Package extends BaseExtension {
 	public function getReflection($name) {
 		$pkg = new PackageReflection();
-		if($pkg->load(Yii::$app->modulePath . '/' . $name)) {
+		if($pkg->loadByName($name)) {
 			return $pkg;
 		}
 		
 		return null;
 	}
 
-	protected function namesFromDB($enabled = null) {
-		$cacheKey = __CLASS__ . '_namesFromDB_' . (is_null($enabled) ? 'all' : ($enabled ? 'yes' : 'no'));
-		if(($data = $this->cache->get($cacheKey)) !== false) {
-			//return $data;
-		}
-		
-		$module = MPackage::find();
-		if(!is_null($enabled)) {
-			$module = $module->joinWith('extension as extension')->where(['extension.enabled' => $enabled]);
-		}
-
-		$data = $module->all();
-		$data = ArrayHelper::getColumn($data, 'name');
-		$this->cache->set($cacheKey, $data);
-		return $data;
-	}
+	
 
 	public function clearCache() {
 		$this->cache->delete(__CLASS__ . '_namesFromDB_all');
@@ -74,7 +47,24 @@ class Package extends Component {
 
 		return $ret;
 	}
+	
+	protected function namesFromDB($enabled = null) {
+		$cacheKey = __CLASS__ . '_namesFromDB_' . (is_null($enabled) ? 'all' : ($enabled ? 'yes' : 'no'));
+		if(($data = $this->cache->get($cacheKey)) !== false) {
+			return $data;
+		}
+		
+		$module = MPackage::find();
+		if(!is_null($enabled)) {
+			$module = $module->joinWith('extension as extension')->where(['extension.enabled' => $enabled]);
+		}
 
+		$data = $module->all();
+		$data = ArrayHelper::getColumn($data, 'name');
+		$this->cache->set($cacheKey, $data);
+		return $data;
+	}
+	
 	public function all($enabled = true) {
 		$data = $this->namesFromDB($enabled);
 		$data = array_map(function($name) {
@@ -183,41 +173,6 @@ class Package extends Component {
 				}
 			}else {
 				$ret += $types;
-			}
-		}
-
-		$this->cache->set($cacheKey, $ret);
-		return $ret;
-	}
-
-	protected function prepareSetting($key, $val, $id) {
-		$val['class'] = 'cii\base\Configuration';
-		$val['key'] = $key;
-		$val['id'] = $id;
-		return Yii::createObject($val);
-	}
-
-	public function getSettingTypes($package = null) {
-		if(!is_null($package)) {
-			$ret = [];
-			$pkg = Yii::$app->getModule($package);
-			foreach($pkg->getSettingTypes() as $key => $val) {
-				array_push($ret, $this->prepareSetting($key, $val, $pkg->id));
-			}
-
-			return $ret;
-		}
-
-		$cacheKey = __CLASS__ . '_settingTypes';
-		if(($data = $this->cache->get($cacheKey)) !== false) {
-			return $data;
-		}
-
-		$ret = [];
-
-		foreach($this->all() as $pkg) {
-			foreach($pkg->getSettingTypes() as $key => $val) {
-				array_push($ret, $this->prepareSetting($key, $val, $pkg->id));
 			}
 		}
 

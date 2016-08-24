@@ -12,6 +12,8 @@ abstract class BaseExtension extends ActiveRecord implements ExtendableInterface
     }
     
     abstract public function getReflection();
+    abstract public function getSettings();
+
 
     static public function canOutboxFrom($class) {
         if($class instanceof Extension) {

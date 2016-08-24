@@ -14,6 +14,10 @@ class Layout extends BaseExtension {
         return Yii::$app->cii->layout->getReflection($this->name);
     }
 
+    public function getSettings() {
+	    return Yii::$app->cii->layout->getSettingTypes($this->extension->name);
+	}
+
     static public function getTypename() {
         return Yii::t('app', 'Layout');
     }

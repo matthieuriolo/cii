@@ -72,7 +72,7 @@ class Configuration extends Model {
 			return str_pad('', strlen($val) * 3, '●');
 		}else if($this->type == 'in') {
             $values = $this->getValues();
-            return $values[$val];
+            return isset($values[$val]) ? $values[$val] : null;
         }
 
 		return $val;

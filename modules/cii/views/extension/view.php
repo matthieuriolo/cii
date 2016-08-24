@@ -32,9 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'encode' => false,
                     'label' => '<i class="glyphicon glyphicon-cog"></i> Settings',
-                    'content' => $this->render('_config', ['model' => $model, 'data' => $settings]),
+                    'content' => $this->render('/setting/_list', ['data' => $settings]),
                     'headerOptions' => [
-                        'class' => $reflection->isInstalled() ? '' : 'disabled'
+                        'class' => count($settings->allModels) ? '' : 'disabled'
                     ]
                 ],
             ]]);

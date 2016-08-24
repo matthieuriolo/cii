@@ -126,11 +126,13 @@ class Configuration extends \yii\db\ActiveRecord {
 
     protected function getModuleTypes() {
         if(!$this->_types) {
-            $module = Yii::$app->getModule($this->extension->name);
-            $this->_types = $module->getSettingTypes();
+            $module = Yii::$app->cii->package->getReflection($this->extension->name);
+            if($module) {
+                $this->_types = $module->getSettingTypes();
+            }
         }
-
-        return $this->_types[$this->name];
+        
+        return isset($this->_types[$this->name]) ? $this->_types[$this->name] : null;
     }
 
     /*
