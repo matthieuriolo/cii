@@ -44,9 +44,15 @@ class ContentSearch extends Content
         $query = Content::find();
 
 
-        $query->joinWith(['classname as classname']);
-        // add conditions that should always apply here
+        $query->joinWith([
+            'classname as classname',
+            'classname.package.extension as package'
+        ]);
+        $query->andFilterWhere([
+            'package.enabled' => true,
+        ]);
 
+        // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [

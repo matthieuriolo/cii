@@ -33,8 +33,20 @@ class RouteController extends Controller {
     }
 
     public function actionIndex($parent = null) {
-    	$data = new ActiveDataProvider([
-    		'query' => Route::find()->where(['parent_id' => $parent])->joinWith(['language as language', 'classname as classname']), 
+        $query = Route::find()
+            ->joinWith([
+                'language as language',
+                'classname as classname',
+                'classname.package.extension as ext'
+            ])
+            ->where([
+                'parent_id' => $parent,
+                'ext.enabled' => true
+            ])
+        ;
+    	
+        $data = new ActiveDataProvider([
+    		'query' => $query,
 			'sort' => [
             	'attributes' => [
                     'slug',

@@ -47,8 +47,7 @@ class ContentController extends BackendController {
      * Lists all Content models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new ContentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
@@ -88,7 +87,7 @@ class ContentController extends BackendController {
 
             'visibleModel' => $visibleModel,
             'routes' => Yii::$app->cii->route->getRoutesForDropdown(),
-            //'positions' => Yii::$app->cii->route->getRoutesForDropdown(),
+            'positions' => Yii::$app->cii->layout->getPositionsForDropdown(),
             'languages' => Yii::$app->cii->language->getLanguagesForDropdown(),
         ]);
     }
