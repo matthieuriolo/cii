@@ -135,6 +135,15 @@ span.list-group-item {
 }
 
 
+/* content box */
+.content-box {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    
+    position: relative;
+    padding: 15px;
+    margin-bottom: 15px;
+}
 
 /* tab */
 
@@ -142,6 +151,10 @@ span.list-group-item {
     padding-top: 10px;
 }
 
+/* strength check */
+.popover-strength-check {
+    min-width: 200px;
+}
 
 /* toggler extension (bootstrap like) */
 

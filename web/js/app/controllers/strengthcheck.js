@@ -29,7 +29,7 @@ define([], function() {
 			},]
 			
 			var rebuildContent = function() {
-				var ret = ''
+				var ret = '<div class="popover-strength-check">'
 				var allValid = true
 				tests.forEach(function(test) {
 					ret += '<div class="row">'
@@ -54,7 +54,8 @@ define([], function() {
 				}else {
 					ret += '<hr><div class="row"><div class="col-md-12 text-center" style="font-size: 200%;"><span class="glyphicon glyphicon-thumbs-down text-danger"></span></div></div>'
 				}
-				return ret
+
+				return ret + '</div>'
 			}
 			
 			var pos = $e.data('position') ? $e.data('position') : 'top';
@@ -65,7 +66,7 @@ define([], function() {
 					content: rebuildContent(),
 					placement: pos,
 					html: true,
-					trigger: 'manual',
+					trigger: 'manual'
 				}).popover('show')
 				
 			}).blur(function() {
