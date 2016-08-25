@@ -24,6 +24,9 @@ class GiiRoute extends LazyRouteModel {
     }
    	
    	public function getRouteConfig() {
-   		return ['class' => 'app\modules\cii\routes\gii'];
+   		return [
+        'class' => '\cii\web\routes\ControllerRoute',
+        'baseRoute' => 'gii'
+      ];
    	}
 }

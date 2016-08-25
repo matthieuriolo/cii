@@ -24,6 +24,9 @@ class DocRoute extends LazyRouteModel {
     }
 
    	public function getRouteConfig() {
-   		return ['class' => 'app\modules\cii\routes\doc'];
+   		return [
+        'class' => '\cii\web\routes\ControllerRoute',
+        'baseRoute' => 'cii/site/doc'
+      ];
    	}
 }
