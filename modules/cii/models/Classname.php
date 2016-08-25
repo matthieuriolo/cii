@@ -53,7 +53,7 @@ class Classname extends \yii\db\ActiveRecord {
         if(is_string($package)) {
             $package = Package::find()
                 ->joinWith('extension as ext')
-                ->where(['ext.name' => $extension])
+                ->where(['ext.name' => $package])
                 ->one();
             if(!$package) {
                 throw new InvalidConfigException();

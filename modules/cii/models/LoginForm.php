@@ -4,14 +4,14 @@
 namespace app\modules\cii\models;
 
 use Yii;
-use yii\base\Model;
+use cii\base\Model;
 use yii\captcha\Captcha;
 
 class LoginForm extends Model {
     
     public $email;
     public $password;
-    public $captcha;
+    //public $captcha;
     public $rememberMe = false;
 
     protected $_user;
@@ -33,7 +33,7 @@ class LoginForm extends Model {
             [['password'], 'validatePassword'],
             [['email'], 'activeUser'],
             [['rememberMe'], 'boolean'],
-            [['captcha'], 'captcha', 'captchaAction' => 'cii/site/captcha', 'skipOnEmpty' => !Captcha::checkRequirements()],
+            //[['captcha'], 'captcha', 'captchaAction' => 'cii/site/captcha', 'skipOnEmpty' => !Captcha::checkRequirements()],
         ];
     }
 

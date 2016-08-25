@@ -11,7 +11,8 @@ use yii\base\InvalidConfigException;
 
 class UserLoginContent extends LazyContentModel implements ContentInterface {
     public static $lazyControllerRoute = 'cii/user';
-
+    public $canBeShadowed = true;
+    
     /**
      * @inheritdoc
      */
@@ -68,6 +69,13 @@ class UserLoginContent extends LazyContentModel implements ContentInterface {
         ];
     }
 
+    public function getShadowInformation() {
+        return [
+            'route' => 'cii/site',
+            'isVisible' => 'isVisibleInShadow',
+            'action' => 'loginShadow',  
+        ];
+    }
 
     static public function getLazyCRUD() {
         if(empty(static::$lazyControllerRoute)) {

@@ -28,6 +28,21 @@ class Controller extends \yii\web\Controller {
 		return $this->_package;
 	}
 
+	public function renderShadow($view, $params = []) {
+		$tmpLayout = $this->layout;
+		$this->layout = Yii::$app->layoutBasePath .
+			'/' .
+			Yii::$app->cii->setting('cii', 'frontend_layout') .
+			'/content'
+		;
+        
+        $content = $this->getView()->render($view, $params, $this);
+        $content = $this->renderContent($content);
+        $this->layout = $tmpLayout;
+        
+        return $content;
+    }
+
 /*
 	public function getSeoRoute() {
 

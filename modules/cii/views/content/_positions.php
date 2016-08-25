@@ -43,10 +43,10 @@ $form = ActiveForm::begin(); ?>
         
         'dataProvider' => $visibilities,
         'columns' => [
+            'ordering',
             'position',
             'route_id',
             'language_id',
-
             [
                 'class' => 'cii\grid\ActionColumn',
                 'template' => '{delete}',

@@ -59,7 +59,7 @@ class Language extends Component {
 			return MLanguage::findOne($language);
 		}
 		
-		if($language = Yii::$app->user->getIdentity()->language) {
+		if(($user = Yii::$app->user->getIdentity()) && ($language = $user->language)) {
 			return $language;
 		}
 

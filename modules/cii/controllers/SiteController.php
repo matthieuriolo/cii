@@ -7,20 +7,25 @@ use cii\web\Controller;
 
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-
 use yii\web\NotFoundHttpException;
-use cii\helpers\SPL;
+use yii\data\ActiveDataProvider;
+use cii\helpers\Url;
 
+
+use cii\helpers\SPL;
 use cii\web\SecurityException;
 
-use yii\data\ActiveDataProvider;
 
 use app\modules\cii\models\ForgotForm;
 use app\modules\cii\models\LoginForm;
+use app\modules\cii\models\LogoutForm;
 use app\modules\cii\models\RegisterForm;
 use app\modules\cii\models\User;
 use app\modules\cii\models\GroupMember;
 
+
+use app\modules\cii\models\UserLoginContent;
+use app\modules\cii\models\UserLogoutContent;
 
 
 class SiteController extends Controller {
@@ -62,24 +67,33 @@ class SiteController extends Controller {
 
     public function actionLogin() {
         $content = Yii::$app->seo->getModel()->content->outbox();
+        
 
+        $model = $this->processLogin($content);
+
+        return $this->render('login', [
+            'model' => $model,
+            'content' => $content
+        ]);
+    }
+
+    protected function processLogin($content, $model = null) {
         if(!Yii::$app->user->isGuest) {
             $this->redirectByContent($content);
             return;
         }
 
-        
-        $model = new LoginForm();
+        if(!$model) {
+            $model = new LoginForm();
+        }
+
         if($model->load(Yii::$app->request->post()) && $model->login()) {
             Yii::$app->session->setFlash('success', 'You have been logged in successfully');
             $this->redirectByContent($content);
             return;
         }
 
-        return $this->render('login', [
-            'model' => $model,
-            'content' => $content
-        ]);
+        return $model;
     }
 
     public function actionLogout() {
@@ -92,6 +106,10 @@ class SiteController extends Controller {
 
     public function actionRegister() {
         $content = Yii::$app->seo->getModel()->content->outbox();
+        if(!Yii::$app->user->isGuest) {
+            $this->redirectByContent($content);
+            return;
+        }
 
         $model = new RegisterForm();
         if($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -163,6 +181,61 @@ class SiteController extends Controller {
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionRedirect() {
+        $model = Yii::$app->seo->getModel()->route->outbox();
+        $url = URL::home();
+        if($model->redirect_id) {
+            $url = ['//' . $model->redirect->getBreadcrumbs()];
+        }
+
+        $this->redirect($url, $model->type);
+    }
+
+    public function isVisibleInShadow($content) {
+        if($content instanceof UserLoginContent) {
+            return Yii::$app->user->isGuest;
+        }else if($content instanceof UserLogoutContent) {
+            return !Yii::$app->user->isGuest;
+        }
+
+        return true;
+    }
+
+    public function loginShadow($content, $position) {
+        $model = new LoginForm();
+        $model->setContentFormName($content, $position);
+
+        $model = $this->processLogin($content, $model);
+
+        return $this->renderShadow('login_shadow', [
+            'model' => $model,
+            'content' => $content,
+            'position' => $position
+        ]);
+    }
+
+    public function logoutShadow($content, $position) {
+        if(Yii::$app->user->isGuest) {
+            $this->redirectByContent($content);
+            return;
+        }
+
+        $model = new LogoutForm();
+        $model->setContentFormName($content, $position);
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()) {
+            Yii::$app->user->logout();
+            Yii::$app->session->setFlash('success', 'You have been logged out successfully');
+            $this->redirectByContent($content);
+        }
+
+        return $this->renderShadow('logout_shadow', [
+            'model' => $model,
+            'content' => $content,
+            'position' => $position
+        ]);
     }
 
 /*

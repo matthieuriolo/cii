@@ -89,4 +89,10 @@ class View extends \yii\web\View {
 	public function getContents($name = null) {
 		return Yii::$app->cii->layout->getContents($name);
 	}
+
+	public function renderShadow($content, $position) {
+		$info = $content->getShadowInformation();
+		$controller = Yii::$app->createController($info['route'])[0];
+		return $controller->$info['action']($content, $position);
+	}
 }

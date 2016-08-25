@@ -50,6 +50,14 @@ abstract class BaseReflection extends Object {
         return $this->data['name'];
     }
 
+    public function getDisplayName() {
+        if(isset($this->data['displayName'])) {
+            return $this->data['displayName'];
+        }
+
+        return ucfirst($this->getName());
+    }
+
     public function getVersion() {
         return $this->data['version'];
     }

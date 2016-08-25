@@ -2,8 +2,8 @@
 namespace cii\components;
 
 use Yii;
-
 use app\modules\cii\models\Content;
+use app\modules\cii\models\ContentVisibilities;
 use app\modules\cii\models\Layout as MLayout;
 
 use cii\base\LayoutReflection;
@@ -78,10 +78,29 @@ class Layout extends BaseExtension {
 		}*/
 
 
-		$models = Content::find()
-			->joinWith(['contentVisibilities as c'])
-			->where(['c.position' => $name])
-			->all();
+		$models = ContentVisibilities::find()
+			->joinWith([
+				'content.classname.package.extension as ext'
+			])
+			->where([
+				'position' => $name,
+				'ext.enabled' => true
+			])
+			->all()
+		;
+
+		//outbox
+		$models = array_map(function($model) {
+			return $model->content->outbox();
+		}, $models);
+
+		//check if visible
+		$models = array_filter($models, function($model) {
+			$info = $model->getShadowInformation();
+			$controller = Yii::$app->createController($info['route'])[0];
+			return $controller->$info['isVisible']($model);
+		});
+
 		//$this->cache->set($cacheKey, $models);
 		return $models;
 	}

@@ -69,7 +69,44 @@ AppAsset::register($this);
             echo '<div class="alert alert-' . $key . '">' . $message . '</div>';
         } ?>
 
-        <?= $content ?>
+        <div class="row"><?php
+            $countMiddle = 12;
+            $leftContents = $this->getContents('left');
+            $rightContents = $this->getContents('right');
+
+            if(count($rightContents)) {
+                $countMiddle -= 3;
+            }
+
+            if(count($leftContents)) {
+                $countMiddle -= 3;
+            ?>
+                <div class="col-md-3">
+                    <?php
+                    foreach($leftContents as $c) {
+                        echo $this->renderShadow($c, 'left');
+                    }
+                    ?>
+                </div>
+            <?php } ?>
+
+
+            <div class="col-md-<?= (string)$countMiddle; ?>">
+                <?= $content ?>
+            </div>
+
+            <?php
+            if(count($rightContents)) {
+            ?>
+                <div class="col-md-3">
+                    <?php
+                    foreach($rightContents as $c) {
+                        echo $this->renderShadow($c, 'right');
+                    }
+                    ?>
+                </div>
+            <?php } ?>
+        </div>
     </div>
 </div>
 
