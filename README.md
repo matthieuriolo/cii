@@ -18,3 +18,12 @@ The original code of yii 2 has a few changes. Those changes will be provided wit
 - Extendable basic object (routes and contents)
 - Gii support
 - MySQL to migrate
+
+
+# Screenshots
+![alt tag](screenshots/home.png)
+![alt tag](screenshots/dashboard.png)
+![alt tag](screenshots/extensions.png)
+![alt tag](screenshots/settings.png)
+![alt tag](screenshots/language-examples.png)
+![alt tag](screenshots/content-text.png)
