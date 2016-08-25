@@ -3,6 +3,7 @@
 namespace app\modules\cii\controllers;
 
 use Yii;
+use app\modules\cii\models\RedirectRoute;
 use app\modules\cii\models\ContentRoute;
 use app\modules\cii\models\Content;
 use app\modules\cii\models\ContentSearch;
@@ -67,7 +68,9 @@ class ContentController extends BackendController {
 
         if($visibleModel->load(Yii::$app->request->post())) {
             $visibleModel->content_id = $id;
-
+            if($visibleModel->save()) {
+                $visibleModel = new ContentVisibilities();
+            }
         }
 
         $visibilities = new ActiveDataProvider([
@@ -246,6 +249,41 @@ class ContentController extends BackendController {
         }
     }
 
+    public function getLazyRedirectLabel() {
+        return '<i class="glyphicon glyphicon-arrow-right"></i> Redirect';
+    }
+
+    public function getLazyRedirectCreate($model = null, $form = null) {
+        if(!$model) {
+            $model = new RedirectRoute();
+        }
+
+        return $this->renderAjax('_form_redirectroute', [
+            'model' => $model,
+            'routes' => Yii::$app->cii->route->getRoutesForDropdown(),
+            'form' => $form ?: ActiveForm::begin()
+        ]);
+    }
+
+    public function getLazyRedirectUpdate($model, $form) {
+        return $this->renderAjax('_form_redirectroute', [
+            'model' => $model,
+            'routes' => Yii::$app->cii->route->getRoutesForDropdown(),
+            'form' => $form
+        ]);
+    }
+
+    public function getLazyRedirectView($model) {
+        return $this->renderAjax('_view_redirectroute', [
+            'model' => $model
+        ]);
+    }
+
+
+
+
+
+
 
 
     public function getLazyLabel() {
@@ -265,7 +303,7 @@ class ContentController extends BackendController {
     }
 
     public function getLazyUpdate($model, $form) {
-        return $this->renderAjax('_update_contentroute', [
+        return $this->renderAjax('_form_contentroute', [
             'model' => $model,
             'contents' => Yii::$app->cii->layout->getContentsForDropdown(),
             'form' => $form
