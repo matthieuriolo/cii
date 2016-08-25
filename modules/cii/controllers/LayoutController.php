@@ -21,7 +21,7 @@ class LayoutController extends ExtensionBaseController {
 
     protected function getDataProvider() {
         return new ActiveDataProvider([
-            'query' => Layout::find(),
+            'query' => Layout::find()->joinWith('extension'),
             'sort' => [
                 'attributes' => [
                     'name',

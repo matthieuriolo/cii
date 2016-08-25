@@ -22,7 +22,7 @@ class PackageController extends ExtensionBaseController {
 
     protected function getDataProvider() {
         return new ActiveDataProvider([
-            'query' => Package::find(),
+            'query' => Package::find()->joinWith('extension as ext'),
             'sort' => [
                 'attributes' => [
                     'name',

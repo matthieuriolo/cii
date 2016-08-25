@@ -4,7 +4,7 @@ use yii\grid\GridView;
 use yii\grid\ActionColumn;
 use yii\data\ArrayDataProvider;
 use cii\helpers\Html;
-
+use yii\widgets\Pjax;
 $this->title = 'Layouts';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,9 +15,10 @@ $this->params['breadcrumbs'][] = $this->title;
         ['class' => 'btn btn-success pull-right']
     ); ?>
     
-    <h1>Packages</h1>
+    <h1>Layouts</h1>
 
     <?php 
+    Pjax::begin();
     echo GridView::widget([
         'tableOptions' => [
             'class' => "table table-striped table-bordered table-hover",
@@ -52,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'buttons' => [
                     'disable' => function($url, $model, $key) {
-                        if(!$model->getEnabled() || $model->id == 'cii') {
+                        if(!$model->getEnabled() || $model->name == 'cii') {
                             return '';
                         }
 
@@ -66,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
 
                     'enable' => function($url, $model, $key) {
-                        if($model->getEnabled() || $model->id == 'core') {
+                        if($model->getEnabled() || $model->name == 'cii') {
                             return '';
                         }
 
@@ -79,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
 
                     'deinstall' => function($url, $model, $key) {
-                        if($model->id == 'core') {
+                        if($model->name == 'cii') {
                             return '';
                         }
 
@@ -93,5 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]
             ],
         ],
-    ]) ?>
+    ]);
+    Pjax::end();
+    ?>
 </div>

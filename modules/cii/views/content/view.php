@@ -25,8 +25,10 @@ $items = [
             'model' => $model,
         ])
     ],
+];
 
-    [
+if($outbox->canBeShadowed) {
+    $items[] = [
         'encode' => false,
         'label' => '<i class="glyphicon glyphicon-blackboard"></i> Positions',
         'content' => $this->render('_positions', [
@@ -36,8 +38,8 @@ $items = [
             'positions' => $positions,
             'languages' => $languages,
         ])
-    ],
-];
+    ];
+}
 
 $info = $outbox->className();
 if(SPL::hasInterface($info, 'app\modules\cii\base\LazyModelInterface') && $info::hasLazyCRUD()) {

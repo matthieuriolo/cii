@@ -4,6 +4,7 @@ use yii\grid\GridView;
 use yii\grid\ActionColumn;
 use yii\data\ArrayDataProvider;
 use cii\helpers\Html;
+use yii\widgets\Pjax;
 
 $this->title = 'Extensions';
 $this->params['breadcrumbs'][] = $this->title;
@@ -18,6 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1>Extensions</h1>
 
     <?php 
+
+    Pjax::begin();
     echo GridView::widget([
         'tableOptions' => [
             'class' => "table table-striped table-bordered table-hover",
@@ -111,5 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]
             ],
         ],
-    ]) ?>
+    ]);
+
+    Pjax::end(); ?>
 </div>

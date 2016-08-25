@@ -3,7 +3,9 @@
 use yii\grid\GridView;
 use cii\grid\ActionColumn;
 use cii\helpers\Html;
+use yii\widgets\Pjax;
 
+Pjax::begin();
 echo GridView::widget([
     'dataProvider' => $data,
     'tableOptions' => [
@@ -45,4 +47,6 @@ echo GridView::widget([
             },
         ],
     ],
-]) ?>
+]);
+
+Pjax::end(); ?>

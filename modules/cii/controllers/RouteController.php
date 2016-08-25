@@ -128,6 +128,7 @@ class RouteController extends Controller {
                 
                 $modelValid = $model->load($data);
                 $topmodelValid = $topmodel->load($data);
+                
 
             	if($modelValid && $topmodelValid && $model->save()) {
                     $attr = $type::getOutboxAttribute($model->className());

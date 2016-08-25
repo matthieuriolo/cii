@@ -7,6 +7,8 @@ use cii\behavior\ExtendableInterface;
 use app\modules\cii\models\Content;
 
 abstract class LazyContentModel extends LazyModel implements ExtendableInterface {
+    public $canBeShadowed = false;
+
     static public function canOutboxFrom($class) {
         return $class instanceof Content;
     }
@@ -17,5 +19,9 @@ abstract class LazyContentModel extends LazyModel implements ExtendableInterface
 
     static public function getOutboxAttribute($class) {
       return 'content_id';
+    }
+
+    public function getShadowInformation() {
+        throw new InvalidConfigException();
     }
 }
