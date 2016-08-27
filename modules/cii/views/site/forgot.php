@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		<?php if($content->register_id) { ?>
 			<p class="text-center"><?php
-				echo Yii::p('cii', 'Create a new {link}', ['link' => Html::a(Yii::p('cii', 'acount'), ['//' . $content->register->getBreadcrumbs()])]);
+				echo Yii::p('cii', 'Create a new {link}', ['link' => Html::a(Yii::p('cii', 'account'), ['//' . $content->register->getBreadcrumbs()])]);
 			?></p>
 		<?php } ?>
 

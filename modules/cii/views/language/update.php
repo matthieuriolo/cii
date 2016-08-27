@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = Yii::p('cii', 'Update {modelClass}: ', [
+$this->title = Yii::p('cii', 'Update {modelClass} - ', [
     'modelClass' => Yii::p('cii', 'Language'),
 ]) . $model->name;
 $this->params['breadcrumbs'][] = [

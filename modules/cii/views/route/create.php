@@ -7,7 +7,7 @@ use cii\helpers\SPL;
 
 
 
-$this->title = Yii::p('cii', 'Create route');
+$this->title = Yii::p('cii', 'Create Route');
 
 
 $this->params['breadcrumbs'][] = [
