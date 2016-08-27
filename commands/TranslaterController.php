@@ -81,7 +81,6 @@ class TranslaterController extends Controller {
 
 
     public function printMessages($messages, $originalMessages) {
-        echo "<?php\nreturn ";
         $ret = [];
         foreach($messages as $value) {
             if(isset($originalMessages[$value])) {
@@ -90,9 +89,9 @@ class TranslaterController extends Controller {
                 $ret[$value] = $value;
             }
         }
-        echo VarDumper::export($ret);
 
-        echo ";";
+        ksort($ret);
+        echo "<?php\nreturn " . VarDumper::export($ret) . ";";
     }
 
 
