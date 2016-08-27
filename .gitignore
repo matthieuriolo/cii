@@ -19,3 +19,12 @@ modules/cii/vendor/yiisoft
 
 runtime
 uploads
+
+
+# ignore extensions
+modules
+layouts
+messages
+
+!modules/cii
+!layouts/cii
