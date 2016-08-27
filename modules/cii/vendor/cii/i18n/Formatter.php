@@ -39,6 +39,7 @@ class Formatter extends \yii\i18n\Formatter {
         $this->currencyCode = $language->currencySymbol;
         $this->currencyCodePlace = $language->currencySymbolPlace;
         $this->currencyRemoveZeros = $language->currencyRemoveZeros;
+        $this->currencySmallestUnit = $language->currencySmallestUnit;
     }
 
 	public function init() {
