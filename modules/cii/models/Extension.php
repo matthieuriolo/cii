@@ -36,6 +36,7 @@ class Extension extends \yii\db\ActiveRecord {
             'name' => Yii::t('app', 'Name'),
             'installed' => Yii::t('app', 'Installed'),
             'enabled' => Yii::t('app', 'Enabled'),
+            'type' => Yii::t('app', 'Type'),
         ];
     }
 
@@ -53,17 +54,7 @@ class Extension extends \yii\db\ActiveRecord {
     
 
     public function getReflection() {
-        $str = substr($this->classname->path, strlen('app\modules\cii\models') + 1);
-        $str = strtolower($str);
-
-        switch($str) {
-            case 'package':
-                return Yii::$app->cii->package->getReflection($this->name);
-            case 'layout':
-                return Yii::$app->cii->layout->getReflection($this->name);
-        }
-
-        return null;
+        return $this->outbox()->getReflection();
     }
 
     public function getSettings() {

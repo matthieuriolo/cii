@@ -6,6 +6,9 @@ use yii\base\Component;
 use app\modules\cii\models\Language as MLanguage;
 use yii\base\InvalidConfigException;
 
+
+use cii\base\LanguageReflection;
+
 class Language extends Component {
 	public $cache = 'cache';
 	public $session = 'session';
@@ -80,5 +83,19 @@ class Language extends Component {
 		}
 
 		$this->session->set('activeLanguage', $language);
+	}
+
+
+	public function getSettingTypes($code, $type, $name) {
+		return [];
+	}
+
+	public function getReflection($code, $type, $name) {
+		$pkg = new LanguageReflection();
+		if($pkg->loadLanguage($code, $type, $name)) {
+			return $pkg;
+		}
+		
+		return null;
 	}
 }
