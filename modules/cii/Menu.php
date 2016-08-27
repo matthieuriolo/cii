@@ -12,7 +12,7 @@ class Menu {
             'icon' => 'glyphicon glyphicon-home',
             'children' => [
                 [
-                    'name' => 'Dashboard',
+                    'name' => Yii::p('cii', 'Dashboard'),
                     'url' => [Yii::$app->seo->relativeAdminRoute('index')],
                     'icon' => 'glyphicon glyphicon-blackboard',
                 ],
@@ -22,13 +22,13 @@ class Menu {
                     'icon' => 'glyphicon glyphicon-globe',
                     'children' => [
                         [
-                            'name' => 'Routes',
+                            'name' => Yii::p('cii', 'Routes'),
                             'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/route/index'), []],
                             'icon' => 'glyphicon glyphicon-link'
                         ],
 
                         [
-                            'name' => 'Contents',
+                            'name' => Yii::p('cii', 'Contents'),
                             'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/content/index'), []],
                             'icon' => 'glyphicon glyphicon-file'
                         ],
@@ -44,17 +44,17 @@ class Menu {
                 ],
 
                 [
-                    'name' => 'Authentication',
+                    'name' => Yii::p('cii', 'Authentication'),
                     'icon' => 'glyphicon glyphicon-lock',
                     'children' => [
                         [
-                            'name' => 'Users',
+                            'name' => Yii::p('cii', 'Users'),
                             'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/user/index'), []],
                             'icon' => 'glyphicon glyphicon-user'
                         ],
 
                         [
-                            'name' => 'Groups',
+                            'name' => Yii::p('cii', 'Groups'),
                             'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/group/index'), []],
                             'icon' => 'glyphicon glyphicon-tags'
                         ],
@@ -62,7 +62,7 @@ class Menu {
                 ],
 
                 [
-                    'name' => 'Application',
+                    'name' => Yii::p('cii', 'Application'),
                     'icon' => 'glyphicon glyphicon-cog',
                     'children' => [
                         /*[
@@ -78,13 +78,13 @@ class Menu {
                         ],
                         */
                         [
-                            'name' => 'Settings',
+                            'name' => Yii::p('cii', 'Settings'),
                             'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/setting/index'), []],
                             'icon' => 'glyphicon glyphicon-wrench'
                         ],
 
                         [
-                            'name' => 'Log',
+                            'name' => Yii::p('cii', 'Log'),
                             'url' => [Yii::$app->seo->relativeAdminRoute('log'), []],
                             'icon' => 'glyphicon glyphicon-record'
                         ],
@@ -92,24 +92,24 @@ class Menu {
                 ],
 
                 [
-                    'name' => 'Extensions',
+                    'name' => Yii::p('cii', 'Extensions'),
                     'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/extension/index')],
                     'icon' => 'glyphicon glyphicon-tasks',
                     'children' => [
                         [
-                            'name' => 'Packages',
+                            'name' => Yii::p('cii', 'Packages'),
                             'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/package/index')],
                             'icon' => 'glyphicon glyphicon-gift'
                         ],
 
                         [
-                            'name' => 'Languages',
+                            'name' => Yii::p('cii', 'Languages'),
                             'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/language/index'), []],
                             'icon' => 'glyphicon glyphicon-flag'
                         ],
 
                         [
-                            'name' => 'Layouts',
+                            'name' => Yii::p('cii', 'Layouts'),
                             'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/layout/index'), []],
                             'icon' => 'glyphicon glyphicon-picture'
                         ],
