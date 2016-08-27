@@ -7,19 +7,19 @@ use cii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 use yii\widgets\Pjax;
 
-$this->title = 'Routes';
+$this->title = Yii::p('cii', 'Routes');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-index">
     <?php echo Html::a(
-        Yii::t('yii', 'Create Route'),
+        Yii::p('cii', 'Create Route'),
         [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/create'), ['parent' => $parent ? $parent->id : null]],
         ['class' => 'btn btn-success pull-right']
     ); ?>
 
-    <h1>Routes</h1>
+    <h1><?= Yii::p('cii', 'Routes') ?></h1>
     
-    <p class="lead">Routes define how the URL looks like and which content can be accessed</p>
+    <p class="lead"><?= Yii::p('cii', 'Routes define how the URL looks like and which content can be accessed') ?></p>
 
     <?php
     if($parent) {
@@ -88,8 +88,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
 
                         $options = [
-                            'title' => Yii::t('yii', 'Disable'),
-                            'aria-label' => Yii::t('yii', 'Disable'),
+                            'title' => Yii::p('cii', 'Disable'),
+                            'aria-label' => Yii::p('cii', 'Disable'),
                             'data-pjax' => '0',
                         ];
 

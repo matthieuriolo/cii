@@ -3,9 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = Yii::t('app', 'Create User');
+$this->title = Yii::p('cii', 'Create User');
 $this->params['breadcrumbs'][] = [
-	'label' => Yii::t('app', 'Users'),
+	'label' => Yii::p('cii', 'Users'),
 	'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/user/index')]
 ];
 $this->params['breadcrumbs'][] = $this->title;
@@ -15,12 +15,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<div class="form-group pull-right">
 		<?php echo Html::a(
-	        Yii::t('yii', 'Cancel'),
+	        Yii::p('cii', 'Cancel'),
 	        [Yii::$app->seo->relativeAdminRoute('modules/cii/user/index')],
 	        ['class' => 'btn btn-warning']
 	    ); ?>
 
-        <?= Html::submitButton(Yii::t('app', 'Create'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::p('cii', 'Create'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <h1><?= Html::encode($this->title) ?></h1>

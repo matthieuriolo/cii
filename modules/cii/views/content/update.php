@@ -6,18 +6,18 @@ use yii\bootstrap\Tabs;
 use cii\helpers\SPL;
 
 
-$this->title = Yii::t('app', 'Update {modelClass} - ', [
-    'modelClass' => 'Content',
+$this->title = Yii::p('cii', 'Update {modelClass} - ', [
+    'modelClass' => Yii::p('cii', 'Content'),
 ]) . $model->name;
 $this->params['breadcrumbs'][] = [
-	'label' => Yii::t('app', 'Contents'),
+	'label' => Yii::p('cii', 'Contents'),
 	'url' => [Yii::$app->seo->relativeAdminRoute('index')]
 ];
 $this->params['breadcrumbs'][] = [
 	'label' => $model->name,
 	'url' => [Yii::$app->seo->relativeAdminRoute('view'), 'id' => $model->id]
 ];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = Yii::p('cii', 'Update');
 ?>
 <div class="content-update">
 	<?php $form = ActiveForm::begin(); ?>
@@ -25,12 +25,12 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 	<div class="form-group pull-right">
 		<?php
 		echo Html::a(
-            Yii::t('yii', 'Cancel'),
+            Yii::p('cii', 'Cancel'),
             [\Yii::$app->seo->relativeAdminRoute('modules/cii/content/index')],
             ['class' => 'btn btn-warning']
         ),
         '&nbsp;',
-        Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-primary']) ?>
+        Html::submitButton(Yii::p('cii', 'Update'), ['class' => 'btn btn-primary']) ?>
     </div>
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
         $items = [
             [
                 'encode' => false,
-                'label' => '<i class="glyphicon glyphicon-file"></i> Content',
+                'label' => '<i class="glyphicon glyphicon-file"></i> ' . Yii::p('cii', 'Content'),
                 'content' => $this->render('_form', [
                     'model' => $model,
                     'form' => $form,

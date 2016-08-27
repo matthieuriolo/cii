@@ -4,13 +4,13 @@ use yii\widgets\ActiveForm;
 use yii\captcha\Captcha;
 use cii\widgets\Toggler;
 
-$this->title = Yii::t('app', 'Forgot password');
+$this->title = Yii::p('cii', 'Forgot password');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <main>
-	<h1><?php echo Yii::t('app', 'Forgot password'); ?></h1>
+	<h1><?php echo Yii::p('cii', 'Forgot password'); ?></h1>
 
-	<p class="lead"><?php echo Yii::t('app', 'Please enter your email address for reseting your password.'); ?></p>
+	<p class="lead"><?php echo Yii::p('cii', 'Please enter your email address for reseting your password.'); ?></p>
 
 	<?php $form = ActiveForm::begin(); ?>
 		
@@ -33,18 +33,18 @@ $this->params['breadcrumbs'][] = $this->title;
 		<hr>
 		<?php if($content->login_id) { ?>
 			<p class="text-center"><?php
-				echo Yii::t('app', 'You already have an {link}', ['link' => Html::a(Yii::t('app', 'account'), ['//' . $content->login->getBreadcrumbs()])]);
+				echo Yii::p('cii', 'You already have an {link}', ['link' => Html::a(Yii::p('cii', 'account'), ['//' . $content->login->getBreadcrumbs()])]);
 			?></p>
 		<?php } ?>
 
 		<?php if($content->register_id) { ?>
 			<p class="text-center"><?php
-				echo Yii::t('app', 'Create a new {link}', ['link' => Html::a(Yii::t('app', 'acount'), ['//' . $content->register->getBreadcrumbs()])]);
+				echo Yii::p('cii', 'Create a new {link}', ['link' => Html::a(Yii::p('cii', 'acount'), ['//' . $content->register->getBreadcrumbs()])]);
 			?></p>
 		<?php } ?>
 
 		<div class="form-group buttons text-center">
-			<?php echo Html::submitButton(Yii::t('app', 'Reset password'), array('class' => 'btn btn-primary')); ?>
+			<?php echo Html::submitButton(Yii::p('cii', 'Reset password'), array('class' => 'btn btn-primary')); ?>
 		</div>
 	 <?php ActiveForm::end(); ?>
 </main>

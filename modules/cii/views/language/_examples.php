@@ -15,7 +15,7 @@ $form = ActiveForm::begin(); ?>
         <div class="form-group">
             <label class="control-label">&nbsp;</label>
             <div class="form-control-static no-padding">
-                <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton(Yii::p('cii', 'Submit'), ['class' => 'btn btn-primary']) ?>
             </div>
         </div>
     </div>

@@ -17,12 +17,12 @@ $this->params['breadcrumbs'][] = $this->title;
     
     <div class="form-group pull-right">
         <?php echo Html::a(
-            Yii::t('yii', 'Cancel'),
+            Yii::p('cii', 'Cancel'),
             $modelUrl,
             ['class' => 'btn btn-warning']
         ); ?>
 
-        <?php echo Html::submitButton(Yii::t('app', 'Upload'), ['class' => 'btn btn-success']); ?>
+        <?php echo Html::submitButton(Yii::p('cii', 'Upload'), ['class' => 'btn btn-success']); ?>
     </div>
    
     <h1>Install <?php echo $modelType; ?></h1>

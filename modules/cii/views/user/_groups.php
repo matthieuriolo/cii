@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
             <div class="form-group">
                 <label class="control-label">&nbsp;</label>
                 <div class="form-control-static no-padding">
-                    <?= Html::submitButton(Yii::t('app', 'Add'), ['class' => 'btn btn-primary']) ?>
+                    <?= Html::submitButton(Yii::p('cii', 'Add'), ['class' => 'btn btn-primary']) ?>
                 </div>
             </div>
         </div>

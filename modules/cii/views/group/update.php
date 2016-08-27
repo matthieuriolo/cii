@@ -3,30 +3,30 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = Yii::t('app', 'Update {modelClass} - ', [
-    'modelClass' => 'Group',
+$this->title = Yii::p('cii', 'Update {modelClass} - ', [
+    'modelClass' => Yii::p('cii', 'Group'),
 ]) . $model->name;
 $this->params['breadcrumbs'][] = [
-	'label' => Yii::t('app', 'Groups'),
+	'label' => Yii::p('cii', 'Groups'),
 	'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/group/index')]
 ];
 $this->params['breadcrumbs'][] = [
 	'label' => $model->name,
 	'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/group/view'), 'id' => $model->id]
 ];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = Yii::p('cii', 'Update');
 ?>
 <div class="group-update">
 	<?php $form = ActiveForm::begin(); ?>
 
 	<div class="form-group pull-right">
 		<?php echo Html::a(
-	        Yii::t('yii', 'Cancel'),
+	        Yii::p('cii', 'Cancel'),
 	        [Yii::$app->seo->relativeAdminRoute('modules/cii/group/index')],
 	        ['class' => 'btn btn-warning']
 	    ); ?>
 
-        <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton(Yii::p('cii', 'Update'), ['class' => 'btn btn-primary']) ?>
     </div>
 
     <h1><?= Html::encode($this->title) ?></h1>

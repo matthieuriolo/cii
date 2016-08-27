@@ -7,11 +7,11 @@ use cii\helpers\SPL;
 
 
 
-$this->title = 'Create route';
+$this->title = Yii::p('cii', 'Create route');
 
 
 $this->params['breadcrumbs'][] = [
-    'label' => Yii::t('app', 'Routes'),
+    'label' => Yii::p('cii', 'Routes'),
     'url' => [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/index'), ['parent' => $parentId]]
 ];
 $this->params['breadcrumbs'][] = $this->title;
@@ -29,15 +29,15 @@ $this->params['breadcrumbs'][] = $this->title;
 			$url = [$url];
 		}
 		echo Html::a(
-	        Yii::t('yii', 'Cancel'),
+	        Yii::p('cii', 'Cancel'),
 	        $url,
 	        ['class' => 'btn btn-warning']
 	    ); ?>
 
-	    <?php echo Html::submitButton(Yii::t('app', 'Create'), ['class' => 'btn btn-success']); ?>
+	    <?php echo Html::submitButton(Yii::p('cii', 'Create'), ['class' => 'btn btn-success']); ?>
     </div>
 
-	<h1>Create Route</h1>
+	<h1><?= Html::encode($this->title); ?></h1>
 
     <div class="body-content">
 		<?php
@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		$items = [
             [
                 'encode' => false,
-                'label' => '<i class="glyphicon glyphicon-link"></i> Route',
+                'label' => '<i class="glyphicon glyphicon-link"></i> ' . Yii::p('cii', 'Route'),
                 'content' => $this->render('_form', [
                 	'model' => $model,
                 	'form' => $form,

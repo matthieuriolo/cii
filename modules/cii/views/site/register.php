@@ -5,13 +5,13 @@ use yii\captcha\Captcha;
 use cii\widgets\Toggler;
 
 
-$this->title = Yii::t('app', 'Register');
+$this->title = Yii::p('cii', 'Register');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <main>
-	<h1><?php echo Yii::t('app', 'Register'); ?></h1>
+	<h1><?php echo Yii::p('cii', 'Register'); ?></h1>
 
-	<p class="lead"><?php echo Yii::t('app', 'Please enter your credentials'); ?></p>
+	<p class="lead"><?php echo Yii::p('cii', 'Please enter your credentials'); ?></p>
 
 	<?php $form = ActiveForm::begin(); ?>
 
@@ -51,18 +51,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		<?php if($content->login_id) { ?>
 			<p class="text-center"><?php
-				echo Yii::t('app', 'You already have an {link}', ['link' => Html::a(Yii::t('app', 'account'), ['//' . $content->login->getBreadcrumbs()])]);
+				echo Yii::p('cii', 'You already have an {link}', ['link' => Html::a(Yii::p('cii', 'account'), ['//' . $content->login->getBreadcrumbs()])]);
 			?></p>
 		<?php } ?>
 
 		<?php if($content->forgot_id) { ?>
 			<p class="text-center"><?php
-				echo Yii::t('app', 'Did you {link} your password?', ['link' => Html::a(Yii::t('app', 'forgot'), ['//' . $content->forgot->getBreadcrumbs()])]);
+				echo Yii::p('cii', 'Did you {link} your password?', ['link' => Html::a(Yii::p('cii', 'forgot'), ['//' . $content->forgot->getBreadcrumbs()])]);
 			?></p>
 		<?php } ?>
 
 		<div class="form-group buttons text-center">
-			<?php echo Html::submitButton(Yii::t('app', 'Register'), array('class' => 'btn btn-primary')); ?>
+			<?php echo Html::submitButton(Yii::p('cii', 'Register'), array('class' => 'btn btn-primary')); ?>
 		</div>
 	 <?php ActiveForm::end(); ?>
 </main>

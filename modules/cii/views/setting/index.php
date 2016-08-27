@@ -4,11 +4,11 @@ use yii\grid\GridView;
 use cii\grid\ActionColumn;
 use cii\helpers\Html;
 
-$this->title = 'Settings';
+$this->title = Yii::p('cii', 'Settings');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-index">
-    <h1>Settings</h1>
+    <h1><?= Html::encode($this->title); ?></h1>
     
    
     <?php 

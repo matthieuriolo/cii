@@ -7,20 +7,21 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\modules\core\models\LanguageSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Languages');
+$this->title = Yii::p('cii', 'Languages');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="language-index">
     <div class="pull-right">
-        <?= Html::a(Yii::t('app', 'Install Message'), [\Yii::$app->seo->relativeAdminRoute('modules/cii/language/install')], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Create Language'), [\Yii::$app->seo->relativeAdminRoute('modules/cii/language/create')], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::p('cii', 'Install Message'), [\Yii::$app->seo->relativeAdminRoute('modules/cii/language/install')], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::p('cii', 'Create Language'), [\Yii::$app->seo->relativeAdminRoute('modules/cii/language/create')], ['class' => 'btn btn-success']) ?>
     </div>
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     
-<?php Pjax::begin(); ?>    <?= GridView::widget([
+<?php Pjax::begin(); ?>
+    <?= GridView::widget([
         'tableOptions' => [
             'class' => "table table-striped table-bordered table-hover",
             'data-controller' => 'singlerowclick'

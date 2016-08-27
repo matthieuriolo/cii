@@ -6,43 +6,41 @@ use yii\bootstrap\Tabs;
 use cii\helpers\SPL;
 
 
-$this->title = Yii::t('app', 'Update {modelClass} - ', [
-    'modelClass' => 'Route',
+$this->title = Yii::p('cii', 'Update {modelClass} - ', [
+    'modelClass' => Yii::p('cii', 'Route'),
 ]) . $model->slug;
 $this->params['breadcrumbs'][] = [
-	'label' => Yii::t('app', 'Routes'),
+	'label' => Yii::p('cii', 'Routes'),
 	'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/route/index')]
 ];
 $this->params['breadcrumbs'][] = [
 	'label' => $model->slug,
 	'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/route/view'), 'id' => $model->id]
 ];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = Yii::p('cii', 'Update');
 ?>
 <div class="route-update">
 	<?php $form = ActiveForm::begin(); ?>
 	
 	<div class="form-group pull-right">
 		<?php echo Html::a(
-	        Yii::t('yii', 'Cancel'),
+	        Yii::p('cii', 'Cancel'),
 	        [Yii::$app->seo->relativeAdminRoute('modules/cii/route/index')],
 	        ['class' => 'btn btn-warning']
 	    ); ?>
 
-        <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton(Yii::p('cii', 'Update'), ['class' => 'btn btn-primary']) ?>
     </div>
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <div class="body-content">
-	    
-
 	    <?php
 
 		$items = [
 			[
 				'encode' => false,
-		        'label' => '<i class="glyphicon glyphicon-link"></i> Route',
+		        'label' => '<i class="glyphicon glyphicon-link"></i> ' . Yii::p('cii', 'Route'),
 				'content' => $this->render('_form', [
 			        'model' => $model,
 			        'form' => $form,

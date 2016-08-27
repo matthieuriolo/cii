@@ -11,12 +11,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-index">
     <?php echo Html::a(
-        Yii::t('yii', 'Install Extension'),
+        Yii::p('cii', 'Install Extension'),
         [\Yii::$app->seo->relativeAdminRoute('modules/cii/extension/install')],
         ['class' => 'btn btn-success pull-right']
     ); ?>
     
-    <h1>Extensions</h1>
+    <h1><?= Yii::p('cii', 'Extensions'); ?></h1>
 
     <?php 
 
@@ -67,8 +67,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
 
                         $options = [
-                            'title' => Yii::t('yii', 'Disable'),
-                            'aria-label' => Yii::t('yii', 'Disable'),
+                            'title' => Yii::p('cii', 'Disable'),
+                            'aria-label' => Yii::p('cii', 'Disable'),
                             'data-pjax' => '0',
                         ];
 
@@ -87,8 +87,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
 
                         $options = [
-                            'title' => Yii::t('yii', 'Enable'),
-                            'aria-label' => Yii::t('yii', 'Enable'),
+                            'title' => Yii::p('cii', 'Enable'),
+                            'aria-label' => Yii::p('cii', 'Enable'),
                             'data-pjax' => '0',
                         ];
                         return Html::a('<span class="glyphicon glyphicon-ok"></span>', $url, $options);
@@ -104,8 +104,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
 
                         $options = [
-                            'title' => Yii::t('yii', 'Deinstall'),
-                            'aria-label' => Yii::t('yii', 'Deinstall'),
+                            'title' => Yii::p('cii', 'Deinstall'),
+                            'aria-label' => Yii::p('cii', 'Deinstall'),
                             'data-pjax' => '0',
                         ];
 

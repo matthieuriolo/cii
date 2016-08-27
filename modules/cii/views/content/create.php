@@ -6,9 +6,9 @@ use yii\bootstrap\Tabs;
 use cii\helpers\SPL;
 
 
-$this->title = Yii::t('app', 'Create Content');
+$this->title = Yii::p('cii', 'Create Content');
 $this->params['breadcrumbs'][] = [
-	'label' => Yii::t('app', 'Contents'),
+	'label' => Yii::p('cii', 'Contents'),
 	'url' => [\Yii::$app->seo->relativeAdminRoute('modules/cii/content/index')]
 ];
 $this->params['breadcrumbs'][] = $this->title;
@@ -19,12 +19,12 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="form-group pull-right">
 		<?php
 		echo Html::a(
-            Yii::t('yii', 'Cancel'),
+            Yii::p('cii', 'Cancel'),
             [\Yii::$app->seo->relativeAdminRoute('modules/cii/content/index')],
             ['class' => 'btn btn-warning']
         ),
         '&nbsp;',
-        Html::submitButton(Yii::t('app', 'Create'), ['class' => 'btn btn-success']) ?>
+        Html::submitButton(Yii::p('cii', 'Create'), ['class' => 'btn btn-success']) ?>
     </div>
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         $items = [
             [
                 'encode' => false,
-                'label' => '<i class="glyphicon glyphicon-file"></i> Content',
+                'label' => '<i class="glyphicon glyphicon-file"></i> ' . Yii::p('cii', 'Content'),
                 'content' => $this->render('_form', [
                     'model' => $model,
                     'form' => $form,

@@ -5,8 +5,8 @@ use yii\widgets\ActiveForm;
 use cii\widgets\Toggler;
 
 
-$this->title = Yii::t('app', 'Update Setting');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/setting/index')]];
+$this->title = Yii::p('cii', 'Update Setting');
+$this->params['breadcrumbs'][] = ['label' => Yii::p('cii', 'Settings'), 'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/setting/index')]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -15,12 +15,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="form-group pull-right">
 	<?php echo Html::a(
-        Yii::t('yii', 'Cancel'),
+        Yii::p('cii', 'Cancel'),
         [Yii::$app->seo->relativeAdminRoute('modules/cii/setting/index')],
         ['class' => 'btn btn-warning']
     ); ?>
 
-    <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-primary']) ?>
+    <?= Html::submitButton(Yii::p('cii', 'Update'), ['class' => 'btn btn-primary']) ?>
 </div>
 
 <h1><?= Html::encode($this->title) ?></h1>

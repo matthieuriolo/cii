@@ -5,9 +5,9 @@ use yii\widgets\ActiveForm;
 use cii\widgets\Toggler;
 use yii\captcha\Captcha;
 
-$this->title = Yii::t('app', 'Delete account');
+$this->title = Yii::p('cii', 'Delete account');
 $this->params['breadcrumbs'][] = [
-	'label' => Yii::t('app', 'Profile'),
+	'label' => Yii::p('cii', 'Profile'),
 	'url' => ['//'. Yii::$app->seo->getBaseRoute()]
 ];
 
@@ -17,12 +17,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $form = ActiveForm::begin(); ?>
 	<div class="form-group pull-right">
         <?php echo Html::a(
-                Yii::t('yii', 'Cancel'),
+                Yii::p('cii', 'Cancel'),
                 [''],
                 ['class' => 'btn btn-warning']
             ),
             '&nbsp;',
-            Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-primary']);
+            Html::submitButton(Yii::p('cii', 'Update'), ['class' => 'btn btn-primary']);
        	?>
     </div>
 

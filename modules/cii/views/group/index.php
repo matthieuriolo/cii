@@ -3,19 +3,16 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
-/* @var $this yii\web\View */
-/* @var $searchModel app\modules\cii\models\GroupSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Groups');
+$this->title = Yii::p('cii', 'Groups');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-index">
-    <?= Html::a(Yii::t('app', 'Create Group'), [Yii::$app->seo->relativeAdminRoute('modules/cii/group/create')], ['class' => 'btn btn-success pull-right']) ?>
+    <?= Html::a(Yii::p('cii', 'Create Group'), [Yii::$app->seo->relativeAdminRoute('modules/cii/group/create')], ['class' => 'btn btn-success pull-right']) ?>
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p class="lead">User can be assigned to a group granting it a set of permissions</p>
+    <p class="lead"><?= Yii::p('cii', 'User can be assigned to a group granting it a set of permissions'); ?></p>
 
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

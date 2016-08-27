@@ -8,14 +8,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-index">
     <?php echo Html::a(
-        Yii::t('yii', 'Clear logs'),
+        Yii::p('cii', 'Clear logs'),
         [\Yii::$app->seo->relativeAdminRoute('flushlog')],
         ['class' => 'btn btn-success pull-right']
     ); ?>
     
-    <h1>System logs</h1>
+    <h1><?= Yii::p('cii', 'System logs'); ?></h1>
 
-    <p class="lead">Display all available logs</p>
+    <p class="lead"><?= Yii::p('cii', 'Display all available logs'); ?></p>
 
     <?php
     echo Tabs::widget([

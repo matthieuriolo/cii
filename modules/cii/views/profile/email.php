@@ -5,9 +5,9 @@ use yii\widgets\ActiveForm;
 use cii\widgets\Toggler;
 use yii\captcha\Captcha;
 
-$this->title = Yii::t('app', 'Change your email');
+$this->title = Yii::p('cii', 'Change your email');
 $this->params['breadcrumbs'][] = [
-	'label' => Yii::t('app', 'Profile'),
+	'label' => Yii::p('cii', 'Profile'),
 	'url' => ['//'. Yii::$app->seo->getBaseRoute()]
 ];
 $this->params['breadcrumbs'][] = $this->title;
@@ -16,18 +16,18 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $form = ActiveForm::begin(); ?>
 	<div class="form-group pull-right">
         <?php echo Html::a(
-                Yii::t('yii', 'Cancel'),
+                Yii::p('cii', 'Cancel'),
                 [''],
                 ['class' => 'btn btn-warning']
             ),
             '&nbsp;',
-            Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-primary']);
+            Html::submitButton(Yii::p('cii', 'Update'), ['class' => 'btn btn-primary']);
        	?>
     </div>
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p class="lead"><?= Yii::t('app', 'We will sent to the old address an verification mail'); ?></p>
+    <p class="lead"><?= Yii::p('cii', 'We will sent to the old address an verification mail'); ?></p>
 
 	<div class="row">
 	    <div class="col-md-6">

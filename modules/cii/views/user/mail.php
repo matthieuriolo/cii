@@ -3,16 +3,16 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = Yii::t('app', 'Send mail to {user}', ['user' => $model->username]);
+$this->title = Yii::p('cii', 'Send mail to {user}', ['user' => $model->username]);
 $this->params['breadcrumbs'][] = [
-    'label' => Yii::t('app', 'Users'),
+    'label' => Yii::p('cii', 'Users'),
     'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/user/index')]
 ];
 $this->params['breadcrumbs'][] = [
     'label' => $model->username,
     'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/user/view'), 'id' => $model->id]
 ];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = Yii::p('cii', 'Update');
 ?>
 <div class="user-update">
 
@@ -20,12 +20,12 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
     
 	<div class="form-group pull-right">
 		<?php echo Html::a(
-	        Yii::t('yii', 'Cancel'),
+	        Yii::p('cii', 'Cancel'),
 	        [Yii::$app->seo->relativeAdminRoute('modules/cii/user/view'), 'id' => $model->id],
 	        ['class' => 'btn btn-warning']
 	    ); ?>
 
-        <?= Html::submitButton(Yii::t('app', 'Send'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton(Yii::p('cii', 'Send'), ['class' => 'btn btn-primary']) ?>
     </div>
 
     <h1><?= Html::encode($this->title) ?></h1>

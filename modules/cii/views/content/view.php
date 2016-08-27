@@ -6,7 +6,7 @@ use cii\helpers\SPL;
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = [
-    'label' => Yii::t('app', 'Contents'),
+    'label' => Yii::p('cii', 'Contents'),
     'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/content/index')
 ]];
 $this->params['breadcrumbs'][] = $this->title;
@@ -20,7 +20,7 @@ $outbox = $model->outbox();
 $items = [
     [
         'encode' => false,
-        'label' => '<i class="glyphicon glyphicon-file"></i> Content',
+        'label' => '<i class="glyphicon glyphicon-file"></i> ' . Yii::p('cii', 'Content'),
         'content' => $this->render('_overview', [
             'model' => $model,
         ])
@@ -30,7 +30,7 @@ $items = [
 if($outbox->canBeShadowed) {
     $items[] = [
         'encode' => false,
-        'label' => '<i class="glyphicon glyphicon-blackboard"></i> Positions',
+        'label' => '<i class="glyphicon glyphicon-blackboard"></i> ' . Yii::p('cii', 'Positions'),
         'content' => $this->render('_positions', [
             'visibilities' => $visibilities,
             'visibleModel' => $visibleModel,
@@ -56,11 +56,11 @@ if(SPL::hasInterface($info, 'app\modules\cii\base\LazyModelInterface') && $info:
 ?>
 <div class="content-view">
     <p class="pull-right">
-        <?= Html::a(Yii::t('app', 'Update'), [Yii::$app->seo->relativeAdminRoute('modules/cii/content/update'), 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), [Yii::$app->seo->relativeAdminRoute('modules/cii/content/delete'), 'id' => $model->id], [
+        <?= Html::a(Yii::p('cii', 'Update'), [Yii::$app->seo->relativeAdminRoute('modules/cii/content/update'), 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::p('cii', 'Delete'), [Yii::$app->seo->relativeAdminRoute('modules/cii/content/delete'), 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'confirm' => Yii::p('cii', 'Are you sure you want to delete this item?'),
                 'method' => 'post',
             ],
         ]) ?>

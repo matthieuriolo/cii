@@ -5,12 +5,13 @@ use yii\grid\ActionColumn;
 use yii\data\ArrayDataProvider;
 use cii\helpers\Html;
 use yii\widgets\Pjax;
-$this->title = 'Layouts';
+
+$this->title = Yii::p('cii', 'Layouts');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-index">
     <?php echo Html::a(
-        Yii::t('yii', 'Install Layout'),
+        Yii::p('cii', 'Install Layout'),
         [\Yii::$app->seo->relativeAdminRoute('modules/cii/layout/install')],
         ['class' => 'btn btn-success pull-right']
     ); ?>
@@ -58,8 +59,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
 
                         $options = [
-                            'title' => Yii::t('yii', 'Disable'),
-                            'aria-label' => Yii::t('yii', 'Disable'),
+                            'title' => Yii::p('cii', 'Disable'),
+                            'aria-label' => Yii::p('cii', 'Disable'),
                             'data-pjax' => '0',
                         ];
 
@@ -72,8 +73,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
 
                         $options = [
-                            'title' => Yii::t('yii', 'Enable'),
-                            'aria-label' => Yii::t('yii', 'Enable'),
+                            'title' => Yii::p('cii', 'Enable'),
+                            'aria-label' => Yii::p('cii', 'Enable'),
                             'data-pjax' => '0',
                         ];
                         return Html::a('<span class="glyphicon glyphicon-ok"></span>', $url, $options);
@@ -85,8 +86,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
 
                         $options = [
-                            'title' => Yii::t('yii', 'Update'),
-                            'aria-label' => Yii::t('yii', 'Update'),
+                            'title' => Yii::p('cii', 'Update'),
+                            'aria-label' => Yii::p('cii', 'Update'),
                             'data-pjax' => '0',
                         ];
                         return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, $options);

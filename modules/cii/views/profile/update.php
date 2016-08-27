@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use cii\widgets\Toggler;
 
-$this->title = Yii::t('app', 'Update Profile');
+$this->title = Yii::p('cii', 'Update Profile');
 
 $this->params['breadcrumbs'][] = [
-	'label' => Yii::t('app', 'Profile'),
+	'label' => Yii::p('cii', 'Profile'),
 	'url' => ['//'. Yii::$app->seo->getBaseRoute()]
 ];
 
@@ -17,12 +17,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $form = ActiveForm::begin(); ?>
 	<div class="form-group pull-right">
         <?php echo Html::a(
-                Yii::t('yii', 'Cancel'),
+                Yii::p('cii', 'Cancel'),
                 [''],
                 ['class' => 'btn btn-warning']
             ),
             '&nbsp;',
-            Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-primary']);
+            Html::submitButton(Yii::p('cii', 'Update'), ['class' => 'btn btn-primary']);
        	?>
     </div>
 
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		    	<div class="form-control-static">
 			    	<?= Html::a(
-		                Yii::t('yii', 'Change password'),
+		                Yii::p('cii', 'Change password'),
 		                ['password'],
 		                ['class' => 'btn btn-warning']
 		            ); ?>
@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		    	<div class="form-control-static">
 			    	<?= Html::a(
-		                Yii::t('yii', 'Change email'),
+		                Yii::p('cii', 'Change email'),
 		                ['email'],
 		                ['class' => 'btn btn-warning']
 		            ); ?>
@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		    	<div class="form-control-static">
 			    	<?= Html::a(
-		                Yii::t('yii', 'Delete account'),
+		                Yii::p('cii', 'Delete account'),
 		                ['delete'],
 		                ['class' => 'btn btn-danger']
 		            ); ?>

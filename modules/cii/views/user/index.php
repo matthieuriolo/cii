@@ -7,14 +7,14 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\modules\cii\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Users');
+$this->title = Yii::p('cii', 'Users');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
-    <?= Html::a(Yii::t('app', 'Create User'), [Yii::$app->seo->relativeAdminRoute('modules/cii/user/create')], ['class' => 'btn btn-success pull-right']) ?>
+    <?= Html::a(Yii::p('cii', 'Create User'), [Yii::$app->seo->relativeAdminRoute('modules/cii/user/create')], ['class' => 'btn btn-success pull-right']) ?>
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p class="lead">User managment</p>
+    <p class="lead"><?= Html::encode(Yii::p('cii', 'User managment')); ?></p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 

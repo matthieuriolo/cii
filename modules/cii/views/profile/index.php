@@ -2,10 +2,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\Tabs;
 
-$this->title = Yii::t('app', 'Profile');
+$this->title = Yii::p('cii', 'Profile');
 $this->params['breadcrumbs'][] = $this->title;
-
-
 
 
 
@@ -13,7 +11,7 @@ $items = [];
 
 $items[] = [
 	'encode' => false,
-	'label' => '<i class="glyphicon glyphicon-user"></i> User',
+	'label' => '<i class="glyphicon glyphicon-user"></i> ' . Yii::p('cii', 'User'),
 	'content' => $this->render('_user', [
         'model' => $model
     ])
@@ -22,7 +20,7 @@ $items[] = [
 if($content->show_groups) {
 	$items[] = [
 		'encode' => false,
-		'label' => '<i class="glyphicon glyphicon-tags"></i> Group',
+		'label' => '<i class="glyphicon glyphicon-tags"></i> ' . Yii::p('cii', 'Group'),
 		'content' => $this->render('_group', [
 	        'data' => $groups
 	    ])
@@ -32,14 +30,14 @@ if($content->show_groups) {
 ?>
 <main>
 	<?php echo Html::a(
-        Yii::t('yii', 'Edit profile'),
+        Yii::p('cii', 'Edit profile'),
         [\Yii::$app->seo->relativeRoute('app\modules\cii\routes\profile', 'edit')],
         ['class' => 'btn btn-success pull-right']
     ); ?>
 
-	<h1><?php echo Yii::t('app', 'Profile'); ?></h1>
+	<h1><?php echo Yii::p('cii', 'Profile'); ?></h1>
 
-	<p class="lead"><?php echo Yii::t('app', 'Overview of the user {user}', ['user' => $model->username]); ?></p>
+	<p class="lead"><?php echo Yii::p('cii', 'Overview of the user {user}', ['user' => $model->username]); ?></p>
 
 	<?= Tabs::widget([
             'items' => $items
