@@ -4,7 +4,7 @@ namespace cii\base;
 
 use Yii;
 use yii\base\InvalidConfigException;
-use yii\base\Model;
+use cii\base\Model;
 
 class Configuration extends Model {
 	public $key;
