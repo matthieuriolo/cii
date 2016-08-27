@@ -19,8 +19,29 @@ class TranslaterController extends Controller {
     public $packageBasePath = '@app/modules';
     public $layoutBasePath = '@app/layouts';
 
+    public $type;
+    public $name;
+    public $original = null;
+    public $override = false;
+    public function options($actionID)
+    {
+        return array_merge(parent::options($actionID), [
+            'type',
+            'name',
+            'original',
+            'override'
+        ]);
+    }
 
-    public function actionIndex($type, $name, $destination = null) {
+
+    public function actionIndex() {
+        $type = $this->type;
+        $name = $this->name;
+        $destination = $this->original;
+        if(!$type || !$name) {
+            throw new Exception("--type and --name must be set");
+        }
+
         if(!($type == 'package' || $type == 'layout')) {
             throw new Exception("Type must be either package or layout");
         }
@@ -45,7 +66,7 @@ class TranslaterController extends Controller {
 
             $originalMessages = require($destination);
             if(!is_array($originalMessages)) {
-
+                throw new Exception("Invalid original file", 1);
             }
         }
 
@@ -91,7 +112,12 @@ class TranslaterController extends Controller {
         }
 
         ksort($ret);
-        echo "<?php\nreturn " . VarDumper::export($ret) . ";";
+        $output = "<?php\nreturn " . VarDumper::export($ret) . ";";
+        if($this->override) {
+            file_put_contents($this->original, $output);
+        }else {
+            echo $output;
+        }
     }
 
 
