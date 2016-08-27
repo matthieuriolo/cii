@@ -5,6 +5,7 @@ namespace app\modules\cii\controllers;
 use Yii;
 use app\modules\cii\models\Language;
 use app\modules\cii\models\LanguageSearch;
+use app\modules\cii\models\LanguageMessage;
 use app\modules\cii\models\FormatterExample;
 
 use yii\web\NotFoundHttpException;
@@ -97,9 +98,32 @@ class LanguageController extends ExtensionBaseController {
         $model->validate();
         $model->setLanguage($language);
 
+        $query = LanguageMessage::find();
+        $query->where(['language_id' => $id]);
+        $query->joinWith('translatedExtension as transl');
+        $messages = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'attributes' => [
+                    'enabled',
+                    'installed',
+                    'translatedExtension.name' => [
+                        'asc' => ['transl.name' => SORT_ASC],
+                        'desc' => ['transl.name' => SORT_DESC],
+                    ],
+
+                    'translatedExtension.type' => [
+                        'asc' => ['transl.classname_id' => SORT_ASC],
+                        'desc' => ['transl.classname_id' => SORT_DESC],
+                    ]
+                ],
+            ],
+        ]);
+
         return $this->render('view', [
             'model' => $language,
             'formatterExample' => $model,
+            'messages' => $messages,
         ]);
     }
 }

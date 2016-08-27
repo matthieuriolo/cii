@@ -6,18 +6,11 @@ use cii\web\routes\DBRoute;
 
 class Application extends \yii\web\Application {
 	public $seo;
-    public $modulePath;
-    public $layoutBasePath;
-
+    public $modulePath = '@app/modules';
+    public $layoutBasePath = '@app/layouts';
+    public $messagePath = '@app/messages';
+    
 	public function init() {
-        if(!$this->modulePath) {
-            $this->modulePath = '@app/modules';
-        }
-
-        if(!$this->layoutBasePath) {
-            $this->layoutBasePath = '@app/layouts';
-        }
-
         //set active modules
 		$this->setModules($this->cii->package->moduleInitializerList());
         
@@ -37,6 +30,7 @@ class Application extends \yii\web\Application {
 
         //set up language
         if($language = $this->cii->language->getActiveLanguage()) {
+            $this->language = $language->code;
             $this->formatter->initValuesFromLanguage($language);
         }
 
@@ -48,6 +42,14 @@ class Application extends \yii\web\Application {
 
 		return parent::init();
 	}
+
+
+    public function coreComponents() {
+        $components = parent::coreComponents();
+        $components['i18n'] = ['class' => 'cii\i18n\I18N'];
+        return $components;
+    }
+
 
     public function handleRequest($request) {
         $seo = null;
