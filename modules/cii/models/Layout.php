@@ -19,6 +19,6 @@ class Layout extends BaseExtension {
 	}
 
     static public function getTypename() {
-        return Yii::t('app', 'Layout');
+        return Yii::p('cii', 'Layout');
     }
 }

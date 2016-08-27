@@ -12,9 +12,9 @@ class UserMailForm extends User {
 
     public function attributeLabels() {
         return [
-            'subject'   => Yii::t('app', 'Subject'),
-            'content'   => Yii::t('app', 'Content'),
-            'cc'        => Yii::t('app', 'Send copy to')
+            'subject'   => Yii::p('cii', 'Subject'),
+            'content'   => Yii::p('cii', 'Content'),
+            'cc'        => Yii::p('cii', 'Send copy to')
         ];
     }
 

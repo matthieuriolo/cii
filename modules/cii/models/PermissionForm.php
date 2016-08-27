@@ -49,7 +49,7 @@ class PermissionForm extends Model {
 
     public function attributeLabels() {
         return [
-            'value' => Yii::t('app', 'Permission')
+            'value' => Yii::p('cii', 'Permission')
         ];
     }
 

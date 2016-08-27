@@ -35,10 +35,9 @@ class Group extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'create' => Yii::t('app', 'Create'),
-            'enabled' => Yii::t('app', 'Enabled'),
+            'name' => Yii::p('cii', 'Name'),
+            'create' => Yii::p('cii', 'Create'),
+            'enabled' => Yii::p('cii', 'Enabled'),
         ];
     }
 

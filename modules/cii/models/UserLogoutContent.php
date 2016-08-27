@@ -52,8 +52,7 @@ class UserLogoutContent extends LazyContentModel implements ContentInterface {
      */
     public function attributeLabels() {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'redirect_id' => Yii::t('app', 'Redirect'),
+            'redirect_id' => Yii::p('cii', 'Redirect'),
         ];
     }
 

@@ -44,14 +44,14 @@ class ContentRoute extends LazyRouteModel {
 
     public function attributeLabels() {
         return [
-            'route_id' => Yii::t('app', 'Route'),
-            'content_id' => Yii::t('app', 'Content'),
+            'route_id' => Yii::p('cii', 'Route'),
+            'content_id' => Yii::p('cii', 'Content'),
 
-            'type' => 'Meta type',
-            'robots' => 'Meta Robots',
-            'keys' => 'Meta keys',
-            'description' => 'Meta description',
-            'image' => 'Meta image',
+            'type' => Yii::p('cii', 'Meta type'),
+            'robots' => Yii::p('cii', 'Meta Robots'),
+            'keys' => Yii::p('cii', 'Meta keys'),
+            'description' => Yii::p('cii', 'Meta description'),
+            'image' => Yii::p('cii', 'Meta image'),
         ];
     }
 
@@ -61,19 +61,19 @@ class ContentRoute extends LazyRouteModel {
 
     public function getTypesForDropdown() {
         return [
-            null => Yii::t('app', 'No selection'),
-            'website' => Yii::t('app', 'Website'),
-            'article' => Yii::t('app', 'Article'),
+            null => Yii::p('cii', 'No selection'),
+            'website' => Yii::p('cii', 'Website'),
+            'article' => Yii::p('cii', 'Article'),
         ];
     }
 
     public function getRobotTypesForDropdown() {
         return [
-            null => Yii::t('app', 'No selection'),
-            'index,follow' => Yii::t('app', 'Indexing and follow'),
-            'noindex,follow' => Yii::t('app', 'No indexing but follow'),
-            'index,nofollow' => Yii::t('app', 'Indexing but not follow'),
-            'noindex,nofollow' => Yii::t('app', 'Neither indexing or following'),
+            null => Yii::p('cii', 'No selection'),
+            'index,follow' => Yii::p('cii', 'Indexing and follow'),
+            'noindex,follow' => Yii::p('cii', 'No indexing but follow'),
+            'index,nofollow' => Yii::p('cii', 'Indexing but not follow'),
+            'noindex,nofollow' => Yii::p('cii', 'Neither indexing or following'),
         ];
     }
 

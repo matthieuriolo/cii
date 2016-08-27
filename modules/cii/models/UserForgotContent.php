@@ -61,10 +61,9 @@ class UserForgotContent extends LazyContentModel implements ContentInterface {
      */
     public function attributeLabels() {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'redirect_id' => Yii::t('app', 'Redirect'),
-            'login_id' => Yii::t('app', 'Login'),
-            'register_id' => Yii::t('app', 'Register'),
+            'redirect_id' => Yii::p('cii', 'Redirect'),
+            'login_id' => Yii::p('cii', 'Login'),
+            'register_id' => Yii::p('cii', 'Register'),
         ];
     }
 

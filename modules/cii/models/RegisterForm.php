@@ -58,7 +58,7 @@ class RegisterForm extends User {
 
     public function attributeLabels() {
         return parent::attributeLabels() + [
-            'password_repeat'   => Yii::t('app', 'Verify Password'),
+            'password_repeat'   => Yii::p('cii', 'Verify Password'),
         ];
     }
 }

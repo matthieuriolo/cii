@@ -28,9 +28,9 @@ class RedirectRoute extends LazyRouteModel {
 
     public function attributeLabels() {
         return [
-            'redirect_id' => Yii::t('app', 'Internal redirect'),
-            'type' => Yii::t('app', 'Type'),
-            'url' => Yii::t('app', 'External redirect')
+            'redirect_id' => Yii::p('cii', 'Internal redirect'),
+            'type' => Yii::p('cii', 'Type'),
+            'url' => Yii::p('cii', 'External redirect')
         ];
     }
 
@@ -40,8 +40,8 @@ class RedirectRoute extends LazyRouteModel {
 
     public function getTypes() {
       return [
-        302 => Yii::t('app', 'Temporary'),
-        301 => Yii::t('app', 'Permanent'),
+        302 => Yii::p('cii', 'Temporary'),
+        301 => Yii::p('cii', 'Permanent'),
       ];
     }
 

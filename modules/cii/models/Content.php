@@ -46,14 +46,12 @@ class Content extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'enabled' => 'Enabled',
-            'classname' => 'Type',
-            'created' => 'Created',
+            'name' => Yii::p('cii', 'Name'),
+            'enabled' => Yii::p('cii', 'Enabled'),
+            'classname' => Yii::p('cii', 'Type'),
+            'created' => Yii::p('cii', 'Created'),
         ];
     }
 

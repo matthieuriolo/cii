@@ -88,20 +88,20 @@ class Route extends ActiveRecord {
 
     public function attributeLabels() {
         return [
-            'slug' => Yii::t('app', 'Address path'),
-            'title' => Yii::t('app', 'Website title'),
-            'enabled' => Yii::t('app', 'Enabled'),
-            'classname' => Yii::t('app', 'Type'),
-            'language_id' => Yii::t('app', 'Language'),
-            'parent_id' => Yii::t('app', 'Parent'),
-            'breadcrumb' => Yii::t('app', 'Breadcrumb'),
+            'slug' => Yii::p('cii', 'Address path'),
+            'title' => Yii::p('cii', 'Website title'),
+            'enabled' => Yii::p('cii', 'Enabled'),
+            'classname' => Yii::p('cii', 'Type'),
+            'language_id' => Yii::p('cii', 'Language'),
+            'parent_id' => Yii::p('cii', 'Parent'),
+            'breadcrumb' => Yii::p('cii', 'Breadcrumb'),
 
-            'hits' => Yii::t('app', 'Total accesses'),
-            'averageHits' => Yii::t('app', 'Average accesses'),
-            'dailyHits' => Yii::t('app', 'Daily accesses'),
-            'weeklyHits' => Yii::t('app', 'Weekly accesses'),
-            'monthlyHits' => Yii::t('app', 'Monthly accesses'),
-            'yearlyHits' => Yii::t('app', 'Yearly accesses'),
+            'hits' => Yii::p('cii', 'Total accesses'),
+            'averageHits' => Yii::p('cii', 'Average accesses'),
+            'dailyHits' => Yii::p('cii', 'Daily accesses'),
+            'weeklyHits' => Yii::p('cii', 'Weekly accesses'),
+            'monthlyHits' => Yii::p('cii', 'Monthly accesses'),
+            'yearlyHits' => Yii::p('cii', 'Yearly accesses'),
         ];
     }
 

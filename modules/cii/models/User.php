@@ -61,16 +61,15 @@ class User extends ActiveRecord implements IdentityInterface {
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'created' => Yii::t('app', 'Created'),
-            'activated' => Yii::t('app', 'Activated'),
-            'username' => Yii::t('app', 'Username'),
-            'email' => Yii::t('app', 'Email'),
-            'password' => Yii::t('app', 'Password'),
-            'enabled' => Yii::t('app', 'Enabled'),
-            'language_id' => Yii::t('app', 'Default language'),
-            'layout_id' => Yii::t('app', 'Default Layout'),
-            'reset_token' => Yii::t('app', 'Activation Token'),
+            'created' => Yii::p('cii', 'Created'),
+            'activated' => Yii::p('cii', 'Activated'),
+            'username' => Yii::p('cii', 'Username'),
+            'email' => Yii::p('cii', 'Email'),
+            'password' => Yii::p('cii', 'Password'),
+            'enabled' => Yii::p('cii', 'Enabled'),
+            'language_id' => Yii::p('cii', 'Default language'),
+            'layout_id' => Yii::p('cii', 'Default Layout'),
+            'reset_token' => Yii::p('cii', 'Activation Token'),
         ];
     }
 

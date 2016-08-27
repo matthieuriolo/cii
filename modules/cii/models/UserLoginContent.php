@@ -62,10 +62,9 @@ class UserLoginContent extends LazyContentModel implements ContentInterface {
      */
     public function attributeLabels() {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'redirect_id' => Yii::t('app', 'Redirect'),
-            'register_id' => Yii::t('app', 'Register'),
-            'forgot_id' => Yii::t('app', 'Forgot'),
+            'redirect_id' => Yii::p('cii', 'Redirect'),
+            'register_id' => Yii::p('cii', 'Register'),
+            'forgot_id' => Yii::p('cii', 'Forgot'),
         ];
     }
 

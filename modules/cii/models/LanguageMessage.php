@@ -35,6 +35,6 @@ class LanguageMessage extends BaseExtension {
 	}
 
     static public function getTypename() {
-        return Yii::t('app', 'Language Message');
+        return Yii::p('cii', 'Language Message');
     }
 }

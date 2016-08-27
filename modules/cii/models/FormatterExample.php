@@ -18,7 +18,7 @@ class FormatterExample extends Model {
 
     public function attributeLabels() {
         return [
-            'numeric' => Yii::t('app', 'Integer or float')
+            'numeric' => Yii::p('cii', 'Integer or float')
         ];
     }
 

@@ -19,9 +19,9 @@ class LoginForm extends Model {
     /** @inheritdoc */
     public function attributeLabels() {
         return [
-            'email'      => Yii::t('app', 'Email'),
-            'password'   => Yii::t('app', 'Password'),
-            'rememberMe' => Yii::t('app', 'Remember me next time'),
+            'email'      => Yii::p('cii', 'Email'),
+            'password'   => Yii::p('cii', 'Password'),
+            'rememberMe' => Yii::p('cii', 'Remember me next time'),
         ];
     }
 

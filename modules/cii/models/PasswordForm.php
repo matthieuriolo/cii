@@ -17,8 +17,8 @@ class PasswordForm extends User {
     /** @inheritdoc */
     public function attributeLabels() {
         return [
-            'password' => Yii::t('app', 'Password'),
-            'password_repeat' => Yii::t('app', 'Verify Password'),
+            'password' => Yii::p('cii', 'Password'),
+            'password_repeat' => Yii::p('cii', 'Verify Password'),
         ];
     }
 

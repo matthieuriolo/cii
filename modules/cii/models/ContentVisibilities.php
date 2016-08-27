@@ -55,10 +55,10 @@ class ContentVisibilities extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'content_id' => Yii::t('app', 'Content'),
-            'route_id' => Yii::t('app', 'Route'),
-            'language_id' => Yii::t('app', 'Language'),
-            'position' => Yii::t('app', 'Position'),
+            'content_id' => Yii::p('cii', 'Content'),
+            'route_id' => Yii::p('cii', 'Route'),
+            'language_id' => Yii::p('cii', 'Language'),
+            'position' => Yii::p('cii', 'Position'),
         ];
     }
 

@@ -32,11 +32,10 @@ class Extension extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'installed' => Yii::t('app', 'Installed'),
-            'enabled' => Yii::t('app', 'Enabled'),
-            'type' => Yii::t('app', 'Type'),
+            'name' => Yii::p('cii', 'Name'),
+            'installed' => Yii::p('cii', 'Installed'),
+            'enabled' => Yii::p('cii', 'Enabled'),
+            'type' => Yii::p('cii', 'Type'),
         ];
     }
 

@@ -22,10 +22,9 @@ class Permission extends \yii\db\ActiveRecord {
 
     public function attributeLabels() {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'permission_id' => Yii::t('app', 'Name'),
-            'group_id' => Yii::t('app', 'Group'),
-            'package_id' => Yii::t('app', 'Module'),
+            'permission_id' => Yii::p('cii', 'Name'),
+            'group_id' => Yii::p('cii', 'Group'),
+            'package_id' => Yii::p('cii', 'Module'),
         ];
     }
 

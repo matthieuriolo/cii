@@ -47,24 +47,24 @@ class Language extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'name' => Yii::t('app', 'Name'),
-            'code' => Yii::t('app', 'Code'),
-            'shortCode' => Yii::t('app', 'Short Code'),
-            'enabled' => Yii::t('app', 'Enabled'),
+            'name' => Yii::p('cii', 'Name'),
+            'code' => Yii::p('cii', 'Code'),
+            'shortCode' => Yii::p('cii', 'Short Code'),
+            'enabled' => Yii::p('cii', 'Enabled'),
 
-            'date' => Yii::t('app', 'Date format'),
-            'time' => Yii::t('app', 'Time format'),
-            'datetime' => Yii::t('app', 'Datetime format'),
+            'date' => Yii::p('cii', 'Date format'),
+            'time' => Yii::p('cii', 'Time format'),
+            'datetime' => Yii::p('cii', 'Datetime format'),
 
-            'decimalSeparator' => Yii::t('app', 'Decimal separator'),
-            'thousandSeparator' => Yii::t('app', 'Thousand separator'),
-            'decimals' => Yii::t('app', 'Decimals digits'),
-            'removeZeros' => Yii::t('app', 'Remove tailing zeros'),
+            'decimalSeparator' => Yii::p('cii', 'Decimal separator'),
+            'thousandSeparator' => Yii::p('cii', 'Thousand separator'),
+            'decimals' => Yii::p('cii', 'Decimals digits'),
+            'removeZeros' => Yii::p('cii', 'Remove tailing zeros'),
             
-            'currencySymbol' => Yii::t('app', 'Currency symbol'),
-            'currencySymbolPlace' => Yii::t('app', 'Symbol as suffix'),
-            'currencySmallestUnit' => Yii::t('app', 'Smallest unit'),
-            'currencyRemoveZeros' => Yii::t('app', 'Remove tailing zeros'),
+            'currencySymbol' => Yii::p('cii', 'Currency symbol'),
+            'currencySymbolPlace' => Yii::p('cii', 'Symbol as suffix'),
+            'currencySmallestUnit' => Yii::p('cii', 'Smallest unit'),
+            'currencyRemoveZeros' => Yii::p('cii', 'Remove tailing zeros'),
             
         ];
     }

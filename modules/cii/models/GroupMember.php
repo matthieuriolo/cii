@@ -39,13 +39,11 @@ class GroupMember extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'user_id' => Yii::t('app', 'User'),
-            'group_id' => Yii::t('app', 'Group'),
-            'created' => Yii::t('app', 'Member since'),
+            'user_id' => Yii::p('cii', 'User'),
+            'group_id' => Yii::p('cii', 'Group'),
+            'created' => Yii::p('cii', 'Member since'),
         ];
     }
 

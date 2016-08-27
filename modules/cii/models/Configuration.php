@@ -26,10 +26,9 @@ class Configuration extends \yii\db\ActiveRecord {
 
     public function attributeLabels() {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'value' => 'Value',
-            'extension_id' => 'Extension'
+            'name' => Yii::p('cii', 'Name'),
+            'value' => Yii::p('cii', 'Value'),
+            'extension_id' => Yii::p('cii', 'Extension')
         ];
     }
 

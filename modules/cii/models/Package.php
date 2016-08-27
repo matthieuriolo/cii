@@ -18,6 +18,6 @@ class Package extends BaseExtension {
 	}
 
     static public function getTypename() {
-        return Yii::t('app', 'Package');
+        return Yii::p('cii', 'Package');
     }
 }

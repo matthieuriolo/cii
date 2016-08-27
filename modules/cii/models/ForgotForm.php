@@ -18,7 +18,7 @@ class ForgotForm extends Model {
     /** @inheritdoc */
     public function attributeLabels() {
         return [
-            'email'      => Yii::t('app', 'Email'),
+            'email'      => Yii::p('cii', 'Email'),
         ];
     }
 

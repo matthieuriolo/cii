@@ -11,7 +11,7 @@ class UploadExtensionForm extends Model {
 
     public function attributeLabels() {
         return [
-            'file'   => Yii::t('app', 'Uploaded file'),
+            'file'   => Yii::p('cii', 'Uploaded file'),
         ];
     }
 
@@ -19,9 +19,5 @@ class UploadExtensionForm extends Model {
         return [
             [['file'], 'file'],
         ];
-    }
-    
-    public function formName() {
-        return 'upload-form';
     }
 }

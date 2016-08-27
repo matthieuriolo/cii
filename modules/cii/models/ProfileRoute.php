@@ -34,8 +34,7 @@ class ProfileRoute extends LazyRouteModel {
 
     public function attributeLabels() {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'show_groups' => Yii::t('app', 'Show groups'),
+            'show_groups' => Yii::p('cii', 'Show groups'),
         ];
     }
 
