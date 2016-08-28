@@ -22,8 +22,8 @@ uploads
 
 
 # ignore extensions
-modules
-layouts
+modules/*
+layouts/*
 messages
 
 !modules/cii
