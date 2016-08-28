@@ -5,7 +5,7 @@ namespace app\modules\cii\controllers;
 use Yii;
 use cii\backend\BackendController as Controller;
 use cii\web\SecurityException;
-
+use cii\base\SearchModel;
 
 use app\modules\cii\models\Route;
 use app\modules\cii\models\Classname;
@@ -44,11 +44,23 @@ class RouteController extends Controller {
                 'ext.enabled' => true
             ])
         ;
-    	
+
+
+        $model = new SearchModel(Route::className());
+        $model->stringFilter('slug');
+        $model->booleanFilter('enabled');
+        $model->languageFilter('language_id');
+
+        if($model->load(Yii::$app->request->get()) && $model->validate()) {
+            $query = $model->applyFilter($query);
+    	}
+
+
         $data = new ActiveDataProvider([
     		'query' => $query,
 			'sort' => [
-            	'attributes' => [
+
+                'attributes' => [
                     'slug',
                     'hits',
                     'created',
@@ -68,6 +80,7 @@ class RouteController extends Controller {
 		]);
 
         return $this->render('index', [
+            'model' => $model,
         	'data' => $data,
         	'parent' => Route::find()->where(['id' => $parent])->one()
         ]);

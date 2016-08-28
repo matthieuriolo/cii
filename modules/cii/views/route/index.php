@@ -7,6 +7,7 @@ use cii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 use yii\widgets\Pjax;
 
+
 $this->title = Yii::p('cii', 'Routes');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -20,6 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Yii::p('cii', 'Routes') ?></h1>
     
     <p class="lead"><?= Yii::p('cii', 'Routes define how the URL looks like and which content can be accessed') ?></p>
+    
+    <?= $model->render($this); ?>
 
     <?php
     if($parent) {

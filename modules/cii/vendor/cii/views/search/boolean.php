@@ -1,0 +1,1 @@
+<?= $form->field($model, $name)->dropDownList($model->getEnabledTypes()) ?>
