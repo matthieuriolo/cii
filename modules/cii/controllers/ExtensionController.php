@@ -7,6 +7,16 @@ use app\modules\cii\models\Extension;
 use yii\data\ActiveDataProvider;
 
 class ExtensionController extends ExtensionBaseController {
+    public function actionEnable($id) {
+        Yii::$app->cii->clearCache();
+        parent::actionEnable($id);
+    }
+
+    public function actionDisable($id) {
+        Yii::$app->cii->clearCache();
+        parent::actionDisable($id);
+    }
+
     protected function getModelType() {
         return 'Extension';
     }

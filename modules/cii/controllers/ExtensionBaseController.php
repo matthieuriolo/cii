@@ -139,8 +139,7 @@ abstract class ExtensionBaseController extends Controller {
         $module = $this->findExtension($id);
         $module->enabled = true;
         $module->save();
-
-        Yii::$app->cii->package->clearCache();
+        
         $this->redirect($this->getModelUrl());
     }
 
@@ -153,7 +152,6 @@ abstract class ExtensionBaseController extends Controller {
         $module->enabled = false;
         $module->save();
 
-        Yii::$app->cii->package->clearCache();
         $this->redirect($this->getModelUrl());
     }
 

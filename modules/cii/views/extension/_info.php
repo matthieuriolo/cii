@@ -23,7 +23,13 @@ $reflection = $model->getReflection();
             'label' => Yii::p('cii', 'Type'),
             'value' => $reflection->getType()
         ],
-        
+
+        [   
+            'label' => Yii::p('cii', 'Message Type'),
+            'value' => method_exists($reflection, 'getMessageType') ? $reflection->messageType : null,
+            'visible' => $reflection->type === 'message'
+        ],
+
         [   
             'label' => Yii::p('cii', 'Created'),
             'format' => 'datetime',

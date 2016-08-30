@@ -7,6 +7,16 @@ use app\modules\cii\models\Layout;
 use yii\data\ActiveDataProvider;
 
 class LayoutController extends ExtensionBaseController {
+    public function actionEnable($id) {
+        Yii::$app->cii->layout->clearCache();
+        parent::actionEnable($id);
+    }
+
+    public function actionDisable($id) {
+        Yii::$app->cii->layout->clearCache();
+        parent::actionDisable($id);
+    }
+
     protected function getModelType() {
         return 'Layout';
     }

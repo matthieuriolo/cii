@@ -4,7 +4,6 @@ namespace app\modules\cii\controllers;
 
 use Yii;
 use app\modules\cii\models\Language;
-use app\modules\cii\models\LanguageSearch;
 use app\modules\cii\models\LanguageMessage;
 use app\modules\cii\models\FormatterExample;
 
@@ -14,78 +13,6 @@ use cii\backend\BackendController;
 
 use cii\base\SearchModel;
 
-
-
-/*
-class LanguageController extends ExtensionBaseController {
-    protected function getModelType() {
-        return 'Language';
-    }
-
-    protected function getModelUrl() {
-        return [\Yii::$app->seo->relativeAdminRoute('modules/cii/language/index')];
-    }
-
-    protected function getModel($id) {
-        return $this->findModel($id);
-    }
-
-    protected function getModelClass() {
-        return Language::className();
-    }
-
-    protected function getDataProvider($searchModel = null) {
-        $query = Language::find();
-        
-        if($searchModel) {
-            if($searchModel->load(Yii::$app->request->get()) && $searchModel->validate()) {
-                $query = $searchModel->applyFilter($query);
-            }
-        }
-
-        return new ActiveDataProvider([
-            'query' => $query,
-            'sort' => [
-                'attributes' => [
-                    'name',
-                    'code',
-                    'shortcode',
-                    'enabled',
-                    'created'
-                ],
-            ],
-        ]);
-    }
-
-    public function actionCreate() {
-        $model = new Language();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->cii->language->clearCache();
-            $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/language/view'), ['id' => $model->id]]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    
-    
-
-    /*public function actionIndex() {
-        $searchModel = new LanguageSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-    *
-
-    
-}*/
 
 class LanguageController extends BackendController {
     public function actionUpdate($id) {

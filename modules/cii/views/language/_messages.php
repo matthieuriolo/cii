@@ -21,7 +21,18 @@ Pjax::begin(); ?>
             
             [
                 'class' => 'cii\grid\ActionColumn',
-                'appendixRoute' => 'modules/cii/language'
+                'appendixRoute' => 'modules/cii/language/message',
+                'template' => '{view} {enable}{disable} {delete}',
+
+                'visibleButtons' => [
+                    'enable' => function($model, $key, $index) {
+                        return !$model->enabled;
+                    },
+
+                    'disable' => function($model, $key, $index) {
+                        return $model->enabled;
+                    },
+                ]
             ],
         ],
     ]); ?>

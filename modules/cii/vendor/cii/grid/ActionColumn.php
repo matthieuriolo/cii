@@ -36,7 +36,7 @@ class ActionColumn extends \yii\grid\ActionColumn {
                 $options = array_merge([
                     'title' => Yii::t('yii', 'Enable'),
                     'aria-label' => Yii::t('yii', 'Enable'),
-                    'data-method' => 'post',
+                    //'data-method' => 'post',
                     'data-pjax' => '0',
                 ], $this->buttonOptions);
                 return Html::a('<span class="glyphicon glyphicon-floppy-saved"></span>', $url, $options);

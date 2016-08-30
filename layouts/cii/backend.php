@@ -99,6 +99,7 @@ AppAsset::register($this);
                         Html::printNestedMenu($items, function($item) {
                             $itemUrl = Url::toRoute($item['url']);
                             $appUrl = Yii::$app->getRequest()->getUrl();
+                            
                             if($itemUrl == $appUrl) {
                                 return true;
                             }else {
@@ -106,7 +107,7 @@ AppAsset::register($this);
                                 $appUrl = Yii::$app->urlManager->getCalledRoute();
                                 
                                 if(strpos($itemUrl, '/admin/modules') === 0) {
-                                    if(dirname(ltrim($itemUrl, '/')) == dirname($appUrl)) {
+                                    if(strpos(dirname($appUrl), dirname(ltrim($itemUrl, '/'))) === 0) {
                                         return true;
                                     }
                                 }

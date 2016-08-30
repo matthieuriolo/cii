@@ -8,6 +8,16 @@ use app\modules\cii\models\Package;
 use yii\data\ActiveDataProvider;
 
 class PackageController extends ExtensionBaseController {
+    public function actionEnable($id) {
+        Yii::$app->cii->package->clearCache();
+        parent::actionEnable($id);
+    }
+
+    public function actionDisable($id) {
+        Yii::$app->cii->package->clearCache();
+        parent::actionDisable($id);
+    }
+    
 	protected function getModelType() {
         return 'Package';
     }
