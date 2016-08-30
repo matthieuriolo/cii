@@ -10,52 +10,52 @@ $reflection = $model->getReflection();
     'model' => $model,
     'attributes' => [
         [	
-        	'label' => 'Name',
+        	'label' => Yii::p('cii', 'Name'),
         	'value' => $reflection->getName()
         ],
 
         [	
-        	'label' => 'Version',
+        	'label' => Yii::p('cii', 'Version'),
         	'value' => $reflection->getVersion()
         ],
 
         [   
-            'label' => 'Type',
+            'label' => Yii::p('cii', 'Type'),
             'value' => $reflection->getType()
         ],
         
         [   
-            'label' => 'Created',
+            'label' => Yii::p('cii', 'Created'),
             'format' => 'datetime',
             'value' => $reflection->created
         ],
 
         [   
-            'label' => 'Installed',
+            'label' => Yii::p('cii', 'Installed'),
             'format' => 'datetime',
             'value' => $model->installed
         ],
 
         [	
-        	'label' => 'Enabled',
+        	'label' => Yii::p('cii', 'Enabled'),
         	'format' => 'html',
         	'value' => Html::boolean($reflection->isEnabled())
         ],
 
         [   
-            'label' => 'Author',
+            'label' => Yii::p('cii', 'Author'),
             'value' => $reflection->authorName
         ],
 
 
         [   
-            'label' => 'Contact',
+            'label' => Yii::p('cii', 'Contact'),
             'format' => 'email',
             'value' => $reflection->authorMail
         ],
 
         [   
-            'label' => 'Website',
+            'label' => Yii::p('cii', 'Website'),
             'format' => 'url',
             'value' => $reflection->authorSite
         ],
