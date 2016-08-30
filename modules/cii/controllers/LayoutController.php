@@ -19,9 +19,17 @@ class LayoutController extends ExtensionBaseController {
         return Layout::find()->where(['id' => $id])->one();
     }
 
-    protected function getDataProvider() {
+    protected function getDataProvider($searchModel = null) {
+        $query = Layout::find()->joinWith('extension');
+        
+        if($searchModel) {
+            if($searchModel->load(Yii::$app->request->get()) && $searchModel->validate()) {
+                $query = $searchModel->applyFilter($query);
+            }
+        }
+
         return new ActiveDataProvider([
-            'query' => Layout::find()->joinWith('extension'),
+            'query' => $query,
             'sort' => [
                 'attributes' => [
                     'name',

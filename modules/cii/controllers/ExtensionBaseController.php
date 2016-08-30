@@ -21,7 +21,7 @@ use yii\data\ArrayDataProvider;
 use app\modules\cii\models\Configuration as Core_Settings;
 use app\modules\cii\models\UploadExtensionForm;
 use app\modules\cii\models\Extension;
-
+use app\modules\cii\models\ExtensionSearchModel as SearchModel;
 
 
 abstract class ExtensionBaseController extends Controller {
@@ -40,13 +40,23 @@ abstract class ExtensionBaseController extends Controller {
     }
 
     abstract protected function getModel($id);
-    abstract protected function getDataProvider();
+    abstract protected function getDataProvider($searchModel = null);
     abstract protected function getModelType();
     abstract protected function getModelUrl();
 
+    protected function getModelClass() {
+        return Extension::className();
+    }
+
     public function actionIndex() {
+        $model = new SearchModel($this->getModelClass());
+        $model->stringFilter('name');
+        $model->booleanFilter('enabled');
+        
+
         return $this->render('index', [
-        	'data' => $this->getDataProvider()
+        	'data' => $this->getDataProvider($model),
+            'model' => $model,
         ]);
     }
 
@@ -125,16 +135,16 @@ abstract class ExtensionBaseController extends Controller {
     }
 
 
-    public function actionEnable($id, $back) {
+    public function actionEnable($id) {
         $module = $this->findExtension($id);
         $module->enabled = true;
         $module->save();
 
         Yii::$app->cii->package->clearCache();
-        $this->redirect($back);
+        $this->redirect($this->getModelUrl());
     }
 
-    public function actionDisable($id, $back) {
+    public function actionDisable($id) {
         $module = $this->findExtension($id);
         if($module->name == 'cii' && ($module->layout || $module->package)) {
             throw new SecurityException();
@@ -144,7 +154,7 @@ abstract class ExtensionBaseController extends Controller {
         $module->save();
 
         Yii::$app->cii->package->clearCache();
-        $this->redirect($back);
+        $this->redirect($this->getModelUrl());
     }
 
     protected function findExtension($id) {

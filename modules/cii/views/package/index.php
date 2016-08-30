@@ -21,6 +21,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php 
 
     Pjax::begin();
+
+    echo $model->render($this);
+
     echo GridView::widget([
         'tableOptions' => [
             'class' => "table table-striped table-bordered table-hover",
@@ -38,71 +41,42 @@ $this->params['breadcrumbs'][] = $this->title;
             'installed:datetime',
             'enabled:boolean',
             [
-                'class' => ActionColumn::className(),
-                'template' => '{view}{disable}{enable}{deinstall}',
-                'urlCreator' => function($action, $model, $key, $index) {
-                    if($action === 'view') {
-                        $route = [\Yii::$app->seo->relativeAdminRoute('modules/cii/package/view'), ['id' => $model->id]];
-                    }else if($action === 'disable') {
-                        $route = [\Yii::$app->seo->relativeAdminRoute('modules/cii/package/disable'), ['id' => $model->id, 'back' => \Yii::$app->request->getAbsoluteUrl()]];
-                    }else if($action === 'enable') {
-                        $route = [\Yii::$app->seo->relativeAdminRoute('modules/cii/package/enable'), ['id' => $model->id, 'back' => \Yii::$app->request->getAbsoluteUrl()]];
-                    }else if($action === 'deinstall') {
-                        $route = [\Yii::$app->seo->relativeAdminRoute('modules/cii/package/deinstall'), ['id' => $model->id, 'back' => \Yii::$app->request->getAbsoluteUrl()]];
-                    }
-                    
-                    return \Yii::$app->urlManager->createUrl($route);
-                },
-
-                'buttons' => [
-                    'disable' => function($url, $model, $key) {
+                'class' => 'cii\grid\ActionColumn',
+                'appendixRoute' => 'modules/cii/package',
+                'template' => '{view} {disable}{enable} {delete}',
+                'visibleButtons' => [
+                    'disable' => function($model, $key, $index) {
                         if(
                             !$model->enabled
                             ||
                             $model->name == 'cii'
                         ) {
-                            return '';
+                            return false;
                         }
 
-                        $options = [
-                            'title' => Yii::p('cii', 'Disable'),
-                            'aria-label' => Yii::p('cii', 'Disable'),
-                            'data-pjax' => '0',
-                        ];
-
-                        return Html::a('<span class="glyphicon glyphicon-remove"></span>', $url, $options);
+                        return true;
                     },
 
-                    'enable' => function($url, $model, $key) {
+                    'enable' => function($model, $key, $index) {
                         if(
                             $model->enabled
                             ||
                             $model->name == 'cii'
                         ) {
-                            return '';
+                            return false;
                         }
 
-                        $options = [
-                            'title' => Yii::p('cii', 'Enable'),
-                            'aria-label' => Yii::p('cii', 'Enable'),
-                            'data-pjax' => '0',
-                        ];
-                        return Html::a('<span class="glyphicon glyphicon-ok"></span>', $url, $options);
+                        return true;
                     },
 
-                    'deinstall' => function($url, $model, $key) {
+                    'delete' => function($model, $key, $index) {
                         if($model->name == 'cii') {
-                            return '';
+                            return false;
                         }
 
-                        $options = [
-                            'title' => Yii::p('cii', 'Update'),
-                            'aria-label' => Yii::p('cii', 'Update'),
-                            'data-pjax' => '0',
-                        ];
-                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, $options);
-                    }
-                ]
+                        return true;
+                    },
+                ],
             ],
         ],
     ]);

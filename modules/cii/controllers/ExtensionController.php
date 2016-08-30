@@ -19,9 +19,19 @@ class ExtensionController extends ExtensionBaseController {
         return Extension::find()->where(['id' => $id])->one();
     }
 
-    protected function getDataProvider() {
+    protected function getDataProvider($searchModel = null) {
+        $query = Extension::find();
+        
+        if($searchModel) {
+            $searchModel->extensionTypeFilter('type', 'classname_id');
+
+            if($searchModel->load(Yii::$app->request->get()) && $searchModel->validate()) {
+                $query = $searchModel->applyFilter($query);
+            }
+        }
+
         return new ActiveDataProvider([
-            'query' => Extension::find(),
+            'query' => $query,
             'sort' => [
                 'attributes' => [
                     'name',

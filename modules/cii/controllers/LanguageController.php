@@ -10,7 +10,13 @@ use app\modules\cii\models\FormatterExample;
 
 use yii\web\NotFoundHttpException;
 use yii\data\ActiveDataProvider;
+use cii\backend\BackendController;
 
+use cii\base\SearchModel;
+
+
+
+/*
 class LanguageController extends ExtensionBaseController {
     protected function getModelType() {
         return 'Language';
@@ -24,9 +30,21 @@ class LanguageController extends ExtensionBaseController {
         return $this->findModel($id);
     }
 
-    protected function getDataProvider() {
+    protected function getModelClass() {
+        return Language::className();
+    }
+
+    protected function getDataProvider($searchModel = null) {
+        $query = Language::find();
+        
+        if($searchModel) {
+            if($searchModel->load(Yii::$app->request->get()) && $searchModel->validate()) {
+                $query = $searchModel->applyFilter($query);
+            }
+        }
+
         return new ActiveDataProvider([
-            'query' => Language::find(),
+            'query' => $query,
             'sort' => [
                 'attributes' => [
                     'name',
@@ -53,6 +71,23 @@ class LanguageController extends ExtensionBaseController {
     }
 
     
+    
+
+    /*public function actionIndex() {
+        $searchModel = new LanguageSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    *
+
+    
+}*/
+
+class LanguageController extends BackendController {
     public function actionUpdate($id) {
         $model = $this->findModel($id);
 
@@ -70,25 +105,6 @@ class LanguageController extends ExtensionBaseController {
         Yii::$app->cii->language->clearCache();
         $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/language/index')]);
     }
-
-    protected function findModel($id) {
-        if (($model = Language::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-
-    /*public function actionIndex() {
-        $searchModel = new LanguageSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-    */
 
     public function actionView($id) {
         $language = $this->findModel($id);
@@ -125,5 +141,63 @@ class LanguageController extends ExtensionBaseController {
             'formatterExample' => $model,
             'messages' => $messages,
         ]);
+    }
+
+    public function actionIndex() {
+        $model = new SearchModel(Language::className());
+        $model->stringFilter('name', ['name', 'code', 'shortcode']);
+        $model->booleanFilter('enabled');
+        
+        $query = Language::find();
+        
+        if($model->load(Yii::$app->request->get()) && $model->validate()) {
+            $query = $model->applyFilter($query);
+        }
+
+        $data = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'attributes' => [
+                    'name',
+                    'code',
+                    'shortcode',
+                    'enabled',
+                    'created'
+                ],
+            ],
+        ]);
+
+
+        return $this->render('index', [
+            'data' => $data,
+            'model' => $model,
+        ]);
+    }
+
+
+    public function actionEnable($id) {
+        $module = $this->findModel($id);
+        $module->enabled = true;
+        $module->save();
+
+        Yii::$app->cii->language->clearCache();
+        $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/language')]);
+    }
+
+    public function actionDisable($id) {
+        $module = $this->findModel($id);
+        $module->enabled = false;
+        $module->save();
+
+        Yii::$app->cii->language->clearCache();
+        $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/language')]);
+    }
+
+    protected function findModel($id) {
+        if (($model = Language::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 }

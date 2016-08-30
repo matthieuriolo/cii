@@ -14,10 +14,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <p class="lead"><?= Yii::p('cii', 'Contents define what data can be accessed (usually through routes)'); ?></p>
 
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-
 <?php Pjax::begin(); ?>
+    
+    <?= $model->render($this); ?>
+
     <?= GridView::widget([
         'tableOptions' => [
             'class' => "table table-striped table-bordered table-hover",

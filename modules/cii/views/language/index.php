@@ -41,6 +41,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'cii\grid\ActionColumn',
                 'appendixRoute' => 'modules/cii/language',
                 'template' => '{view} {update} {enable}{disable} {delete}',
+                'visibleButtons' => [
+                    'enable' => function($model, $key, $index) {
+                        return !$model->enabled;
+                    },
+
+                    'disable' => function($model, $key, $index) {
+                        return $model->enabled;
+                    },
+                ],
             ],
         ],
     ]); ?>
