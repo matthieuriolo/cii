@@ -12,17 +12,16 @@ use app\modules\cii\models\ContentVisibilities;
 
 use cii\web\SecurityException;
 use cii\backend\BackendController;
+use cii\helpers\SPL;
+use cii\base\SearchModel;
 
 
 use yii\web\ServerErrorHttpException;
 use yii\web\NotFoundHttpException;
-
 use yii\filters\VerbFilter;
 use yii\widgets\ActiveForm;
 use yii\data\ActiveDataProvider;
-
 use yii\helpers\Json;
-use cii\helpers\SPL;
 
 
 /**
@@ -49,11 +48,43 @@ class ContentController extends BackendController {
      * @return mixed
      */
     public function actionIndex() {
-        $searchModel = new ContentSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
+        $query = Content::find();
+
+
+        $query->joinWith([
+            'classname as classname',
+            'classname.package.extension as package'
+        ]);
+        $query->andFilterWhere([
+            'package.enabled' => true,
+        ]);
+
+        $model = new SearchModel(Content::className());
+        $model->stringFilter('name');
+        $model->booleanFilter('enabled');
+
+        if($model->load(Yii::$app->request->get()) && $model->validate()) {
+            $query = $model->applyFilter($query);
+        }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'attributes' => [
+                    'name',
+                    
+                    'classname' => [
+                        'asc' => ['classname.path' => SORT_ASC],
+                        'desc' => ['classname.path' => SORT_DESC],
+                    ],
+                    'created',
+                    'enabled'
+                ],
+            ],
+        ]);
+
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'model' => $model,
             'dataProvider' => $dataProvider,
         ]);
     }

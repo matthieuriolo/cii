@@ -21,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     
 <?php Pjax::begin(); ?>
+    <?= $model->render($this); ?>
     <?= GridView::widget([
         'tableOptions' => [
             'class' => "table table-striped table-bordered table-hover",
@@ -38,7 +39,8 @@ $this->params['breadcrumbs'][] = $this->title;
             
             [
                 'class' => 'cii\grid\ActionColumn',
-                'appendixRoute' => 'modules/cii/language'
+                'appendixRoute' => 'modules/cii/language',
+                'template' => '{view} {update} {enable}{disable} {delete}',
             ],
         ],
     ]); ?>

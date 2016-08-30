@@ -46,25 +46,31 @@ class SearchModel extends \yii\base\DynamicModel {
 			$attributes = [$name];
 		}
 
-		$this->attributeFormatters[$name]['attributes'] = $attributes;
+		$this->attributeFormatters[$name]['attributes'] = (array)$attributes;
 	}
 
 	public function booleanFilter($name, $attributes = null) {
-		$this->addAttribute($name, 'boolean', [
-			['in', 'range' => array_keys($this->getEnabledTypes())]
+		$values = $this->getEnabledTypes();
+
+		$this->addAttribute($name, ['boolean', 'template' => 'in', 'values' => $values], [
+			['in', 'range' => array_keys($values)]
 		], $attributes);
 	}
 
 	public function getEnabledTypes() {
 		return [
 			null => Yii::t('yii', 'All'),
-			1 => Yii::t('yii', 'Enabled'),
-			2 => Yii::t('yii', 'Disabled'),
+			1 => Yii::t('yii', 'Yes'),
+			0 => Yii::t('yii', 'No'),
 		];
 	}
+	
+	public function nullFilter($name, $attributes = null) {
+		$values = $this->getEnabledTypes();
 
-	public function getLanguages() {
-		return Yii::$app->cii->language->getLanguagesForDropdown();
+		$this->addAttribute($name, ['null', 'template' => 'in', 'values' => $values], [
+			['in', 'range' => array_keys($values)]
+		], $attributes);
 	}
 
 	public function stringFilter($name, $attributes = null) {
@@ -74,26 +80,37 @@ class SearchModel extends \yii\base\DynamicModel {
 	}
 	
 	public function languageFilter($name, $attributes = null) {
-		$this->addAttribute($name, 'language', [
-			['in', 'range' => array_keys($this->getLanguages())]
+		$values = Yii::$app->cii->language->getLanguagesForDropdown();
+
+		$this->addAttribute($name, ['language', 'template' => 'in', 'values' => $values], [
+			['in', 'range' => array_keys($values)]
 		], $attributes);
 	}
 
 
 	public function applyFilter($query) {
 		foreach($this->attributeFormatters as $name => $formatter) {
-			
-			if($this->$name) {
+			$value = $this->$name;
+			if(strlen($value) != 0) {
 				$where = ['or'];
+				$func = 'andWhere';
+
 				foreach($formatter['attributes'] as $attr) {
 					if($formatter[0] == 'string') {
-						$where[] = ['like', $this->model->tableName() . '.' . $attr, $this->$name];
+						$func = 'andFilterWhere';
+						$where[] = ['like', $this->model->tableName() . '.' . $attr, $value];
+					}else if($formatter[0] == 'null') {
+						if($value == 0) {
+							$where[] = [$this->model->tableName() . '.' . $attr => null];
+						}else {
+							$where[] = ['not', [$this->model->tableName() . '.' . $attr => null]];
+						}
 					}else {
-						$where[] = [$this->model->tableName() . '.' . $attr => $this->$name];
+						$where[] = [$this->model->tableName() . '.' . $attr => $value];
 					}
 				}
 
-				$query->andFilterWhere($where);
+				$query->$func($where);
 			}
 			
 		}

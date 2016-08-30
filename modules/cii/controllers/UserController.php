@@ -27,7 +27,7 @@ use app\modules\cii\models\ContentRoute;
 
 use cii\backend\BackendController;
 use cii\web\SecurityException;
-
+use cii\base\SearchModel;
 
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -67,11 +67,24 @@ class UserController extends BackendController
      * @return mixed
      */
     public function actionIndex() {
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $query = User::find();
+
+        $model = new SearchModel(User::className());
+        $model->stringFilter('name', ['username', 'email']);
+        $model->booleanFilter('enabled');
+        $model->nullFilter('activated');
+        $model->booleanFilter('superadmin');
+
+        if($model->load(Yii::$app->request->get()) && $model->validate()) {
+            $query = $model->applyFilter($query);
+        }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'model' => $model,
             'dataProvider' => $dataProvider,
         ]);
     }

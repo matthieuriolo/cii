@@ -10,8 +10,9 @@ use app\modules\cii\models\GroupSearch;
 use app\modules\cii\models\Permission;
 use app\modules\cii\models\PermissionForm;
 
-
+use cii\base\SearchModel;
 use cii\backend\BackendController;
+
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
@@ -19,13 +20,11 @@ use yii\data\ActiveDataProvider;
 /**
  * GroupController implements the CRUD actions for Group model.
  */
-class GroupController extends BackendController
-{
+class GroupController extends BackendController {
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -40,13 +39,23 @@ class GroupController extends BackendController
      * Lists all Group models.
      * @return mixed
      */
-    public function actionIndex()
-    {
-        $searchModel = new GroupSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    public function actionIndex() {
+        $query = Group::find();
+
+        $model = new SearchModel(Group::className());
+        $model->stringFilter('name');
+        $model->booleanFilter('enabled');
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if($model->load(Yii::$app->request->get()) && $model->validate()) {
+            $query = $model->applyFilter($query);
+        }
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'model' => $model,
             'dataProvider' => $dataProvider,
         ]);
     }

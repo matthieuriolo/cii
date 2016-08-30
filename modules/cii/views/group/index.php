@@ -7,17 +7,17 @@ use yii\widgets\Pjax;
 $this->title = Yii::p('cii', 'Groups');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="group-index">
-    <?= Html::a(Yii::p('cii', 'Create Group'), [Yii::$app->seo->relativeAdminRoute('modules/cii/group/create')], ['class' => 'btn btn-success pull-right']) ?>
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<?= Html::a(Yii::p('cii', 'Create Group'), [Yii::$app->seo->relativeAdminRoute('modules/cii/group/create')], ['class' => 'btn btn-success pull-right']) ?>
 
-    <p class="lead"><?= Yii::p('cii', 'User can be assigned to a group granting it a set of permissions'); ?></p>
+<h1><?= Html::encode($this->title) ?></h1>
 
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<p class="lead"><?= Yii::p('cii', 'User can be assigned to a group granting it a set of permissions'); ?></p>
 
 <?php Pjax::begin(); ?>
+    
+    <?= $model->render($this); ?>
+
     <?= GridView::widget([
         'tableOptions' => [
             'class' => "table table-striped table-bordered table-hover",

@@ -10,15 +10,15 @@ use yii\widgets\Pjax;
 $this->title = Yii::p('cii', 'Users');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-index">
-    <?= Html::a(Yii::p('cii', 'Create User'), [Yii::$app->seo->relativeAdminRoute('modules/cii/user/create')], ['class' => 'btn btn-success pull-right']) ?>
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p class="lead"><?= Html::encode(Yii::p('cii', 'User managment')); ?></p>
+<?= Html::a(Yii::p('cii', 'Create User'), [Yii::$app->seo->relativeAdminRoute('modules/cii/user/create')], ['class' => 'btn btn-success pull-right']) ?>
+<h1><?= Html::encode($this->title) ?></h1>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<p class="lead"><?= Html::encode(Yii::p('cii', 'User managment')); ?></p>
 
 <?php Pjax::begin(); ?>
+    <?= $model->render($this); ?>
+
     <?= GridView::widget([
         'tableOptions' => [
             'class' => "table table-striped table-bordered table-hover",
@@ -26,7 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         
         'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
         'rowOptions' => function($model, $key, $index, $grid) {
             return $model->superadmin ? ['class' => "warning"] : [];
         },
@@ -59,4 +58,4 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-<?php Pjax::end(); ?></div>
+<?php Pjax::end(); ?>

@@ -21,8 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Yii::p('cii', 'Routes') ?></h1>
     
     <p class="lead"><?= Yii::p('cii', 'Routes define how the URL looks like and which content can be accessed') ?></p>
-    
-    <?= $model->render($this); ?>
 
     <?php
     if($parent) {
@@ -43,6 +41,8 @@ $this->params['breadcrumbs'][] = $this->title;
    
     <?php 
     Pjax::begin();
+
+    echo $model->render($this);
 
     echo GridView::widget([
         'tableOptions' => [

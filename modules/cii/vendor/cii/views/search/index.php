@@ -13,11 +13,17 @@ use cii\helpers\Html;
             echo '<div class="row">';
         }
 
+        $template = $formatter[0];
+        if(isset($formatter['template'])) {
+            $template = $formatter['template'];
+        }
+
         echo '<div class="col-md-6">',
-            $this->render($formatter[0], [
+            $this->render($template, [
                 'model' => $model,
                 'form' => $form,
-                'name' => $name
+                'name' => $name,
+                'formatter' => $formatter
             ]),
             '</div>'
         ;
