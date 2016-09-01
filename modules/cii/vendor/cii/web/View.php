@@ -9,6 +9,13 @@ use cii\routes\ControllerRoute;
 use cii\helpers\SPL;
 
 class View extends \yii\web\View {
+	public function isAdminArea() {
+		if(Yii::$app->seo && Yii::$app->seo->findRoute('app\modules\cii\routes\Backend')) {
+			return true;
+		}
+
+		return false;
+	}
 
 	public function init() {
 		$dbmodel = Yii::$app->seo;

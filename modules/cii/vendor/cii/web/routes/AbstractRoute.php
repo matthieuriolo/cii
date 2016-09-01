@@ -35,7 +35,7 @@ abstract class AbstractRoute extends Object implements RouteInterface {
         return $this->getBaseRoute() . '/' . $route;
     }
 
-    public function findRoute($controller) {
+    public function findRoute($controller, $throwException = true) {
         $routeClass = null;
         $node = $this;
 
@@ -48,7 +48,11 @@ abstract class AbstractRoute extends Object implements RouteInterface {
         }
 
         if(!$node) {
-            throw new \Exception('Could not resolve the relative route (' . $controller . ' )');
+            if($throwException) {
+                throw new \Exception('Could not resolve the relative route (' . $controller . ' )');
+            }
+
+            return null;
         }
 
         return $node;

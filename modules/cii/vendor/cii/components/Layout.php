@@ -75,13 +75,6 @@ class Layout extends BaseExtension {
 	}
 
 	public function getContents($name = null) {
-		/*
-		$cacheKey = __CLASS__ . '_contents_' . ($name ?: '');
-		if(($data = $this->cache->get($cacheKey)) !== false) {
-			return $data;
-		}*/
-
-
 		$models = ContentVisibilities::find()
 			->joinWith([
 				'content.classname.package.extension as ext'
@@ -93,11 +86,12 @@ class Layout extends BaseExtension {
 			->all()
 		;
 
+
 		//outbox
 		$models = array_map(function($model) {
 			return $model->content->outbox();
 		}, $models);
-
+		
 		//check if visible
 		$models = array_filter($models, function($model) {
 			$info = $model->getShadowInformation();
@@ -105,7 +99,6 @@ class Layout extends BaseExtension {
 			return $controller->$info['isVisible']($model);
 		});
 
-		//$this->cache->set($cacheKey, $models);
 		return $models;
 	}
 
@@ -164,7 +157,7 @@ class Layout extends BaseExtension {
 
 	public function getPositionsForDropdown() {
 		$data = [null => Yii::t('app', 'No selection')];
-		$refl = $this->getReflection(Yii::$app->cii->setting('cii', 'frontend_layout'));
+		$refl = $this->getReflection(Yii::$app->cii->package->setting('cii', 'layout'));
 
 		return $data + $refl->getPositions();
 	}

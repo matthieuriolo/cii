@@ -10,8 +10,8 @@ class Controller extends \yii\web\Controller {
 	public function init() {
 		$this->layout = Yii::$app->layoutBasePath .
 			'/' .
-			Yii::$app->cii->package->setting('cii', 'frontend_layout') .
-			'/frontend'
+			Yii::$app->cii->package->setting('cii', 'layout') .
+			'/main'
 		;
 		$this->setView(Yii::createObject('cii\web\view', []));
 	}
@@ -32,7 +32,7 @@ class Controller extends \yii\web\Controller {
 		$tmpLayout = $this->layout;
 		$this->layout = Yii::$app->layoutBasePath .
 			'/' .
-			Yii::$app->cii->package->setting('cii', 'frontend_layout') .
+			Yii::$app->cii->package->setting('cii', 'layout') .
 			'/content'
 		;
         

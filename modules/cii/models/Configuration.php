@@ -19,7 +19,7 @@ class Configuration extends \yii\db\ActiveRecord {
             [['name', 'value'], 'string', 'max' => 255],
             [['value'], 'validateValue'],
             
-            [['name'], 'unique'],
+            [['name'], 'unique', 'targetAttribute' => ['name', 'extension_id']],
             [['extension_id'], 'exist', 'skipOnError' => true, 'targetClass' => Extension::className(), 'targetAttribute' => ['extension_id' => 'id']],
         ];
     }
@@ -62,7 +62,7 @@ class Configuration extends \yii\db\ActiveRecord {
             case 'image':
                 $path = Yii::getAlias('@webroot') . '/' . $value;
                 if(!is_file($path) || (false === getimagesize($path))) {
-                    $model->addError('value', 'No valid image path or not an image');
+                    $this->addError('value', 'No valid image path or not an image');
                 }
                 break;
             default:

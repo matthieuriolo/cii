@@ -47,11 +47,6 @@ class MainComponent extends Component {
         }
 
         return $ret;
-
-        return $this->package->getSettingTypes() +
-            //+ $this->language->getSettingTypes()
-             $this->layout->getSettingTypes()
-        ;
     }
 
     public function mail($class, $to, $data) {
@@ -124,7 +119,7 @@ class MainComponent extends Component {
     		$types = $extension->getSettings();
 
     		if(!isset($types[$key])) {
-    			throw new InvalidConfigException();
+                throw new InvalidConfigException();
     		}
 
     		if(isset($types[$key]['default'])) {

@@ -9,6 +9,9 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
+
+use cii\widgets\BackendMenu;
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -30,18 +33,18 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
 
-    $label = '<div class="brand-label pull-right">' . Yii::$app->cii->setting('cii', 'name') . '</div>';
+    $label = '<div class="brand-label pull-right">' . Yii::$app->cii->package->setting('cii', 'name') . '</div>';
 
-    if($logo = Yii::$app->cii->setting('cii', 'logo')) {
+    if($logo = Yii::$app->cii->layout->setting('cii', 'logo')) {
         //$label .= '<div class="brand-logo pull-left" style="background-image: url(' . $logo . ')"></div>';
         $label = '<div class="brand-logo pull-left">' .
             Html::img($logo) . 
             '</div>' .
-            (Yii::$app->cii->setting('cii', 'onlylogo') ? '' : $label)
+            (Yii::$app->cii->layout->setting('cii', 'onlylogo') ? '' : $label)
         ;
     }
 
-    
+
     NavBar::begin([
         'brandLabel' => $label,
         'brandUrl' => Yii::$app->homeUrl,
@@ -49,23 +52,30 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    /*
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Log', 'url' => [Yii::$app->seo->relativeAdminRoute('log')]],
-            ['label' => 'Dashboard', 'url' => [Yii::$app->seo->relativeAdminRoute('index')]],
-        ],
-    ]);
-    */
+
+    if($this->isAdminArea()) {
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-right'],
+            'items' => [
+                ['label' => 'Log', 'url' => [Yii::$app->seo->relativeAdminRoute('log')]],
+                ['label' => 'Dashboard', 'url' => [Yii::$app->seo->relativeAdminRoute('index')]],
+            ],
+        ]);
+    }else {
+        foreach($this->getContents('top') as $c) {
+            echo $this->renderShadow($c, 'top');
+        }
+    }
 
     NavBar::end();
     ?>
 
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+        <?php if(Yii::$app->cii->layout->setting('cii', 'show_breadcrumb')) {
+            echo Breadcrumbs::widget([
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ]);
+        } ?>
         
         <?php
         foreach(Yii::$app->session->getAllFlashes() as $key => $message) {
@@ -74,25 +84,35 @@ AppAsset::register($this);
 
         <div class="row"><?php
             $countMiddle = 12;
-            $leftContents = $this->getContents('left');
-            $rightContents = $this->getContents('right');
-
-            if(count($rightContents)) {
-                $countMiddle -= 3;
-            }
-
-            if(count($leftContents)) {
+            $leftContents = [];
+            $rightContents = [];
+            
+            if($this->isAdminArea()) {
                 $countMiddle -= 3;
             ?>
                 <div class="col-md-3">
-                    <?php
-                    foreach($leftContents as $c) {
-                        echo $this->renderShadow($c, 'left');
-                    }
-                    ?>
+                    <?= BackendMenu::widget(); ?>
                 </div>
-            <?php } ?>
+            <?php }else {
+                $leftContents = $this->getContents('left');
+                $rightContents = $this->getContents('right');
 
+                if(count($rightContents)) {
+                    $countMiddle -= 3;
+                }
+
+                if(count($leftContents)) {
+                    $countMiddle -= 3;
+                ?>
+                    <div class="col-md-3">
+                        <?php
+                        foreach($leftContents as $c) {
+                            echo $this->renderShadow($c, 'left');
+                        }
+                        ?>
+                    </div>
+                <?php } ?>
+            <?php } ?>
 
             <div class="col-md-<?= (string)$countMiddle; ?>">
                 <?= $content ?>
