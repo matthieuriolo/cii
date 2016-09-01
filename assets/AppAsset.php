@@ -20,12 +20,14 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         'css/bootstrap-wysihtml5.css',
+        'css/bootstrap-colorpicker.min.css',
     ];
 
     public $js = [
         'js/tabhack.js',
         'js/rivets.min.js',
-        ['js/require.min.js', 'data-main' => 'js/app/init.js']
+        ['js/require.min.js', 'data-main' => 'js/app/init.js'],
+        //'js/bootstrap-colorpicker.js'
     ];
 
     public $depends = [
