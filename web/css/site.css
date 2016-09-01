@@ -100,6 +100,28 @@ a.desc:after {
 }
 
 
+.color-block {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+
+
+
+
+.pagination {
+    width: 100%;
+    text-align: center;
+}
+
+.pagination > li {
+    display: inline-block;
+    margin-right: -4px;
+}
 
 
 
