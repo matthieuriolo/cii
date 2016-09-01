@@ -25,6 +25,10 @@ class Language extends Component {
         parent::init();
 	}
 
+	public function getExtensionType() {
+		return 'language';
+	}
+
 	public function clearCache() {
 		$this->cache->delete(__CLASS__ . '_getLanguagesForDropdown');
 	}
@@ -66,7 +70,7 @@ class Language extends Component {
 			return $language;
 		}
 
-		if($language = Yii::$app->cii->setting('cii', 'language')) {
+		if($language = Yii::$app->cii->package->setting('cii', 'language')) {
 			return MLanguage::findOne($language);
 		}
 

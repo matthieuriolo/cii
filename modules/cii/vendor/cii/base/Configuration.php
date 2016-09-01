@@ -10,10 +10,12 @@ class Configuration extends Model {
 	public $key;
 	public $label;
 	public $id;
-	public $default = null;
+	public $default;
 	public $type = 'text';
-	public $values = null;
-    
+	public $values;
+    public $extension_type;
+    protected $types;
+
 	public function init() {
 		if(!$this->key || !$this->id) {
 			throw new InvalidConfigException();
@@ -22,8 +24,8 @@ class Configuration extends Model {
 		if(!$this->label) {
 			$this->label = ucfirst($this->key);
 		}
-
-		parent::init();
+		
+        parent::init();
 	}
 
 	public function attributeLabels() {
@@ -50,14 +52,16 @@ class Configuration extends Model {
     			return Yii::$app->formatter->asDecimals($this->default);
     		case 'integer':
     			return Yii::$app->formatter->asInteger($this->default);
+            case 'color':
+                return '<span class="color-block" style="background-color: ' . $this->default .';"></span> ' . Yii::$app->formatter->asText($this->default);
     		default:
     			throw new InvalidConfigException();
     	}
     }
     
     protected function getValues() {
-        $module = Yii::$app->getModule($this->id);
-        $types = $module->getSettingTypes();
+        $types = $this->getSettingTypes();
+
         if(!isset($types[$this->key], $types[$this->key]['values'])) {
             return [];
         }
@@ -65,8 +69,18 @@ class Configuration extends Model {
         return $types[$this->key]['values'];
     }
 
+    protected function getSettingTypes() {
+        if(!$this->types) {
+            $ext = $this->extension_type;
+            $ext = Yii::$app->cii->$ext;
+            $this->types = $ext->getSettingTypes($this->id);
+        }
+
+        return $this->types;
+    }
+
 	public function getValue() {
-		$val = Yii::$app->cii->setting($this->id, $this->key, null);
+		$val = Yii::$app->cii->setting($this->extension_type, $this->id, $this->key, null);
 		//protected passwords
 		if($this->type == 'password') {
 			return str_pad('', strlen($val) * 3, '●');

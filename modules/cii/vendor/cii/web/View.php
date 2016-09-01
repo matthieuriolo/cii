@@ -25,7 +25,7 @@ class View extends \yii\web\View {
 		                    'name' => 'keywords',
 		                    'content' => $dbmodel->keys
 		                ]);
-		            }else if($content = Yii::$app->cii->setting('cii', 'metakeys')) {
+		            }else if($content = Yii::$app->cii->package->setting('cii', 'metakeys')) {
 		                $this->registerMetaTag([
 		                    'name' => 'keywords',
 		                    'content' => $content
@@ -42,7 +42,7 @@ class View extends \yii\web\View {
 		                    'property' => 'og:description',
 		                    'content' => $dbmodel->description
 		                ]);
-		            }else if($content = Yii::$app->cii->setting('cii', 'metadescription')) {
+		            }else if($content = Yii::$app->cii->package->setting('cii', 'metadescription')) {
 		                $this->registerMetaTag([
 		                    'name' => 'description',
 		                    'content' => $content

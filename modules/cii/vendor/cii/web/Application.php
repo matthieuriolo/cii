@@ -15,16 +15,16 @@ class Application extends \yii\web\Application {
 		$this->setModules($this->cii->package->moduleInitializerList());
         
         //set up mailer according to the settings (default is sendmail)
-        if($this->cii->setting('cii', 'transport.type') == 'file') {
+        if($this->cii->package->setting('cii', 'transport.type') == 'file') {
             $this->mailer->useFileTransport = true;
-        }else if($this->cii->setting('cii', 'transport.type') == 'smtp') {
+        }else if($this->cii->package->setting('cii', 'transport.type') == 'smtp') {
             $this->mailer->transport = Yii::createObject([
                 'class' => 'Swift_SmtpTransport',
-                'host' => $this->cii->setting('cii', 'transport.smtp.host'),
-                'username' => $this->cii->setting('cii', 'transport.smtp.user'),
-                'password' => $this->cii->setting('cii', 'transport.smtp.password'),
-                'port' => $this->cii->setting('cii', 'transport.smtp.port'),
-                'encryption' => $this->cii->setting('cii', 'transport.smtp.encryption'),
+                'host' => $this->cii->package->setting('cii', 'transport.smtp.host'),
+                'username' => $this->cii->package->setting('cii', 'transport.smtp.user'),
+                'password' => $this->cii->package->setting('cii', 'transport.smtp.password'),
+                'port' => $this->cii->package->setting('cii', 'transport.smtp.port'),
+                'encryption' => $this->cii->package->setting('cii', 'transport.smtp.encryption'),
             ]);
         }
 
@@ -35,7 +35,7 @@ class Application extends \yii\web\Application {
         }
 
         //set up mail layout
-        $layout = $this->cii->setting('cii', 'mail_layout');
+        $layout = $this->cii->package->setting('cii', 'mail_layout');
         $this->mailer->htmlLayout = $this->layoutBasePath . '/' . $layout . '/mail-html';
         $this->mailer->textLayout = $this->layoutBasePath . '/' . $layout . '/mail-text';
 

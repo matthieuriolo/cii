@@ -43,7 +43,7 @@ class UserMailForm extends User {
                 ))
                 ->setCc($this->cc)
                 ->setTo($this->email)
-                ->setFrom(Yii::$app->cii->setting('cii', 'sender'))
+                ->setFrom(Yii::$app->cii->package->setting('cii', 'sender'))
                 ->send()
             ;
         }

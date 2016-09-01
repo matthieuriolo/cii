@@ -4,23 +4,27 @@ namespace app\modules\cii\controllers;
 
 use Yii;
 use cii\backend\BackendController as Controller;
+
+use app\modules\cii\models\SettingSearchModel;
 use app\modules\cii\models\Configuration;
+
 use yii\data\ArrayDataProvider;
+use yii\base\InvalidConfigException;
 
 class SettingController extends Controller {
     public function actionIndex() {
-        /*
-        $data = new ActiveDataProvider([
-    		'query' => Configuration::find(), 
-			'sort' => [
-            	'attributes' => [
-            		'name',
-            		'value'
-            	],
-        	],
-		]);*/
+        $models = Yii::$app->cii->getSettingTypes();
+        
+        $model = new SettingSearchModel();
+        $model->stringFilter('name', ['name', 'value']);
+        $model->typeFilter('type');
+
+        if($model->load(Yii::$app->request->get()) && $model->validate()) {
+            $models = $model->filterArray($models);
+        }
+
         $data = new ArrayDataProvider([
-            'allModels' => Yii::$app->cii->package->getSettingTypes(),
+            'allModels' => $models,
             'sort' => [
                 'attributes' => [
                     'label',
@@ -33,21 +37,39 @@ class SettingController extends Controller {
         ]);
         
         return $this->render('index', [
-        	'data' => $data
+        	'data' => $data,
+            'model' => $model
         ]);
     }
 
-    public function actionUpdate($id, $key) {
-        $pkg = Yii::$app->getModule($id);
+    public function actionUpdate($id, $type, $key) {
+        $identifier = null;
+
+        $extension = 'app\modules\cii\models\\' . ucfirst($type);
+        $model = $extension::find()
+            ->joinWith('extension as ext')
+            ->where([
+                'ext.name' => $id
+            ])
+            ->one();
+        if($model) {
+            $identifier = $model->extension_id;
+        }
+        
+
+        if(!$identifier) {
+            throw new InvalidConfigException();
+        }
+        
 
         $model = Configuration::findOne([
-            'extension_id' => $pkg->getIdentifier(),
+            'extension_id' => $identifier,
             'name' => $key
         ]);
 
         if(!$model) {
             $model = new Configuration();
-            $model->extension_id = $pkg->getIdentifier();
+            $model->extension_id = $identifier;
             $model->name = $key;
         }
 
@@ -57,12 +79,11 @@ class SettingController extends Controller {
         }
 
         return $this->render('update', [
-            'package' => $pkg,
             'model' => $model,
         ]);
     }
 
-    public function actionDelete($id, $key) {
+    public function actionDelete($id, $type, $key) {
         $pkg = Yii::$app->getModule($id);
         if($model = Configuration::findOne([
             'extension_id' => $pkg->getIdentifier(),

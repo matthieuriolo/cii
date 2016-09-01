@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'encode' => false,
                     'label' => '<i class="glyphicon glyphicon-cog"></i> ' . Yii::p('cii', 'Settings'),
-                    'content' => $this->render('/setting/_list', ['data' => $settings]),
+                    'content' => $this->render('/setting/_list', ['data' => $settings, 'model' => $searchModel]),
                     'headerOptions' => [
                         'class' => count($settings->allModels) ? '' : 'disabled'
                     ]

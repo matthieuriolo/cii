@@ -22,6 +22,7 @@ use app\modules\cii\models\Configuration as Core_Settings;
 use app\modules\cii\models\UploadExtensionForm;
 use app\modules\cii\models\Extension;
 use app\modules\cii\models\ExtensionSearchModel as SearchModel;
+use app\modules\cii\models\SettingSearchModel;
 
 
 abstract class ExtensionBaseController extends Controller {
@@ -62,12 +63,25 @@ abstract class ExtensionBaseController extends Controller {
 
     public function actionView($id) {
         $model = $this->getModel($id);
+
+        $models = $model->settings;
+
+        $searchModel = new SettingSearchModel();
+        $searchModel->stringFilter('name', ['name', 'value']);
+        $searchModel->typeFilter('type');
+        
+        if($searchModel->load(Yii::$app->request->get()) && $searchModel->validate()) {
+            $models = $searchModel->filterArray($models);
+        }
+
+
         return $this->render('/extension/view', [
             'modelType' => $this->getModelType(),
             'modelUrl' => $this->getModelUrl(),
             'model' => $model,
+            'searchModel' => $searchModel,
             'settings' => new ArrayDataProvider([
-                'allModels' => $model->settings,
+                'allModels' => $models,
                 'sort' => [
                     'attributes' => [
                         'label',

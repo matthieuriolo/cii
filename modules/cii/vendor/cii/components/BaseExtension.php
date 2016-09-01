@@ -16,11 +16,21 @@ abstract class BaseExtension extends Component {
 
 	abstract public function all($enabled = true);
 	abstract public function getReflection($name);
+	abstract public function getExtensionType();
+
+
+	public function setting($package, $key, $defaultValue = null) {
+		if(func_num_args() == 2) {
+			return Yii::$app->cii->setting($this->extensionType, $package, $key);
+		}
+		return Yii::$app->cii->setting($this->extensionType, $package, $key, $defaultValue);
+	}
 
 	protected function prepareSetting($key, $val, $id) {
 		$val['class'] = 'cii\base\Configuration';
 		$val['key'] = $key;
 		$val['id'] = $id;
+		$val['extension_type'] = $this->getExtensionType();
 		return Yii::createObject($val);
 	}
 
@@ -29,23 +39,27 @@ abstract class BaseExtension extends Component {
 			$ret = [];
 			if($pkg = $this->getReflection($package)) {
 				foreach($pkg->getSettingTypes() as $key => $val) {
-					array_push($ret, $this->prepareSetting($key, $val, $pkg->getName()));
+					//array_push($ret, $this->prepareSetting($key, $val, $pkg->getName()));
+					$ret[$key] = $this->prepareSetting($key, $val, $pkg->getName());
 				}
 			}
 
 			return $ret;
 		}
-
-		$cacheKey = __CLASS__ . '_settingTypes';
+		
+		$cacheKey = get_called_class() . '_settingTypes';
 		if(($data = $this->cache->get($cacheKey)) !== false) {
 			return $data;
 		}
 
 		$ret = [];
-
 		foreach($this->all() as $pkg) {
 			foreach($pkg->getSettingTypes() as $key => $val) {
-				array_push($ret, $this->prepareSetting($key, $val, $pkg->id));
+				if(is_object($val)) {
+					$ret[] = $val;
+				}else {
+					$ret[] = $this->prepareSetting($key, $val, $pkg->id);
+				}
 			}
 		}
 

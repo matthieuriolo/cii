@@ -36,6 +36,23 @@ class MainComponent extends Component {
         ]);
     }
 
+    public function getSettingTypes() {
+        $ret = [];
+        foreach($this->package->getSettingTypes() as $val) {
+            array_push($ret, $val);
+        }
+
+        foreach($this->layout->getSettingTypes() as $val) {
+            array_push($ret, $val);
+        }
+
+        return $ret;
+
+        return $this->package->getSettingTypes() +
+            //+ $this->language->getSettingTypes()
+             $this->layout->getSettingTypes()
+        ;
+    }
 
     public function mail($class, $to, $data) {
     	if(is_string($class)) {
@@ -78,11 +95,23 @@ class MainComponent extends Component {
     }
 
 
-    public function setting($package, $key, $defaultValue = null) {
-    	$package = Yii::$app->getModule($package);
-    	$model = Configuration::find()
+    public function setting($type, $package, $key, $defaultValue = null) {
+    	$identifier = null;
+        $extension = 'app\modules\cii\models\\' . ucfirst($type);
+
+        $extension = $extension::find()
+            ->joinWith('extension as ext')
+            ->where(['ext.name' => $package])
+            ->one()
+        ;
+
+        if(!$extension) {
+            throw new InvalidConfigException();
+        }
+
+        $model = Configuration::find()
     		->where([
-    			'extension_id' => $package->getIdentifier(),
+    			'extension_id' => $extension->extension_id,
     			'name' => $key,
     		])
     		->one();
@@ -91,8 +120,8 @@ class MainComponent extends Component {
     		return $model->getPreparedValue();
     	}
 
-    	if(!$model && func_num_args() == 2) {
-    		$types = $package->getSettingTypes();
+    	if(!$model && func_num_args() == 3) {
+    		$types = $extension->getSettings();
 
     		if(!isset($types[$key])) {
     			throw new InvalidConfigException();

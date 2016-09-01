@@ -80,7 +80,7 @@ class LoginForm extends Model {
      */
     public function login() {
         if($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? Yii::$app->cii->setting('cii', 'rememberduration') : 0);
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? Yii::$app->cii->package->setting('cii', 'rememberduration') : 0);
         } else {
             return false;
         }

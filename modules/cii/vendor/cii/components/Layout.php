@@ -34,7 +34,11 @@ class Layout extends BaseExtension {
 		return $data;
 	}
 	*/
-
+	
+	public function getExtensionType() {
+		return 'layout';
+	}
+	
 	public function clearCache() {
 		$this->cache->delete(__CLASS__ . '_getLayoutsForDropdown');
 		$this->cache->delete(__CLASS__ . '_getContentsForDropdown_yes');

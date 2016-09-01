@@ -57,6 +57,7 @@ class Configuration extends \yii\db\ActiveRecord {
                 break;
             case 'password':
             case 'text':
+            case 'color':
                 break;
             case 'image':
                 $path = Yii::getAlias('@webroot') . '/' . $value;
@@ -76,6 +77,7 @@ class Configuration extends \yii\db\ActiveRecord {
                 return floatval($this->value);
             case 'integer':
                 return intval($this->value);
+            case 'color':
             case 'in':
             case 'password':
             case 'text':
@@ -94,6 +96,7 @@ class Configuration extends \yii\db\ActiveRecord {
     public function render($view, $form) {
         $type = $this->type;
         switch($type) {
+            case 'color':
             case 'boolean':
             case 'in':
             case 'password':
@@ -109,26 +112,23 @@ class Configuration extends \yii\db\ActiveRecord {
     }
 
     public function getType() {
-        $type = $this->getModuleTypes();
+        $type = $this->getTypes();
         return isset($type['type']) ? strtolower($type['type']) : 'text';
     }
 
     public function getValues() {
-        $type = $this->getModuleTypes();
+        $type = $this->getTypes();
         return isset($type['values']) ? $type['values'] : [];
     }
 
     public function getLabel() {
-        $type = $this->getModuleTypes();
+        $type = $this->getTypes();
         return isset($type['label']) ? $type['label'] : ucfirst($this->name);
     }
 
-    protected function getModuleTypes() {
+    protected function getTypes() {
         if(!$this->_types) {
-            $module = Yii::$app->cii->package->getReflection($this->extension->name);
-            if($module) {
-                $this->_types = $module->getSettingTypes();
-            }
+            $this->_types = $this->extension->getReflection()->getSettingTypes();
         }
         
         return isset($this->_types[$this->name]) ? $this->_types[$this->name] : null;

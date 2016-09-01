@@ -17,7 +17,9 @@ class Package extends BaseExtension {
 		return null;
 	}
 
-	
+	public function getExtensionType() {
+		return 'package';
+	}
 
 	public function clearCache() {
 		$this->cache->delete(__CLASS__ . '_namesFromDB_all');

@@ -11,7 +11,7 @@ class BackendController extends Controller {
 	public function init() {
 		$this->layout = Yii::$app->layoutBasePath .
 			'/' .
-			Yii::$app->cii->setting('cii', 'backend_layout') .
+			Yii::$app->cii->package->setting('cii', 'backend_layout') .
 			'/backend'
 		;
 	}

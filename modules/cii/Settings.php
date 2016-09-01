@@ -19,6 +19,11 @@ return [
     ],
 
     /*
+    'favicon' => [
+        'label' => Yii::t('app', 'Website Logo'),
+        'type' => 'favicon'
+    ],
+
     'timezone' => [
         'label' => Yii::t('app', 'Website default timezone'),
         'type' => 'in',
