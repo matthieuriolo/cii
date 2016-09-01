@@ -9,7 +9,7 @@ Pjax::begin(); ?>
         'dataProvider' => $data,
         'columns' => [
             'group.name',
-            'created'
+            'created:datetime'
         ],
     ]); ?>
 <?php Pjax::end(); ?>

@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ['class' => 'btn btn-success pull-right']
     ); ?>
     
-    <h1>Packages</h1>
+    <h1><?= Html::encode($this->title); ?></h1>
 
     <?php 
 

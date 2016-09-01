@@ -32,7 +32,7 @@ Pjax::begin(); ?>
         'dataProvider' => $data,
         'columns' => [
             'group.name',
-            'created',
+            'created:datetime',
             'group.enabled:boolean',
             
             [

@@ -5,22 +5,33 @@ use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 
-$form = ActiveForm::begin(); ?>
+$form = ActiveForm::begin();
+$multilanguage = Yii::$app->cii->package->setting('cii', 'multilanguage');
+
+if($multilanguage) {
+    $col = 3;
+}else {
+    $col = 4;
+}
+
+?>
 
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-<?= $col ?>">
         <?= $form->field($visibleModel, 'position')->dropDownList($positions); ?>
     </div>
     
-    <div class="col-md-3">
+    <div class="col-md-<?= $col ?>">
         <?= $form->field($visibleModel, 'route_id')->dropDownList($routes); ?>
     </div>
     
-    <div class="col-md-3">
+    <? if($multilanguage) { ?>
+    <div class="col-md-<?= $col ?>">
         <?= $form->field($visibleModel, 'language_id')->dropDownList($languages); ?>
     </div>
-    
-    <div class="col-md-3">
+    <?php } ?>
+
+    <div class="col-md-<?= $col ?>">
         <div class="form-group">
             <label class="control-label">&nbsp;</label>
             <div class="form-control-static no-padding">
@@ -46,7 +57,13 @@ $form = ActiveForm::begin(); ?>
             'ordering',
             'position',
             'route_id',
-            'language_id',
+            [
+                'attribute' => 'language_id',
+                'format' => 'html',
+                'value' => ['cii\helpers\Html', 'languageLink'],
+                'visible' => $multilanguage
+            ],
+
             [
                 'class' => 'cii\grid\ActionColumn',
                 'template' => '{delete}',

@@ -9,7 +9,12 @@ echo DetailView::widget([
         'username',
         'email:email',
         'created:datetime',
-        'language_id',
+        [
+        	'attribute' => 'language_id',
+        	'value' => $model->language_id ? $model->language->name : null,
+        	'visible' => Yii::$app->cii->package->setting('cii', 'multilanguage')
+        ],
+
         'layout_id',
     ],
 ]);

@@ -52,7 +52,10 @@ echo GridView::widget([
             'value' => 'preparedDefault',
         ],
 
-        'value',
+        [
+            'attribute' => 'value',
+            'format' => 'html' 
+        ],
 
         [
             'class' => 'yii\grid\ActionColumn',

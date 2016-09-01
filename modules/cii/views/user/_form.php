@@ -37,12 +37,14 @@ use cii\widgets\Toggler;
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model, 'language_id')->dropDownList(Yii::$app->cii->language->getLanguagesForDropdown()) ?>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-6">
         <?= $form->field($model, 'layout_id')->dropDownList(Yii::$app->cii->layout->getLayoutsForDropdown()) ?>
     </div>
 </div>
+
+<?php if(Yii::$app->cii->package->setting('cii', 'multilanguage')) { ?>
+<div class="row">
+    <div class="col-md-6">
+        <?= $form->field($model, 'language_id')->dropDownList(Yii::$app->cii->language->getLanguagesForDropdown()) ?>
+    </div>
+</div>
+<?php } ?>

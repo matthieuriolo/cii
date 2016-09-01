@@ -3,6 +3,17 @@ namespace cii\helpers;
 use Yii;
 
 class Html extends \yii\helpers\BaseHtml {
+    public static function languageLink($model) {
+        if($model && $model->language_id) {
+            return static::a($model->language->name, [
+                Yii::$app->seo->relativeAdminRoute('modules/cii/language/view'),
+                'id' => $model->language_id
+            ]);
+        }
+
+        return null;
+    }
+
 	public static function a($text, $url = null, $options = []){
         if ($url !== null) {
             $options['href'] = Url::to($url);
