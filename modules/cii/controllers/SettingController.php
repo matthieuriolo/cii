@@ -14,7 +14,7 @@ use yii\base\InvalidConfigException;
 class SettingController extends Controller {
     public function actionIndex() {
         $models = Yii::$app->cii->getSettingTypes();
-        
+
         $model = new SettingSearchModel();
         $model->stringFilter('name', ['name', 'value']);
         $model->typeFilter('type');
