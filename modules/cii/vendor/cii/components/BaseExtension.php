@@ -56,9 +56,9 @@ abstract class BaseExtension extends Component {
 		foreach($this->all() as $pkg) {
 			foreach($pkg->getSettingTypes() as $key => $val) {
 				if(is_object($val)) {
-					$ret[] = $val;
+					$ret[$key] = $val;
 				}else {
-					$ret[] = $this->prepareSetting($key, $val, $pkg->id);
+					$ret[$key] = $this->prepareSetting($key, $val, $pkg->id);
 				}
 			}
 		}

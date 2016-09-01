@@ -39,24 +39,37 @@ class Configuration extends Model {
     }
 
     public function getPreparedDefault() {
-    	switch($this->type) {
-    		case 'password':
-    		case 'image':
-    		case 'text':
-    		case 'in':
-    		case 'email':
-    			return Yii::$app->formatter->asText($this->default);
-    		case 'boolean':
-    			return Yii::$app->formatter->asBoolean($this->default);
-    		case 'float':
-    			return Yii::$app->formatter->asDecimals($this->default);
-    		case 'integer':
-    			return Yii::$app->formatter->asInteger($this->default);
+    	return $this->prepareValue($this->default);
+    }
+
+    protected function prepareValue($val) {
+        switch($this->type) {
+            case 'image':
+            case 'text':
+            case 'email':
+            default:
+                return Yii::$app->formatter->asText($val);
+            case 'in':
+                $values = $this->getValues();
+                return isset($values[$val]) ? $values[$val] : null;
+            case 'password':
+                if(empty($val)) {
+                    return null;
+                }
+
+                return Yii::$app->formatter->asText(str_pad('', strlen($val) * 3, '●'));
+            case 'boolean':
+                return Yii::$app->formatter->asBoolean($val);
+            case 'float':
+                return Yii::$app->formatter->asDecimals($val);
+            case 'integer':
+                return Yii::$app->formatter->asInteger($val);
             case 'color':
-                return '<span class="color-block" style="background-color: ' . $this->default .';"></span> ' . Yii::$app->formatter->asText($this->default);
-    		default:
-    			throw new InvalidConfigException();
-    	}
+                if($val) {
+                    return '<span class="color-block" style="background-color: ' . $val .';"></span> ' . Yii::$app->formatter->asText($val);
+                }
+                return null;
+        }
     }
     
     protected function getValues() {
@@ -80,15 +93,6 @@ class Configuration extends Model {
     }
 
 	public function getValue() {
-		$val = Yii::$app->cii->setting($this->extension_type, $this->id, $this->key, null);
-		//protected passwords
-		if($this->type == 'password') {
-			return str_pad('', strlen($val) * 3, '●');
-		}else if($this->type == 'in') {
-            $values = $this->getValues();
-            return isset($values[$val]) ? $values[$val] : null;
-        }
-
-		return $val;
+        return $this->prepareValue(Yii::$app->cii->setting($this->extension_type, $this->id, $this->key, null));
 	}
 }

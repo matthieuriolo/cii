@@ -7,17 +7,6 @@ return [
         'default' => 'My website'
     ],
 
-    'logo' => [
-        'label' => Yii::t('app', 'Website Logo'),
-        'type' => 'image'
-    ],
-
-    'onlylogo' => [
-        'label' => Yii::t('app', 'Website only logo'),
-        'type' => 'boolean',
-        'default' => false
-    ],
-
     /*
     'favicon' => [
         'label' => Yii::t('app', 'Website Logo'),
@@ -44,18 +33,11 @@ return [
     ],
 
 
-    'frontend_layout' => [
-        'label' => Yii::t('app', 'Frontend layout'),
+    'layout' => [
+        'label' => Yii::t('app', 'Default ayout'),
         'default' => 'cii',
         'type' => 'in',
-        'values' => Yii::$app->cii->layout->getBackendLayoutsForDropdown()
-    ],
-
-    'backend_layout' => [
-        'label' => Yii::t('app', 'Backend layout'),
-        'default' => 'cii',
-        'type' => 'in',
-        'values' => Yii::$app->cii->layout->getFrontendLayoutsForDropdown()
+        'values' => Yii::$app->cii->layout->getLayoutsForDropdown()
     ],
 
     'mail_layout' => [

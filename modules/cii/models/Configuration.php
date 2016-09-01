@@ -133,22 +133,4 @@ class Configuration extends \yii\db\ActiveRecord {
         
         return isset($this->_types[$this->name]) ? $this->_types[$this->name] : null;
     }
-
-    /*
-    public function getSetting() {
-        $module = Yii::$app->getModule($this->extension->name);
-        $types = $module->getSettingTypes();
-        $type = $types[$this->name];
-        return Yii::createObject([
-            'class' => 'cii\base\Configuration',
-            'id' => $this->extension->name,
-
-            'key' => $this->name,
-            'label' => isset($type['label']) ? $type['label'] : null,
-            
-            'default' => isset($type['default']) ? $type['default'] : null,
-            'type' => isset($type['type']) ? $type['type'] : 'text',
-            'values' => isset($type['values']) ? $type['values'] : null,
-        ]);
-    }*/
 }
