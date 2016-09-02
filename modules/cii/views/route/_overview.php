@@ -21,7 +21,8 @@ echo DetailView::widget([
         [
         	'attribute' => 'language_id',
         	'format' => 'html',
-        	'value' => empty($model->language_id) ? '-' : Html::a($model->language->name, [Yii::$app->seo->relativeAdminRoute('modules/cii/language/view'), 'id' => $model->language->id])
+        	'value' => empty($model->language_id) ? '-' : Html::a($model->language->name, [Yii::$app->seo->relativeAdminRoute('modules/cii/language/view'), 'id' => $model->language->id]),
+            'visible' => Yii::$app->cii->package->setting('cii', 'multilanguage')
         ],
 
         [

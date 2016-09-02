@@ -36,10 +36,12 @@ use cii\widgets\Toggler;
 
 <div class="row">
 	<div class="col-md-6">
-		<?php echo $form->field($model, 'language_id')->dropDownList($languages); ?>
-	</div>
-
-	<div class="col-md-6">
 		<?php echo $form->field($model, 'parent_id')->dropDownList($parentRoutes); ?>
 	</div>
+
+	<?php if(Yii::$app->cii->package->setting('cii', 'multilanguage')) { ?>
+	<div class="col-md-6">
+		<?php echo $form->field($model, 'language_id')->dropDownList($languages); ?>
+	</div>
+	<?php } ?>
 </div>
