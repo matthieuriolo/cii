@@ -34,7 +34,7 @@ return [
 
 
     'layout' => [
-        'label' => Yii::t('app', 'Default ayout'),
+        'label' => Yii::t('app', 'Default Layout'),
         'default' => 'cii',
         'type' => 'in',
         'values' => Yii::$app->cii->layout->getLayoutsForDropdown()

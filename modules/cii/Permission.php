@@ -15,18 +15,24 @@ class Permission {
     const MANAGE_EXTENSION = 6;
     const MANAGE_LAYOUT = 7;
     const MANAGE_LANGUAGE = 8;
+    const MANAGE_PACKAGE = 8;
+
+    const MANAGE_ADMIN = 10;
 
     static public function getPermissions() {
     	return [
-    		static::MANAGE_ROUTE => Yii::t('app', 'Manage routes'),
-    		static::MANAGE_CONTENT => Yii::t('app', 'Manage contents'),
-    		static::MANAGE_USER => Yii::t('app', 'Manage users'),
-    		static::MANAGE_GROUP => Yii::t('app', 'Manage groups'),
-    		static::MANAGE_SETTING => Yii::t('app', 'Manage settings'),
-    		static::MANAGE_LOG => Yii::t('app', 'Manage log'),
-    		static::MANAGE_EXTENSION => Yii::t('app', 'Manage extensions'),
-    		static::MANAGE_LAYOUT => Yii::t('app', 'Manage layouts'),
-    		static::MANAGE_LANGUAGE => Yii::t('app', 'Manage languages'),
+    		static::MANAGE_ADMIN => Yii::p('cii', 'Admin'),
+
+            static::MANAGE_ROUTE => Yii::p('cii', 'Manage routes'),
+    		static::MANAGE_CONTENT => Yii::p('cii', 'Manage contents'),
+    		static::MANAGE_USER => Yii::p('cii', 'Manage users'),
+    		static::MANAGE_GROUP => Yii::p('cii', 'Manage groups'),
+    		static::MANAGE_SETTING => Yii::p('cii', 'Manage settings'),
+    		static::MANAGE_LOG => Yii::p('cii', 'Manage log'),
+    		static::MANAGE_EXTENSION => Yii::p('cii', 'Manage extensions'),
+    		static::MANAGE_LAYOUT => Yii::p('cii', 'Manage layouts'),
+    		static::MANAGE_LANGUAGE => Yii::p('cii', 'Manage languages'),
+            static::MANAGE_PACKAGE => Yii::p('cii', 'Manage packages'),
     	];
     }
 }

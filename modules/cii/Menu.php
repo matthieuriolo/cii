@@ -35,6 +35,13 @@ class Menu {
 
                         /*
                         [
+                            'name' => Yii::p('cii', 'Positions'),
+                            'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/position/index'), []],
+                            'icon' => 'glyphicon glyphicon-blackboard'
+                        ],
+
+                        
+                        [
                             'name' => 'Mail templates',
                             'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/mail/index')],
                             'icon' => 'glyphicon glyphicon-envelope'

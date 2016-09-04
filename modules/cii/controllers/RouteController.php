@@ -9,7 +9,7 @@ use cii\base\SearchModel;
 
 use app\modules\cii\models\Route;
 use app\modules\cii\models\Classname;
-
+use app\modules\cii\Permission;
 
 use yii\data\ActiveDataProvider;
 use yii\helpers\Json;
@@ -20,8 +20,12 @@ use yii\web\NotFoundHttpException;
 use cii\helpers\SPL;
 
 class RouteController extends Controller {
+    public function getAccessRoles() {
+        return [Permission::MANAGE_ROUTE, Permission::MANAGE_ADMIN];
+    }
+
 	public function behaviors() {
-        return [
+        return parent::behaviors() + [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

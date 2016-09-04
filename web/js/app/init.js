@@ -137,6 +137,40 @@ var App = {
 
 		return $.Deferred().reject(resp.error_code).promise();
 	},
+
+
+
+	getSelector: function(node) {
+		/*
+		thanks to
+		http://stackoverflow.com/questions/3620116/get-css-path-from-dom-element
+		Gumbo
+		*/
+		var el = node;
+		if (!(el instanceof Element)) 
+            return;
+        var path = [];
+        while (el.nodeType === Node.ELEMENT_NODE) {
+            var selector = el.nodeName.toLowerCase();
+            if (el.id) {
+                selector += '#' + el.id;
+                path.unshift(selector);
+                break;
+            } else {
+                var sib = el, nth = 1;
+                while (sib = sib.previousElementSibling) {
+                    if (sib.nodeName.toLowerCase() == selector)
+                       nth++;
+                }
+                if (nth != 1)
+                    selector += ":nth-of-type("+nth+")";
+            }
+            path.unshift(selector);
+            el = el.parentNode;
+        }
+        return path.join(" > ");
+	},
+
 	/*
 	openGPModal: function(url) {
 		if(!url)
@@ -324,10 +358,22 @@ rivets.formatters.bytesFormatter = App.bytesFormatter;
 
 /* setup require according the config of the App */
 var defaultConfig = {
+	//baseUrl: './js/app',
 	//urlArgs: "v=" +  App.commitID,
 	paths: {
-		'jstemplate': '../..',
+		jstemplate: '../..',
+		tinyMCE: '../app/tinymce/tinymce',
 	},
+
+    shim: {
+        tinyMCE: {
+            exports: 'tinyMCE',
+            init: function () {
+                this.tinyMCE.DOM.events.domLoaded = true;
+                return this.tinyMCE;
+            }
+        }
+    }
 }
 
 if(true || App.isDevelopment) {

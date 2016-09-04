@@ -7,11 +7,16 @@ use cii\backend\BackendController as Controller;
 
 use app\modules\cii\models\SettingSearchModel;
 use app\modules\cii\models\Configuration;
+use app\modules\cii\Permission;
 
 use yii\data\ArrayDataProvider;
 use yii\base\InvalidConfigException;
 
 class SettingController extends Controller {
+    public function getAccessRoles() {
+        return [Permission::MANAGE_SETTING, Permission::MANAGE_ADMIN];
+    }
+
     public function actionIndex() {
         $models = Yii::$app->cii->getSettingTypes();
 

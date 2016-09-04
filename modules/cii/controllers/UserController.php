@@ -59,7 +59,7 @@ class UserController extends BackendController
     }
 
     public function getAccessRoles() {
-        return [Permission::MANAGE_USER];
+        return [Permission::MANAGE_USER, Permission::MANAGE_ADMIN];
     }
 
     /**

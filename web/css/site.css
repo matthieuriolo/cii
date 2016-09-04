@@ -109,7 +109,21 @@ a.desc:after {
     border: 1px solid #ddd;
 }
 
+.homepage-background {
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+    overflow: hidden;
+    z-index: -1;
+}
 
+.homepage-background .content-box {
+    border: none;
+    padding: 0px;
+    margin: 0px;
+}
 
 
 
@@ -157,6 +171,9 @@ span.list-group-item {
 }
 
 
+
+
+
 /* content box */
 .content-box {
     border: 1px solid #ddd;
@@ -166,6 +183,13 @@ span.list-group-item {
     padding: 15px;
     margin-bottom: 15px;
 }
+
+.content-box .content-box {
+    padding: 0px;
+    margin-bottom: 0px;
+    border: none;
+}
+
 
 /* tab */
 
@@ -323,6 +347,9 @@ span.list-group-item {
 
 
 /* navbar logo and text */
+.navbar-inverse {
+    border: none !important;
+}
 
 .navbar .navbar-brand .brand-logo {
     margin-top: -10px;

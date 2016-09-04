@@ -4,9 +4,16 @@ namespace app\modules\cii\controllers;
 
 use Yii;
 use app\modules\cii\models\Extension;
+use app\modules\cii\Permission;
+
+
 use yii\data\ActiveDataProvider;
 
 class ExtensionController extends ExtensionBaseController {
+    public function getAccessRoles() {
+        return [Permission::MANAGE_EXTENSION, Permission::MANAGE_ADMIN];
+    }
+
     public function actionEnable($id) {
         Yii::$app->cii->clearCache();
         parent::actionEnable($id);

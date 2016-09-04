@@ -28,6 +28,10 @@ use yii\helpers\Json;
  * ContentController implements the CRUD actions for Content model.
  */
 class ContentController extends BackendController {
+    public function getAccessRoles() {
+        return [Permission::MANAGE_CONTENT, Permission::MANAGE_ADMIN];
+    }
+    
     /**
      * @inheritdoc
      */

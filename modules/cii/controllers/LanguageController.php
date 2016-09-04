@@ -6,6 +6,7 @@ use Yii;
 use app\modules\cii\models\Language;
 use app\modules\cii\models\LanguageMessage;
 use app\modules\cii\models\FormatterExample;
+use app\modules\cii\Permission;
 
 use yii\web\NotFoundHttpException;
 use yii\data\ActiveDataProvider;
@@ -15,6 +16,10 @@ use cii\base\SearchModel;
 
 
 class LanguageController extends BackendController {
+    public function getAccessRoles() {
+        return [Permission::MANAGE_LANGUAGE, Permission::MANAGE_EXTENSION, Permission::MANAGE_ADMIN];
+    }
+
     public function actionUpdate($id) {
         $model = $this->findModel($id);
 

@@ -5,9 +5,16 @@ namespace app\modules\cii\controllers;
 use Yii;
 use cii\backend\BackendController as Controller;
 use app\modules\cii\models\Package;
+use app\modules\cii\Permission;
+
+
 use yii\data\ActiveDataProvider;
 
 class PackageController extends ExtensionBaseController {
+    public function getAccessRoles() {
+        return [Permission::MANAGE_PACKAGE, Permission::MANAGE_EXTENSION, Permission::MANAGE_ADMIN];
+    }
+
     public function actionEnable($id) {
         Yii::$app->cii->package->clearCache();
         parent::actionEnable($id);

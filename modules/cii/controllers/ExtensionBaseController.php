@@ -30,7 +30,7 @@ abstract class ExtensionBaseController extends Controller {
     const DIRNAME = 'extension.dir';
 
     public function behaviors() {
-        return [
+        return parent::behaviors() + [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

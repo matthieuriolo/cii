@@ -10,6 +10,8 @@ use app\modules\cii\models\GroupSearch;
 use app\modules\cii\models\Permission;
 use app\modules\cii\models\PermissionForm;
 
+use app\modules\cii\Permission as MPermission;
+
 use cii\base\SearchModel;
 use cii\backend\BackendController;
 
@@ -21,11 +23,15 @@ use yii\data\ActiveDataProvider;
  * GroupController implements the CRUD actions for Group model.
  */
 class GroupController extends BackendController {
+    public function getAccessRoles() {
+        return [MPermission::MANAGE_GROUP, MPermission::MANAGE_ADMIN];
+    }
+
     /**
      * @inheritdoc
      */
     public function behaviors() {
-        return [
+        return parent::behaviors() + [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
