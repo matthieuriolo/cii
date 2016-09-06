@@ -26,6 +26,10 @@ abstract class AbstractRoute extends Object implements RouteInterface {
     	return '/' . $node->getBaseRoute() . '/' . $route;
     }
 
+    public function getCalledModelRoute() {
+        return $this->parentRoute ? $this->parentRoute->getCalledModelRoute() : null;
+    }
+
 
     public function relativeAdminRoute($route) {
         return $this->relativeRoute('app\modules\cii\routes\Backend', $route);

@@ -26,6 +26,10 @@ class ControllerRoute extends DBRoute {
         return [];
     }
 
+    public function getCalledModelRoute() {
+        return $this->parentRoute ? $this->parentRoute->getCalledModelRoute() : null;
+    }
+
     protected function matchRoute($sub) {
         $matches = [];
         foreach($this->getSubRoutes() as $class) {

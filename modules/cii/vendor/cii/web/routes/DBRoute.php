@@ -14,9 +14,7 @@ use cii\helpers\UTC;
 class DBRoute extends AbstractRoute {
     protected function getRouteName() {
     	$route = $this->route;
-        if(!is_string($route)) {
-            die('weird');
-        }
+        
         if(($pos = strpos($route, '/', $this->offset)) !== false) {
         	$name = substr($route, $this->offset, $pos);
 		}else if($this->offset < strlen($route)) {
@@ -39,6 +37,10 @@ class DBRoute extends AbstractRoute {
             	'parent_id' => $parent_id
             ])
             ->one();
+    }
+
+    public function getCalledModelRoute() {
+        return $this->getDBModel();
     }
 
     public function parseRoute($manager, $request) {
