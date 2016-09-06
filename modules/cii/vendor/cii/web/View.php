@@ -10,7 +10,7 @@ use cii\helpers\SPL;
 
 class View extends \yii\web\View {
 	public function isAdminArea() {
-		if(Yii::$app->seo && Yii::$app->seo->findRoute('app\modules\cii\routes\Backend')) {
+		if(Yii::$app->seo && Yii::$app->seo->findRoute('app\modules\cii\routes\Backend', false)) {
 			return true;
 		}
 
