@@ -61,6 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'language',
                 'value' => 'language.name',
+                'visible' => Yii::$app->cii->package->setting('cii', 'multilanguage')
             ],
 
             'hits',

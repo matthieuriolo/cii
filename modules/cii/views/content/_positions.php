@@ -25,7 +25,7 @@ if($multilanguage) {
         <?= $form->field($visibleModel, 'route_id')->dropDownList($routes); ?>
     </div>
     
-    <? if($multilanguage) { ?>
+    <?php if($multilanguage) { ?>
     <div class="col-md-<?= $col ?>">
         <?= $form->field($visibleModel, 'language_id')->dropDownList($languages); ?>
     </div>

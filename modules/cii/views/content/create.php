@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\bootstrap\Tabs;
 use cii\helpers\SPL;
-
+use dosamigos\tinymce\TinyMce;
 
 $this->title = Yii::p('cii', 'Create Content');
 $this->params['breadcrumbs'][] = [
@@ -57,6 +57,6 @@ $this->params['breadcrumbs'][] = $this->title;
         echo Tabs::widget(['items' => $items]);
         ?>
     </div>
-
+    
     <?php ActiveForm::end(); ?>
 </div>
