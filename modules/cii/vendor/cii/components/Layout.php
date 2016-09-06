@@ -74,15 +74,30 @@ class Layout extends BaseExtension {
 		return $query->all();
 	}
 
-	public function getContents($name = null) {
+	public function getContents($name = null, $routeId = true) {
+		if($routeId === true) {
+			$routeId = null;
+
+			if(Yii::$app->seo && ($mainRoute = Yii::$app->seo->getCalledModelRoute())) {
+				$routeId = $mainRoute->id;
+			}
+		}
+
+		$where = [
+			'position' => $name,
+			'ext.enabled' => true
+		];
+
+		if(is_int($routeId) || is_null($routeId)) {
+			$where['route_id'] = $routeId;
+		}
+
+
 		$models = ContentVisibilities::find()
 			->joinWith([
 				'content.classname.package.extension as ext'
 			])
-			->where([
-				'position' => $name,
-				'ext.enabled' => true
-			])
+			->where($where)
 			->all()
 		;
 
