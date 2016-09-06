@@ -23,8 +23,7 @@ class Module extends \cii\backend\Package {
 
     public function getContentTypes() {
     	return [
-    		'app\modules\cii\models\CustomContent' => Yii::p('cii', 'CustomContent'),
-            'app\modules\cii\models\UserLoginContent' => Yii::p('cii', 'Login'),
+    		'app\modules\cii\models\UserLoginContent' => Yii::p('cii', 'Login'),
     		'app\modules\cii\models\UserLogoutContent' => Yii::p('cii', 'Logout'),
     		'app\modules\cii\models\UserRegisterContent' => Yii::p('cii', 'Registration'),
     		'app\modules\cii\models\UserActivateContent' => Yii::p('cii', 'Activation'),

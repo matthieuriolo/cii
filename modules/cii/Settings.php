@@ -20,6 +20,12 @@ return [
     ],
     */
 
+    'startroute' => [
+        'label' => Yii::t('app', 'Route showed at startpage'),
+        'type' => 'in',
+        'values' => Yii::$app->cii->route->getRoutesForDropdown()
+    ],
+
     'multilanguage' => [
         'label' => Yii::t('app', 'Website is multilanguage'),
         'type' => 'boolean',
