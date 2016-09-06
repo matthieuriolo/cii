@@ -53,7 +53,10 @@ class RouteController extends Controller {
         $model = new SearchModel(Route::className());
         $model->stringFilter('slug');
         $model->booleanFilter('enabled');
-        $model->languageFilter('language_id');
+        
+        if(Yii::$app->cii->package->setting('cii', 'multilanguage')) {
+            $model->languageFilter('language_id');
+        }
 
         if($model->load(Yii::$app->request->get()) && $model->validate()) {
             $query = $model->applyFilter($query);
