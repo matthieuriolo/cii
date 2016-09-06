@@ -1,13 +1,10 @@
 <?php
-
-/* @var $this \yii\web\View */
-/* @var $content string */
-
+use yii\helpers\Json;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
-use app\assets\AppAsset;
+use app\layouts\cii\assets\AppAsset;
 
 
 use cii\widgets\BackendMenu;
@@ -21,7 +18,11 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <link rel="shortcut icon" href="<?php echo Yii::$app->request->baseUrl;?>/favicon.ico" type="image/x-icon" />
+    <?php if($favicon = Yii::$app->cii->layout->setting('cii', 'favicon')) { ?>
+        <link rel="shortcut icon" href="<?php
+        echo Yii::$app->request->baseUrl , '/' , $favicon;
+        ?>" type="image/x-icon" />
+    <?php } ?>
 
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
@@ -29,6 +30,13 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
+
+<div class="homepage-background"><?php
+$background = $this->getContents('background');
+foreach($background as $c) {
+    echo $this->renderShadow($c, 'background');
+}
+?></div>
 
 <div class="wrap">
     <?php
@@ -50,6 +58,7 @@ AppAsset::register($this);
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
+            'style' => 'background-color: ' . Yii::$app->cii->layout->setting('cii', 'navbarcolor') . ';'
         ],
     ]);
 
@@ -62,8 +71,8 @@ AppAsset::register($this);
             ],
         ]);
     }else {
-        foreach($this->getContents('top') as $c) {
-            echo $this->renderShadow($c, 'top');
+        foreach($this->getContents('navbar') as $c) {
+            echo $this->renderShadow($c, 'navbar');
         }
     }
 
@@ -71,7 +80,7 @@ AppAsset::register($this);
     ?>
 
     <div class="container">
-        <?php if(Yii::$app->cii->layout->setting('cii', 'show_breadcrumb')) {
+        <?php if(Yii::$app->cii->layout->setting('cii', 'show_breadcrumb') || $this->isAdminArea()) {
             echo Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]);
@@ -84,34 +93,27 @@ AppAsset::register($this);
 
         <div class="row"><?php
             $countMiddle = 12;
-            $leftContents = [];
-            $rightContents = [];
+            $leftContents = $this->getContents('left');
+            $rightContents = $this->getContents('right');
             
-            if($this->isAdminArea()) {
+            if(count($rightContents)) {
+                $countMiddle -= 3;
+            }
+
+            if(count($leftContents) || $this->isAdminArea()) {
                 $countMiddle -= 3;
             ?>
                 <div class="col-md-3">
-                    <?= BackendMenu::widget(); ?>
+                    <?php
+                    if($this->isAdminArea()) {
+                        echo BackendMenu::widget();
+                    }
+
+                    foreach($leftContents as $c) {
+                        echo $this->renderShadow($c, 'left');
+                    }
+                    ?>
                 </div>
-            <?php }else {
-                $leftContents = $this->getContents('left');
-                $rightContents = $this->getContents('right');
-
-                if(count($rightContents)) {
-                    $countMiddle -= 3;
-                }
-
-                if(count($leftContents)) {
-                    $countMiddle -= 3;
-                ?>
-                    <div class="col-md-3">
-                        <?php
-                        foreach($leftContents as $c) {
-                            echo $this->renderShadow($c, 'left');
-                        }
-                        ?>
-                    </div>
-                <?php } ?>
             <?php } ?>
 
             <div class="col-md-<?= (string)$countMiddle; ?>">
@@ -141,6 +143,21 @@ AppAsset::register($this);
 </footer>
 
 <?php $this->endBody() ?>
+
+<style>
+    .navbar-inverse .navbar-brand,
+    .navbar-inverse .navbar-nav > li > a {
+        color: <?= Yii::$app->cii->layout->setting('cii', 'navbarcolor_text'); ?>;
+    }
+
+    .navbar-inverse .navbar-brand:hover,
+    .navbar-inverse .navbar-brand:focus,
+    .navbar-inverse .navbar-nav > li > a:hover,
+    .navbar-inverse .navbar-nav > li > a:focus {
+        color: <?= Yii::$app->cii->layout->setting('cii', 'navbarcolor_text_hover'); ?>;
+    }
+</style>
+
 </body>
 </html>
 <?php $this->endPage() ?>

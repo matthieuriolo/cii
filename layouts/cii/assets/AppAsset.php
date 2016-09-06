@@ -14,8 +14,12 @@ use yii\web\AssetBundle;
  * @since 2.0
  */
 class AppAsset extends AssetBundle {
-    public $basePath = '@webroot';
+   /* public $basePath = '@webroot';
     public $baseUrl = '@web';
+    */
+
+    public $sourcePath = '@app/layouts/cii/assets/web';
+
     public $css = [
         'css/site.css',
         'css/bootstrap-wysihtml5.css',
@@ -24,7 +28,7 @@ class AppAsset extends AssetBundle {
     public $js = [
         'js/tabhack.js',
         'js/rivets.min.js',
-        ['js/require.min.js', 'data-main' => 'js/app/init.js']
+        //['js/require.min.js', 'data-main' => 'js/app/init.js']
     ];
 
     public $depends = [
@@ -32,4 +36,10 @@ class AppAsset extends AssetBundle {
         //'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',
     ];
+
+    static public function register($view) {
+        $info = parent::register($view);
+        $info->js[] = ['js/require.min.js', 'data-main' => $info->baseUrl . '/js/app/init.js'];
+        return $info;
+    }
 }
