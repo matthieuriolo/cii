@@ -15,5 +15,7 @@ return [
     'positions' => [
         'left' => Yii::t('app', 'Left'),
         'right' => Yii::t('app', 'Right'),
+        'background' => Yii::t('app', 'Background'),
+        'navbar' => Yii::t('app', 'Navigation'),
     ],
 ];
