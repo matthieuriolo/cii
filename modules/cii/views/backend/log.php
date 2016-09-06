@@ -7,11 +7,19 @@ $this->title = 'Log files';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-index">
-    <?php echo Html::a(
-        Yii::p('cii', 'Clear logs'),
-        [\Yii::$app->seo->relativeAdminRoute('flushlog')],
-        ['class' => 'btn btn-success pull-right']
-    ); ?>
+    <div class="pull-right">
+        <?php echo Html::a(
+            Yii::p('cii', 'Clear Cache'),
+            [\Yii::$app->seo->relativeAdminRoute('flushcache')],
+            ['class' => 'btn btn-success']
+        ); ?>
+
+        <?php echo Html::a(
+            Yii::p('cii', 'Clear logs'),
+            [\Yii::$app->seo->relativeAdminRoute('flushlog')],
+            ['class' => 'btn btn-success']
+        ); ?>
+    </div>
     
     <h1><?= Yii::p('cii', 'System logs'); ?></h1>
 

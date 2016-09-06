@@ -53,8 +53,11 @@ class BackendController extends Controller {
     		}
     	}
     	
-        //Yii::$app->cache->flush();
+        $this->redirect([Yii::$app->seo->relativeAdminRoute('log')]);
+    }
 
-    	$this->redirect([Yii::$app->seo->relativeAdminRoute('log')]);
+    public function actionFlushcache() {
+        Yii::$app->cache->flush();
+        $this->redirect([Yii::$app->seo->relativeAdminRoute('log')]);
     }
 }
