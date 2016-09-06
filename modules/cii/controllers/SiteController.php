@@ -11,11 +11,12 @@ use yii\web\NotFoundHttpException;
 use yii\data\ActiveDataProvider;
 use cii\helpers\Url;
 
-
+use cii\web\routes\StartpageRoute;
 use cii\helpers\SPL;
 use cii\web\SecurityException;
 
-
+use app\modules\cii\models\Route;
+use app\modules\cii\models\ContentRoute;
 use app\modules\cii\models\ForgotForm;
 use app\modules\cii\models\LoginForm;
 use app\modules\cii\models\LogoutForm;
@@ -54,6 +55,19 @@ class SiteController extends Controller {
 
     public function actionIndex() {
         //this should only happen if there is no startpage
+        if($route_id = Yii::$app->cii->package->setting('cii', 'startroute')) {
+            $model = Route::findOne(['id' => $route_id]);
+            if($model) {
+                $model = $model->outbox();
+                Yii::$app->seo = Yii::createObject([
+                    'class' => 'cii\web\routes\StartpageRoute',
+                    'loadedModel' => $model,
+                    'route_id' => $route_id
+                ]);
+                return $model->forwardToController($this);
+            }
+        }
+
         return $this->render('index');
     }
 
@@ -175,7 +189,20 @@ class SiteController extends Controller {
     }
 
     public function actionContent() {
-        $model = Yii::$app->seo->getModel()->content->outbox();
+        $model = null;
+        if(Yii::$app->seo) {
+            $model = Yii::$app->seo->getModel()->content->outbox();
+        }else {
+            //we're on the frontpage
+            if($route_id = Yii::$app->cii->package->setting('cii', 'startroute')) {
+                $model = ContentRoute::findOne(['route_id' => $route_id]);
+                if($model) {
+                    $model = $model->content->outbox();
+                }
+            }
+        }
+
+
         if(SPL::hasInterface($model, 'app\modules\cii\base\ContentInterface')) {
             return $model->forwardToController($this);
         }
@@ -237,56 +264,4 @@ class SiteController extends Controller {
             'position' => $position
         ]);
     }
-
-/*
-    public function behaviors() {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => [
-                            'error',
-                            'index',
-                            'login',
-                            'content',
-                            'captcha',
-                        ],
-
-                        'allow' => true,
-                    ],
-
-                    [
-                        'actions' => [
-                            'login',
-                            'register',
-                            'forgot',
-                            'activate',
-                        ],
-
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-
-                    [
-                        'actions' => [
-                            'content',
-                            'logout',
-                            'profile'
-                        ],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-
-            /*'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],*
-        ];
-    }
-    */
 }
