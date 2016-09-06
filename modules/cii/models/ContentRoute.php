@@ -86,6 +86,10 @@ class ContentRoute extends LazyRouteModel {
         return ['class' => 'app\modules\cii\routes\content'];
     }
 
+    public function forwardToController($controller) {
+        return Yii::$app->runAction('cii/site/content', Yii::$app->request->queryParams);
+    }
+
     static public function getRouteToController() {
         return 'cii/content';
     }
