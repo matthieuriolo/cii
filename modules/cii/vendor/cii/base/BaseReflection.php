@@ -152,7 +152,7 @@ abstract class BaseReflection extends Object {
             }
         }
 
-        return true;
+        return $this->checkDependencies();
     }
     
     public function install($enabled = false) {
@@ -164,6 +164,19 @@ abstract class BaseReflection extends Object {
         }
 
         return $ret;
+    }
+
+    public function deinstall() {
+        $transaction = Yii::$app->db->connection->beginTransaction();
+        try {
+            $this->getInstalledVersion()->remove();
+        }catch(\Exception $e) {
+            $transaction->rollback();
+            throw $e;
+        }
+
+        $transaction->commit();
+        FileHelper::removeDirectory($this->basePath);
     }
     
 
@@ -216,5 +229,71 @@ abstract class BaseReflection extends Object {
         }
 
         return [];
+    }
+
+
+    protected function versionCompare($packageName, $version) {
+        $min = null;
+        $max = null;
+        if(is_array($version) && count($version) > 0) {
+            $min = $version[0];
+            if(count($version) > 1) {
+                $max = $version[1];
+            }
+        }else if(is_string($version)){
+            $min = $version;
+        }
+
+        $hasModule = Core_Module::find()
+            ->joinWith('extension as ext')
+            ->where([
+                'ext.name' => $packageName,
+            ])
+            ->one();
+
+        if(!$hasModule) {
+            return Yii::t('app', 'The package {pkg} is missing', ['pkg' => $packageName]);
+        }
+        
+
+        if($min) {
+            $ref = new PackageReflection();
+            if(!$ref->load($this->getInstallationPath() . '/' . $packageName)) {
+                return false;
+            }
+
+            if(!version_compare($min, $ref->getVersion(), '>=')) {
+                return Yii::t('app', 'The package {pkg} has only version {version} (demanded is {min})', [
+                    'pkg' => $packageName,
+                    'min' => $min,
+                    'version' => $ref->getVersion()
+                ]);
+            }
+
+            if($max) {
+                if(!version_compare($max, $ref->getVersion(), '<=')) {
+                    return Yii::t('app', 'The package {pkg} version is a greater than demanded  - {version} (demanded is {max})', [
+                        'pkg' => $packageName,
+                        'max' => $min,
+                        'version' => $ref->getVersion()
+                    ]);
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public function checkDependencies() {
+        $ret = [];
+        if(isset($this->data['dependencies'])) {
+            foreach($this->data['dependencies'] as $module => $version) {
+                if(($test = $this->versionCompare($module, $version)) !== true) {
+                    $ret[] = $test;
+                }
+            }
+        }
+
+        return count($ret) == 0 ? true : $ret;
     }
 }
