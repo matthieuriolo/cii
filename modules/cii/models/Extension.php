@@ -10,7 +10,7 @@ class Extension extends \yii\db\ActiveRecord {
      * @inheritdoc
      */
     public static function tableName() {
-        return '{{%Cii_Extension}}';
+        return '{{%Cii_Abstract_Extension}}';
     }
 
     /**

@@ -11,7 +11,7 @@ class Route extends ActiveRecord {
 	public $throwErrorUnboxed = true;
     
     public static function tableName() {
-        return '{{%Cii_Route}}';
+        return '{{%Cii_Abstract_Route}}';
     }
 
     public function rules() {

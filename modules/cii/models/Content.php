@@ -22,7 +22,7 @@ class Content extends \yii\db\ActiveRecord {
      */
     public static function tableName()
     {
-        return '{{%Cii_Content}}';
+        return '{{%Cii_Abstract_Content}}';
     }
 
     /**
