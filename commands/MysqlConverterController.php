@@ -179,7 +179,9 @@ class MysqlConverterController extends Controller
     				'int' => 'integer',
     				'varchar' => 'string',
     				'text' => 'text',
-                    'datetime' => 'dateTime'
+                    'datetime' => 'dateTime',
+                    'date' => 'date',
+                    'time' => 'time',
     			];
 
     			$type = null;
