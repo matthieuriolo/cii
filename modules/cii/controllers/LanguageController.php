@@ -20,6 +20,18 @@ class LanguageController extends BackendController {
         return [Permission::MANAGE_LANGUAGE, Permission::MANAGE_EXTENSION, Permission::MANAGE_ADMIN];
     }
 
+    public function actionCreate() {
+        $model = new Language();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/language/view'), ['id' => $model->id]]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+    }
+
     public function actionUpdate($id) {
         $model = $this->findModel($id);
 

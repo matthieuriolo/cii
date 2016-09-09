@@ -2,9 +2,20 @@
 
 use yii\helpers\Html;
 use cii\widgets\Toggler;
+use cii\widgets\EditView;
 ?>
-
-
+<?php echo EditView::widget([
+     'model' => $model,
+     'form' => $form,
+     'attributes' => [
+            'name:text',
+            'code:text',
+            'shortcode:text',
+            'enabled:boolean',
+        ]
+    ]);
+?>
+<?php /*
 <div class="row">
     <div class="col-md-6">
     	<?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
@@ -28,9 +39,25 @@ use cii\widgets\Toggler;
         ]); ?>
     </div>
 </div>
-
+*/ ?>
 <hr>
 
+<?php echo EditView::widget([
+     'columns' => isset($columns) && $columns > 0 ? $columns : null,
+     'model' => $model,
+     'form' => $form,
+     'attributes' => [
+            'time:text',
+            'date:text',
+            'datetime:text',
+            'thousandSeparator:text',
+            'decimalSeparator:text',
+            'decimals:integer',
+            'removeZeros:boolean'
+        ]
+    ]);
+?>
+<?php /*
 <div class="row">
     <div class="col-md-6">
         <?= $form->field($model, 'time')->textInput(['maxlength' => true]) ?>
@@ -72,7 +99,7 @@ use cii\widgets\Toggler;
         ]); ?>
     </div>
 </div>
-
+*/ ?>
 <hr>
 
 <div class="row">

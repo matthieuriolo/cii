@@ -9,7 +9,8 @@ echo DetailView::widget([
         'name',
         'code',
         'shortcode',
-        'enabled:boolean'
+        'enabled:boolean',
+        'created:datetime'
     ],
 ]) ?>
 

@@ -1,24 +1,19 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use cii\grid\GridView;
 use yii\widgets\Pjax;
-/* @var $this yii\web\View */
-/* @var $searchModel app\modules\core\models\LanguageSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+
 
 $this->title = Yii::p('cii', 'Languages');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="language-index">
-    <div class="pull-right">
-        <?= Html::a(Yii::p('cii', 'Install Message'), [\Yii::$app->seo->relativeAdminRoute('modules/cii/language/install')], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::p('cii', 'Create Language'), [\Yii::$app->seo->relativeAdminRoute('modules/cii/language/create')], ['class' => 'btn btn-success']) ?>
-    </div>
+<div class="pull-right">
+    <?= Html::a(Yii::p('cii', 'Install Message'), [\Yii::$app->seo->relativeAdminRoute('modules/cii/language/install')], ['class' => 'btn btn-primary']) ?>
+    <?= Html::a(Yii::p('cii', 'Create Language'), [\Yii::$app->seo->relativeAdminRoute('modules/cii/language/create')], ['class' => 'btn btn-success']) ?>
+</div>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
+<h1><?= Html::encode($this->title) ?></h1>
     
 <?php Pjax::begin(); ?>
     <?= $model->render($this); ?>
@@ -53,4 +48,4 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-<?php Pjax::end(); ?></div>
+<?php Pjax::end(); ?>
