@@ -15,6 +15,7 @@ class AppAsset extends AssetBundle {
     public $js = [
         'js/tabhack.js',
         'js/rivets.min.js',
+        'js/moment-with-locales.js',
         //['js/require.min.js', 'data-main' => 'js/app/init.js']
     ];
 
