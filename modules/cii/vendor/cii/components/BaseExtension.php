@@ -66,4 +66,30 @@ abstract class BaseExtension extends Component {
 		$this->cache->set($cacheKey, $ret);
 		return $ret;
 	}
+
+	public function getFieldTypes($package = null) {
+		if(!is_null($package)) {
+			$ret = [];
+			if($pkg = $this->getReflection($package)) {
+				return $pkg->getFieldTypes();
+			}
+
+			return $ret;
+		}
+		
+		$cacheKey = get_called_class() . '_fieldTypes';
+		if(($data = $this->cache->get($cacheKey)) !== false) {
+			return $data;
+		}
+
+		$ret = [];
+		foreach($this->all() as $pkg) {
+			foreach($pkg->getFieldTypes() as $key => $val) {
+				$ret += $pkg->getFieldTypes();
+			}
+		}
+
+		$this->cache->set($cacheKey, $ret);
+		return $ret;
+	}
 }

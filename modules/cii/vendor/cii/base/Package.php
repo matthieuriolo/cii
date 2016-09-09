@@ -57,4 +57,8 @@ class Package extends Module {
     public function getSettingTypes() {
         return $this->getReflection()->getSettingTypes();
     }
+
+    public function getFieldTypes() {
+        return $this->getReflection()->getFieldTypes();
+    }
 }

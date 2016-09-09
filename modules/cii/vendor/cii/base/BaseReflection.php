@@ -231,6 +231,10 @@ abstract class BaseReflection extends Object {
         return [];
     }
 
+    public function getFieldTypes() {
+        return isset($this->data['fieldTypes']) && is_array($this->data['fieldTypes']) ? $this->data['fieldTypes'] : [];
+    }
+
 
     protected function versionCompare($packageName, $version) {
         $min = null;

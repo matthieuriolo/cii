@@ -31,6 +31,38 @@ class Module extends \cii\backend\Package {
     	];
     }
 
+    public function getFieldTypes() {
+        return [
+            'text' => 'cii\fields\TextField',
+            'textarea' => 'cii\fields\TextareaField',
+            'html' => 'cii\fields\HtmlField',
+            'password' => 'cii\fields\PasswordField',
+            'texteditor' => 'cii\fields\TexteditorField',
+
+            'boolean' => 'cii\fields\BooleanField',
+            
+            'email' => 'cii\fields\EmailField',
+            'url' => 'cii\fields\UrlField',
+            'integer' => 'cii\fields\IntegerField',
+            'float' => 'cii\fields\FloatField',
+            //'dropdown' => 'cii\fields\DropdownField',
+            
+            'datetime' => 'cii\fields\DatetimeField',
+            'date' => 'cii\fields\DateField',
+            'time' => 'cii\fields\TimeField',
+
+            'route' => 'cii\fields\dropdown\RouteField',
+            'content' => 'cii\fields\dropdown\ContentField',
+            'language' => 'cii\fields\dropdown\ContentField',
+
+            'group' => 'cii\fields\dropdown\GroupField',
+            'user' => 'cii\fields\dropdown\UserField',
+
+            'fieldtypes' => 'cii\fields\dropdown\FieldTypesField',
+            'positiontypes' => 'cii\fields\dropdown\PositionTypesField',
+        ];
+    }
+
     public function getPermissionTypes() {
     	return Permission::getPermissions();
     }
