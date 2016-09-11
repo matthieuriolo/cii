@@ -3,9 +3,11 @@ namespace cii;
 
 use Yii;
 use yii\base\Component;
+use yii\helpers\FileHelper;
 
 use yii\base\InvalidConfigException;
 
+use cii\web\SecurityException;
 use cii\helpers\SPL;
 use app\modules\cii\models\Configuration;
 
@@ -14,12 +16,18 @@ class MainComponent extends Component {
 	public $package = ['class' => 'cii\components\package'];
 	public $route = ['class' => 'cii\components\route'];
 	public $language = ['class' => 'cii\components\language'];
-	
+	public $image = [
+        'class' => 'cii\components\ImageDriver',
+        'driver' => 'GD',
+    ];
+
 	public function init() {
 		$this->layout = Yii::createObject($this->layout);
 		$this->package = Yii::createObject($this->package);
 		$this->route = Yii::createObject($this->route);
 		$this->language = Yii::createObject($this->language);
+
+        $this->image = Yii::createObject($this->image);
 		parent::init();
 	}
 
@@ -36,17 +44,52 @@ class MainComponent extends Component {
         ]);
     }
 
+    protected $_settingTypes;
     public function getSettingTypes() {
-        $ret = [];
-        foreach($this->package->getSettingTypes() as $val) {
-            array_push($ret, $val);
+        if(!$this->_settingTypes) {
+            $ret = [];
+            foreach($this->package->getSettingTypes() as $val) {
+                array_push($ret, $val);
+            }
+
+            foreach($this->layout->getSettingTypes() as $val) {
+                array_push($ret, $val);
+            }
+
+            return $this->_settingTypes = $ret;
         }
 
-        foreach($this->layout->getSettingTypes() as $val) {
-            array_push($ret, $val);
+        return $this->_settingTypes;
+    }
+
+    protected $_fieldTypes;
+    public function getFieldTypes() {
+        if(!$this->_fieldTypes) {
+            return $this->_fieldTypes = $this->package->getFieldTypes()/* +
+                $this->layout->getFieldTypes()*/;
         }
 
-        return $ret;
+        return $this->_fieldTypes;
+    }
+
+    public function hasFieldType($type) {
+        $type = strtolower($type);
+        $values = $this->getFieldTypes();
+        if(isset($values[$type])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function createFieldObject($type, $data = []) {
+        $type = strtolower($type);
+        if(self::hasFieldType($type)) {
+            $data['class'] = $this->getFieldTypes()[$type];
+            return Yii::createObject($data);
+        }
+
+        return null;
     }
 
     public function mail($class, $to, $data) {
@@ -130,5 +173,37 @@ class MainComponent extends Component {
     	}
 
     	return $defaultValue;
+    }
+
+
+    public function thumbnail($file, $width, $height) {
+        $web = Yii::$app->basePath . '/web';
+        if(!is_readable($file) || strpos($file, $web) !== 0) {
+            throw new SecurityException();
+        }
+        
+        $origPath = $path = substr($file, strlen($web) + 1);
+        $path = dirname($path);
+
+        $filename = basename($file);
+        $suffix = '-' . $width . 'X' . $height;
+        if(($pos = strrpos($filename, '.')) !== false) {
+            $filename = substr($filename, 0, $pos) . $suffix . substr($filename, $pos);
+        }else {
+            $filename .= $suffix;
+        }
+
+
+        $thumbnail = $web . '/thumbnails';
+        $thumbnailPath = $thumbnail . '/' . $path . '/' . $filename;
+
+        $img = $this->image->load($file);
+        $img->resize($width, $height, \cii\components\drivers\Kohana\Image::ADAPT);
+        FileHelper::createDirectory(dirname($thumbnailPath));
+        if($img->save($thumbnailPath)) {
+            return substr($thumbnailPath, strlen($web) + 1);
+        }
+
+        return $origPath;
     }
 }

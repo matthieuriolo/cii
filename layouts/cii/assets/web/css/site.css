@@ -366,3 +366,90 @@ span.list-group-item {
 .navbar .navbar-brand:hover .brand-logo img {
     opacity: 1;
 }
+
+
+/* file browser */
+.file-browser .upload-area {
+    border: 2px dashed #ddd;
+    height: 110px;
+    border-radius: 6px;
+
+    background-image: url('../images/file-drag-drop.png');
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    background-position-y: 10px;
+
+    position: relative;
+}
+
+.file-browser .upload-area .form-group {
+    position: absolute;
+    text-align: center;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin-bottom: 0px;
+}
+
+.file-browser .upload-area .form-group input[type="file"] {
+    display: inline-block;
+}
+
+.file-browser .element {
+    position: relative;
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    margin: 4px;
+    padding: 4px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.file-browser .element:hover,
+.file-browser .element.active {
+    border-color: #337ab7;
+}
+
+.file-browser .element .name {
+    text-align: center;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.file-browser .element .preview-container {
+    height: 80px;
+    width: 100%;
+}
+
+.file-browser .element img {
+    width: 100%;
+    height: 100%;
+}
+
+.file-browser .element .preview-container i {
+    font-size: 60px;
+    text-align: center;
+    display: block;
+}
+
+.file-browser .element .buttons {
+    position: absolute;
+    left: 4px;
+    top: 10px;
+    width: 20px;
+    font-size: 18px;
+
+    visibility: hidden;
+    text-align: center;
+}
+
+.file-browser .element .buttons > a {
+    margin: 1px;
+}
+
+.file-browser .element:hover .buttons {
+    visibility: visible;
+}
