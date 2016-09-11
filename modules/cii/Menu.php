@@ -50,14 +50,22 @@ class Menu {
                             'visible' => self::visible($module, [Permission::MANAGE_ADMIN, Permission::MANAGE_CONTENT]),
                         ],
 
-                        /*
+                        
                         [
                             'name' => Yii::p('cii', 'Positions'),
                             'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/position/index'), []],
                             'icon' => 'glyphicon glyphicon-blackboard'
                         ],
 
+
+
+                        [
+                            'name' => Yii::p('cii', 'File browser'),
+                            'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/browser/index'), []],
+                            'icon' => 'glyphicon glyphicon-folder-open'
+                        ],
                         
+                        /*
                         [
                             'name' => 'Mail templates',
                             'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/mail/index')],
@@ -105,12 +113,6 @@ class Menu {
                             'name' => 'Backups',
                             'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/user/index'), []],
                             'icon' => 'glyphicon glyphicon-hdd'
-                        ],
-                        
-                        [
-                            'name' => 'Defaults',
-                            'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/user/index'), []],
-                            'icon' => 'glyphicon glyphicon-tint'
                         ],
                         */
                         [

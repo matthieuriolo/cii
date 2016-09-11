@@ -16,9 +16,10 @@ class Permission {
     const MANAGE_LAYOUT = 7;
     const MANAGE_LANGUAGE = 8;
     const MANAGE_PACKAGE = 8;
+    const MANAGE_BROWSER = 9;
 
     const MANAGE_ADMIN = 10;
-
+    
     static public function getPermissions() {
     	return [
     		static::MANAGE_ADMIN => Yii::p('cii', 'Admin'),
@@ -33,6 +34,7 @@ class Permission {
     		static::MANAGE_LAYOUT => Yii::p('cii', 'Manage layouts'),
     		static::MANAGE_LANGUAGE => Yii::p('cii', 'Manage languages'),
             static::MANAGE_PACKAGE => Yii::p('cii', 'Manage packages'),
+            static::MANAGE_BROWSER => Yii::p('cii', 'Manage files'),
     	];
     }
 }
