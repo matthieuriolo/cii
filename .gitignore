@@ -21,6 +21,7 @@ modules/cii/vendor/yiisoft
 runtime
 uploads
 web/assets
+web/thumbnails
 
 # ignore extensions
 modules/*
