@@ -17,6 +17,10 @@ $config = [
     ],
     
     'components' => [
+        'assetManager' => [
+            'forceCopy' => YII_DEBUG
+        ],
+        
         'cii' => [
             'class' => 'cii\MainComponent'
         ],
