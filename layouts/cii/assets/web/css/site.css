@@ -30,6 +30,27 @@ body {
     padding-top: 20px;
 }
 
+.footer .social-buttons {
+    text-align: center;
+    font-size: 28px;
+}
+
+.footer .social-buttons i {
+    vertical-align: top;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.5s;
+    -webkit-transition: opacity 0.5s;
+    -o-transition: opacity 0.5s;
+    -ms-transition: opacity 0.5s;
+    -moz-transition: opacity 0.5s;
+}
+
+.footer .social-buttons i:hover {
+    opacity: 1;
+}
+
+
 .jumbotron {
     text-align: center;
     background-color: transparent;

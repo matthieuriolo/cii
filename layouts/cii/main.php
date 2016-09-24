@@ -138,7 +138,13 @@ foreach($background as $c) {
 <footer class="footer">
     <div class="container">
         <p class="pull-right"><?= Yii::powered() ?></p>
-        <p><?= Yii::$app->cii->powered() ?></p>
+        <p class="pull-left"><?= Yii::$app->cii->powered() ?></p>
+
+        <div class="text-center social-buttons">
+            <i class="fa fa-google-plus-square" data-controller="buttons/google"></i>
+            <i class="fa fa-facebook-square" data-controller="buttons/facebook"></i>
+            <i class="fa fa-twitter-square" data-controller="buttons/twitter"></i>
+        </div>
     </div>
 </footer>
 

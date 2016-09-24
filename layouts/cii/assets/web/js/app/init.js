@@ -171,7 +171,7 @@ var App = {
         return path.join(" > ");
 	},
 
-	/*
+	
 	openGPModal: function(url) {
 		if(!url)
 			url = App.getAbsoluteUrl();
@@ -190,7 +190,7 @@ var App = {
 		window.open('https://twitter.com/share?url='  + encodeURIComponent(url), 'twitterwindow', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width=500,height=350');
 	},
 
-
+	/*
 	_openModals: [],
 	
 	openModal: function(bindings, template) {

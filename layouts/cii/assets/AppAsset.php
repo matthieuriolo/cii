@@ -10,6 +10,7 @@ class AppAsset extends AssetBundle {
     public $css = [
         'css/site.css',
         'css/bootstrap-wysihtml5.css',
+        'css/font-awesome.min.css'
     ];
 
     public $js = [
