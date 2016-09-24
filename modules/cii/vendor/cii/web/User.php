@@ -5,7 +5,7 @@ use Yii;
 class User extends \yii\web\User {
 	public function can($permissionName, $params = [], $allowCaching = true) {
         //grant all rights to super user
-        if($this->getIdentity()->superadmin) {
+        if($this->getIdentity() && $this->getIdentity()->superadmin) {
 			return true;
 		}
 
