@@ -10,6 +10,13 @@ abstract class AbstractField extends Model {
 	public $value;
 	public $attribute;
 	
+	public function rules() {
+		return [
+			[['value'], 'string', 'max' => 255]
+		];
+	}
+
+
 	public function isVisible() {
 		return true;
 	}

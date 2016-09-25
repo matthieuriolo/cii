@@ -4,6 +4,14 @@ namespace cii\fields;
 use Yii;
 
 class UrlField extends TextField {
+	public function rules() {
+		return [
+			[['value'], 'url'],
+			[['value'], 'string', 'max' => 255]
+		];
+	}
+
+
 	public function getView($model) {
         return Yii::$app->formatter->asUrl($this->getRaw($model));
     }
