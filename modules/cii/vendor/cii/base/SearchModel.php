@@ -87,6 +87,30 @@ class SearchModel extends \yii\base\DynamicModel {
 		], $attributes);
 	}
 
+	public function routeFilter($name, $attributes = null) {
+		$values = Yii::$app->cii->route->getRoutesForDropdown();
+
+		$this->addAttribute($name, ['route', 'template' => 'in', 'values' => $values], [
+			['in', 'range' => array_keys($values)]
+		], $attributes);
+	}
+
+	public function contentFilter($name, $attributes = null) {
+		$values = Yii::$app->cii->layout->getContentsForDropdown();
+
+		$this->addAttribute($name, ['content', 'template' => 'in', 'values' => $values], [
+			['in', 'range' => array_keys($values)]
+		], $attributes);
+	}
+
+	public function positionTypesFilter($name, $attributes = null) {
+		$values = Yii::$app->cii->layout->getPositionsForDropdown();
+
+		$this->addAttribute($name, ['position', 'template' => 'in', 'values' => $values], [
+			['in', 'range' => array_keys($values)]
+		], $attributes);
+	}
+
 
 	public function applyFilter($query) {
 		foreach($this->attributeFormatters as $name => $formatter) {
