@@ -12,6 +12,11 @@ define(['tinyMCE'], function(tinyMCE) {
 			defaultLang = defaultLang.replace('-', '_');
 			if(defaultLang == 'en_US') {
 				defaultLang = false;
+			}else if(defaultLang.indexOf('_') !== -1) {
+				var tks = defaultLang.split('_')
+				if(tks[0] == tks[1].toLowerCase()) {
+					defaultLang = tks[0]
+				}
 			}
 		}
 
