@@ -18,6 +18,10 @@ abstract class AbstractField extends Model {
 		return $this->value;
     }
 
+    public function getPreparedValue($model) {
+        return $this->getRaw($model);
+    }
+
     public function getView($model) {
         return Yii::$app->formatter->asText($this->getRaw($model));
     }

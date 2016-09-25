@@ -33,8 +33,11 @@ class SettingController extends Controller {
             'sort' => [
                 'attributes' => [
                     'label',
-                    'id',
-                    'type',
+                    'extension' => [
+                        'asc' => ['extension.name' => SORT_ASC],
+                        'desc' => ['extension.name' => SORT_DESC],
+                    ],
+                    'translatedType',
                     'default',
                     'value'
                 ]
@@ -57,6 +60,7 @@ class SettingController extends Controller {
                 'ext.name' => $id
             ])
             ->one();
+
         if($model) {
             $identifier = $model->extension_id;
         }
@@ -82,7 +86,7 @@ class SettingController extends Controller {
             $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/setting/index')]);
             return;
         }
-
+        
         return $this->render('update', [
             'model' => $model,
         ]);

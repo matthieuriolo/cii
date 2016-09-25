@@ -7,14 +7,17 @@ use yii\helpers\Html;
 
 class FieldColumn extends \yii\grid\DataColumn {
 	protected function renderDataCellContent($model, $key, $index) {
-        if ($this->content === null) {
+        if($this->content === null) {
 
-            return Yii::$app->cii->createFieldObject($this->format, [
+            $field = Yii::$app->cii->createFieldObject($this->format, [
                 'value' => $this->getDataCellValue($model, $key, $index)
-            ])->getView($model);
-            //$this->grid->formatter->format($this->getDataCellValue($model, $key, $index), $this->format);
-        } else {
-            return parent::renderDataCellContent($model, $key, $index);
+            ]);
+            
+            if($field) {
+                return $field->getView($model);
+            }
         }
+
+        return parent::renderDataCellContent($model, $key, $index);
     }
 }

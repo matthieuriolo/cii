@@ -18,11 +18,17 @@ abstract class RelationField extends DropdownField {
 		return Yii::$app->seo->relativeAdminRoute('modules/' . $this->baseUri);
 	}
 
+	abstract public function findModel($pk);
+
 	public function getView($model) {
 		$propLabel = $this->label_property;
 		$propPK = $this->pk_property;
 
 		if($raw = $this->getRaw($model)) {
+			if(!is_object($raw)) {
+				$raw = $this->findModel($raw);
+			}
+			
 			$val = $raw->$propPK;
 			if($val) {
 				$name = Yii::$app->formatter->asText($raw->$propLabel);

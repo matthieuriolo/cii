@@ -36,79 +36,44 @@ class Configuration extends \yii\db\ActiveRecord {
         return $this->hasOne(Extension::className(), ['id' => 'extension_id']);
     }
 
+    public function getField() {
+        $config = [
+            'value' => $this->value,
+            'attribute' => 'value'
+        ];
+
+        if($this->type == 'in') {
+            $config['values'] = $this->getValues();
+        }
+        
+        return Yii::$app->cii->createFieldObject($this->type, $config);
+    }
+
 
     public function validateValue($attribute, $params) {
-        $value = $this->$attribute;
-
-        switch($this->type) {
-            case 'email':
-            case 'float':
-            case 'boolean':
-                $validator = Validator::createValidator($this->type, $this, ['value']);
-                $validator->validateAttributes($this, ['value']);
-                break;
-            case 'integer':
-                $validator = Validator::createValidator('integer', $this, ['value'], ['integerOnly' => true]);
-                $validator->validateAttributes($this, ['value']);
-                break;
-            case 'in':
-                $validator = Validator::createValidator('in', $this, ['value'], ['range' => array_keys($this->getValues())]);
-                $validator->validateAttributes($this, ['value']);
-                break;
-            case 'password':
-            case 'text':
-            case 'color':
-                break;
-            case 'image':
-                $path = Yii::getAlias('@webroot') . '/' . $value;
-                if(!is_file($path) || (false === getimagesize($path))) {
-                    $this->addError('value', 'No valid image path or not an image');
+        $field = $this->getField();
+        if(!$field->validate()) {
+            foreach($field->errors as $values) {
+                foreach($values as $val) {
+                    $this->addError('value', $val);
                 }
-                break;
-            default:
-                throw new InvalidConfigException();
+            }
         }
     }
 
     
     public function getPreparedValue() {
-        switch($this->type) {
-            case 'float':
-                return floatval($this->value);
-            case 'integer':
-                return intval($this->value);
-            case 'color':
-            case 'in':
-            case 'password':
-            case 'text':
-            case 'image':
-            case 'email':
-                return $this->value;
-            case 'boolean':
-                return $this->value == '0' ? false : true;
-            default:
-                throw new InvalidConfigException();
-        }
+        return $this->getField()->getPreparedValue($this);
     }
 
+    public function getLabel() {
+        $type = $this->getTypes();
+        return isset($type['label']) ? $type['label'] : ucfirst($this->name);
+    }
     
-
-    public function render($view, $form) {
-        $type = $this->type;
-        switch($type) {
-            case 'color':
-            case 'boolean':
-            case 'in':
-            case 'password':
-                break;
-            default:
-                $type = 'text';
-        }
-
-        return $view->render('_type_' . $type, [
-            'form' => $form,
-            'model' => $this
-        ]);
+    public function getValues() {
+        $type = $this->getTypes();
+        return isset($type['values']) ? $type['values'] : [];
     }
 
     public function getType() {
@@ -116,14 +81,8 @@ class Configuration extends \yii\db\ActiveRecord {
         return isset($type['type']) ? strtolower($type['type']) : 'text';
     }
 
-    public function getValues() {
-        $type = $this->getTypes();
-        return isset($type['values']) ? $type['values'] : [];
-    }
-
-    public function getLabel() {
-        $type = $this->getTypes();
-        return isset($type['label']) ? $type['label'] : ucfirst($this->name);
+    public function getTranslatedType() {
+        return Yii::p('cii', ucfirst($this->type));
     }
 
     protected function getTypes() {

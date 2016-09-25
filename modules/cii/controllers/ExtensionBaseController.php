@@ -85,8 +85,11 @@ abstract class ExtensionBaseController extends Controller {
                 'sort' => [
                     'attributes' => [
                         'label',
-                        'id',
-                        'type',
+                        'extension' => [
+                            'asc' => ['extension.name' => SORT_ASC],
+                            'desc' => ['extension.name' => SORT_DESC],
+                        ],
+                        'translatedType',
                         'default',
                         'value'
                     ]

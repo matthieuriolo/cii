@@ -32,44 +32,10 @@ class Configuration extends Model {
         return [
             'id' => Yii::t('app', 'Extension'),
             'label' => Yii::t('app', 'Name'),
-            'type' => Yii::t('app', 'Type'),
+            'translatedType' => Yii::t('app', 'Type'),
             'default' => Yii::t('app', 'Default'),
             'value' => Yii::t('app', 'Value'),
         ];
-    }
-
-    public function getPreparedDefault() {
-    	return $this->prepareValue($this->default);
-    }
-
-    protected function prepareValue($val) {
-        switch($this->type) {
-            case 'image':
-            case 'text':
-            case 'email':
-            default:
-                return Yii::$app->formatter->asText($val);
-            case 'in':
-                $values = $this->getValues();
-                return isset($values[$val]) ? $values[$val] : null;
-            case 'password':
-                if(empty($val)) {
-                    return null;
-                }
-
-                return Yii::$app->formatter->asText(str_pad('', strlen($val) * 3, '●'));
-            case 'boolean':
-                return Yii::$app->formatter->asBoolean($val);
-            case 'float':
-                return Yii::$app->formatter->asDecimals($val);
-            case 'integer':
-                return Yii::$app->formatter->asInteger($val);
-            case 'color':
-                if($val) {
-                    return '<span class="color-block" style="background-color: ' . $val .';"></span> ' . Yii::$app->formatter->asText($val);
-                }
-                return null;
-        }
     }
     
     protected function getValues() {
@@ -91,8 +57,32 @@ class Configuration extends Model {
 
         return $this->types;
     }
+    
+    protected function displayFieldValue($value) {
+        $config = ['value' => $value];
+        if($this->type == 'in') {
+            $config['values'] = $this->getValues();
+        }
 
-	public function getValue() {
-        return $this->prepareValue(Yii::$app->cii->setting($this->extension_type, $this->id, $this->key, null));
-	}
+        return Yii::$app->cii->createFieldObject($this->type, $config)->getView($this);
+    }
+    
+    public function getTranslatedType() {
+        return Yii::p('cii', ucfirst($this->type));
+    }
+
+    public function getValue() {
+        return $this->displayFieldValue(
+            Yii::$app->cii->setting($this->extension_type, $this->id, $this->key, null)
+        );
+    }
+
+    public function getPreparedDefault() {
+        return $this->displayFieldValue($this->default);
+    }
+
+    public function getExtension() {
+        $ext = 'app\modules\cii\models\\'. ucfirst($this->extension_type);
+        return $ext::find()->joinWith('extension as ext')->where(['ext.name' => $this->id])->one();
+    }
 }

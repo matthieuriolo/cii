@@ -30,7 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-6">
         <div class="form-group">
             <?= Html::activeLabel($model, 'extension_id'); ?>
-            <p class="form-control-static"><?= $model->extension->name; ?></p>
+            <p class="form-control-static"><?= 
+                Html::a($model->extension->name, [
+                    Yii::$app->seo->relativeAdminRoute('modules/cii/extension'),
+                    'id' => $model->extension->id
+                ]);
+            ?></p>
         </div>
     </div>
 
@@ -46,12 +51,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-6">
         <div class="form-group">
             <?= Html::activeLabel($model, 'type'); ?>
-            <p class="form-control-static"><?= $model->type; ?></p>
+            <p class="form-control-static"><?= $model->getTranslatedType(); ?></p>
         </div>
     </div>
 
     <div class="col-md-6">
-        <?= $model->render($this, $form); ?>
+        <?= $model->getField()->getEditable($model, $form); ?>
     </div>
 </div>
 

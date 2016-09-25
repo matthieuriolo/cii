@@ -1,6 +1,6 @@
 <?php
 
-use yii\grid\GridView;
+use cii\grid\GridView;
 use cii\grid\ActionColumn;
 use cii\helpers\Html;
 use yii\widgets\Pjax;
@@ -26,25 +26,12 @@ echo GridView::widget([
     'columns' => [
         'label',
         [
-            'attribute' => 'id',
-            'format' => 'html',
-            'value' => function($model) use($showExtension) {
-                if(!$showExtension) {
-                    return null;
-                }
-
-                $ext = 'app\modules\cii\models\\'. ucfirst($model->extension_type);
-                $ext = $ext::find()->joinWith('extension as ext')->where(['ext.name' => $model->id])->one();
-                if($ext) {
-                    return Html::a($model->id, [Yii::$app->seo->relativeAdminRoute('modules/cii/' . $model->extension_type . '/view'), 'id' => $ext->id]);
-                }
-
-                return null;
-            },
-            'visible' => $showExtension
+            'attribute' => 'extension',
+            'format' => 'extension',
+            'visible' => $showExtension,
         ],
 
-        'type',
+        'translatedType',
         
         [
             'attribute' => 'default',
@@ -59,8 +46,7 @@ echo GridView::widget([
 
         [
             'class' => 'yii\grid\ActionColumn',
-            'template' => '{update}{delete}',
-
+            'template' => '{update} {delete}',
             'urlCreator' => function($action, $model, $key, $index) {
                 $params = ['id' => $model->id, 'key' => $model->key, 'type' => $model->extension_type];
                 if($action == 'delete') {
