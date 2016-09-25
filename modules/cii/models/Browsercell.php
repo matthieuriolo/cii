@@ -44,7 +44,7 @@ class Browsercell extends Model {
                 '<div class="buttons">' .
                     ($this->isDirectory() ? '<a class="button-open-directory" href="' . Url::to([$this->baseUrl . '/index', 'path' => $this->getFilePath()]) . '"><i class="glyphicon glyphicon-share"></i></a>' : '')
                     . (!$this->isDirectory() ? '<a class="button-download" href="' . Url::to([$this->baseUrl . '/download', 'path' => $this->getFilePath()]) . '"><i class="glyphicon glyphicon-cloud-download"></i></a>' : '')
-                    . '<a class="button-rename" data-target="#' . $renameModalId . '" data-toggle="modal" data-original-name="'.Html::encode($this->getName()).'"><i class="glyphicon glyphicon-edit"></i></a>'
+                    . '<a class="button-rename" href="#" data-target="#' . $renameModalId . '" data-toggle="modal" data-original-name="'.Html::encode($this->getName()).'"><i class="glyphicon glyphicon-edit"></i></a>'
                     . '<a class="button-remove" href="' . Url::to([$this->baseUrl . '/remove', 'path' => $this->getFilePath()]) . '"><i class="glyphicon glyphicon-remove"></i></a>'
                     .
 
