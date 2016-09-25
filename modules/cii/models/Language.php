@@ -89,4 +89,14 @@ class Language extends \yii\db\ActiveRecord {
     public function getUsers() {
         return $this->hasMany(User::className(), ['language_id' => 'id']);
     }
+
+
+    public function behaviors() {
+        return [
+            [
+                'class' => 'cii\behavior\DatetimeBehavior',
+                'create' => 'created'
+            ]
+        ];
+    }
 }
