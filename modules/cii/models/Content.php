@@ -31,10 +31,11 @@ class Content extends \yii\db\ActiveRecord {
     public function rules() {
         return [
             [['name', 'enabled', 'type'], 'required'],
-            [['enabled'], 'boolean'],
+            [['enabled', 'show_name'], 'boolean'],
             [['name'], 'string', 'max' => 255],
-
-            [['type'], 'in', 'range' => Yii::$app->cii->layout->getContentTypeValues()]
+            [['columns_count'], 'integer', 'min' => 1],
+            [['type'], 'in', 'range' => Yii::$app->cii->layout->getContentTypeValues()],
+            [['classname_id'], 'exist', 'skipOnError' => true, 'targetClass' => Classname::className(), 'targetAttribute' => ['classname_id' => 'id']],
         ];
     }
 
