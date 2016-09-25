@@ -2,119 +2,130 @@
 
 return [
     'name' => [
-        'label' => Yii::t('app', 'Website name'),
+        'label' => Yii::p('cii', 'Website name'),
         'type' => 'text',
         'default' => 'My website'
     ],
 
     /*
     'favicon' => [
-        'label' => Yii::t('app', 'Website Logo'),
+        'label' => Yii::p('cii', 'Website Logo'),
         'type' => 'favicon'
     ],
 
     'timezone' => [
-        'label' => Yii::t('app', 'Website default timezone'),
+        'label' => Yii::p('cii', 'Website default timezone'),
         'type' => 'in',
         'default' => 'UTC'
     ],
     */
 
+    'offline' => [
+        'label' => Yii::p('cii', 'Website offline'),
+        'type' => 'boolean',
+        'default' => false
+    ],
+
+    'offline_description' => [
+        'label' => Yii::p('cii', 'Website description'),
+        'type' => 'texteditor',
+        'default' => Yii::p('cii', 'The website is currently offline')
+    ],
+
     'startroute' => [
-        'label' => Yii::t('app', 'Route showed at startpage'),
-        'type' => 'in',
-        'values' => Yii::$app->cii->route->getRoutesForDropdown()
+        'label' => Yii::p('cii', 'Route showed at startpage'),
+        'type' => 'route',
     ],
 
     'multilanguage' => [
-        'label' => Yii::t('app', 'Website is multilanguage'),
+        'label' => Yii::p('cii', 'Website is multilanguage'),
         'type' => 'boolean',
         'default' => false
     ],
 
     'language' => [
-        'label' => Yii::t('app', 'Website language'),
-        'type' => 'in',
-        'values' => Yii::$app->cii->language->getLanguagesForDropdown()
+        'label' => Yii::p('cii', 'Website language'),
+        'type' => 'language',
+        //'values' => Yii::$app->cii->language->getLanguagesForDropdown()
     ],
 
 
     'layout' => [
-        'label' => Yii::t('app', 'Default Layout'),
+        'label' => Yii::p('cii', 'Default Layout'),
         'default' => 'cii',
         'type' => 'in',
         'values' => Yii::$app->cii->layout->getLayoutsForDropdown()
     ],
 
     'mail_layout' => [
-        'label' => Yii::t('app', 'Mail layout'),
+        'label' => Yii::p('cii', 'Mail layout'),
         'default' => 'cii',
         'type' => 'in',
         'values' => Yii::$app->cii->layout->getMailLayoutsForDropdown()
     ],
 
     'metakeys' => [
-        'label' => Yii::t('app', 'Website metakeys'),
+        'label' => Yii::p('cii', 'Website metakeys'),
         'type' => 'text',
         'default' => 'Cii, CMS'
     ],
 
     'metadescription' => [
-        'label' => Yii::t('app', 'Website description'),
+        'label' => Yii::p('cii', 'Website description'),
         'type' => 'text',
         'default' => 'A CMS Website created with Cii'
     ],
 
     'rememberduration' => [
-        'label' => Yii::t('app', 'Remember login duration'),
+        'label' => Yii::p('cii', 'Remember login duration'),
         'type' => 'integer',
         'default' => 3600 * 24 * 30
     ],
 
     'transport.type' => [
-        'label' => Yii::t('app', 'Mail Transport type'),
+        'label' => Yii::p('cii', 'Mail Transport type'),
         'type' => 'in',
         'default' => 'file',
         'values' => [
-            'file' => Yii::t('app', 'File'),
-            'sendmail' => Yii::t('app', 'Local mail system'),
-            'smtp' => Yii::t('app', 'SMTP'),
+            'file' => Yii::p('cii', 'File'),
+            'sendmail' => Yii::p('cii', 'Local mail system'),
+            'smtp' => Yii::p('cii', 'SMTP'),
         ]
     ],
 
     'transport.smtp.host' => [
-        'label' => Yii::t('app', 'SMTP Host'),
+        'label' => Yii::p('cii', 'SMTP Host'),
         'type' => 'text'
     ],
 
     'transport.smtp.user' => [
-        'label' => Yii::t('app', 'SMTP User'),
+        'label' => Yii::p('cii', 'SMTP User'),
         'type' => 'text'
     ],
 
     'transport.smtp.password' => [
-        'label' => Yii::t('app', 'SMTP Password'),
+        'label' => Yii::p('cii', 'SMTP Password'),
         'type' => 'password'
     ],
 
     'transport.smtp.port' => [
-        'label' => Yii::t('app', 'SMTP Port'),
+        'label' => Yii::p('cii', 'SMTP Port'),
         'type' => 'integer',
         'default' => 465
     ],
 
     'transport.smtp.encryption' => [
-        'label' => Yii::t('app', 'SMTP Encryption'),
+        'label' => Yii::p('cii', 'SMTP Encryption'),
         'type' => 'in',
         'values' => [
-            'ssl' => Yii::t('app', 'SSL'),
-            'tls' => Yii::t('app', 'TLS'),
+            'ssl' => Yii::p('cii', 'SSL'),
+            'tls' => Yii::p('cii', 'TLS'),
         ],
         'default' => 'ssl'
     ],
 
     'sender' => [
-        'label' => Yii::t('app', 'Sending address'),
+        'label' => Yii::p('cii', 'Sending address'),
         'type' => 'email',
         'default' => 'my@website.local'
     ],

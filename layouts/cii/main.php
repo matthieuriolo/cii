@@ -80,56 +80,60 @@ foreach($background as $c) {
     ?>
 
     <div class="container">
-        <?php if(Yii::$app->cii->layout->setting('cii', 'show_breadcrumb') || $this->isAdminArea()) {
-            echo Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]);
-        } ?>
-        
-        <?php
-        foreach(Yii::$app->session->getAllFlashes() as $key => $message) {
-            echo '<div class="alert alert-' . $key . '">' . $message . '</div>';
-        } ?>
-
-        <div class="row"><?php
-            $countMiddle = 12;
-            $leftContents = $this->getContents('left');
-            $rightContents = $this->getContents('right');
+        <?php if(!$this->isAdminArea() && Yii::$app->cii->package->setting('cii', 'offline')) {
+            echo Yii::$app->cii->package->setting('cii', 'offline_description');
+        }else { ?>
+            <?php if(Yii::$app->cii->layout->setting('cii', 'show_breadcrumb') || $this->isAdminArea()) {
+                echo Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ]);
+            } ?>
             
-            if(count($rightContents)) {
-                $countMiddle -= 3;
-            }
-
-            if(count($leftContents) || $this->isAdminArea()) {
-                $countMiddle -= 3;
-            ?>
-                <div class="col-md-3">
-                    <?php
-                    if($this->isAdminArea()) {
-                        echo BackendMenu::widget();
-                    }
-
-                    foreach($leftContents as $c) {
-                        echo $this->renderShadow($c, 'left');
-                    }
-                    ?>
-                </div>
-            <?php } ?>
-
-            <div class="col-md-<?= (string)$countMiddle; ?>">
-                <?= $content ?>
-            </div>
-
             <?php
-            if(count($rightContents)) {
-            ?>
-                <div class="col-md-3">
-                    <?php
-                    foreach($rightContents as $c) {
-                        echo $this->renderShadow($c, 'right');
-                    }
-                    ?>
+            foreach(Yii::$app->session->getAllFlashes() as $key => $message) {
+                echo '<div class="alert alert-' . $key . '">' . $message . '</div>';
+            } ?>
+
+            <div class="row"><?php
+                $countMiddle = 12;
+                $leftContents = $this->getContents('left');
+                $rightContents = $this->getContents('right');
+                
+                if(count($rightContents)) {
+                    $countMiddle -= 3;
+                }
+
+                if(count($leftContents) || $this->isAdminArea()) {
+                    $countMiddle -= 3;
+                ?>
+                    <div class="col-md-3">
+                        <?php
+                        if($this->isAdminArea()) {
+                            echo BackendMenu::widget();
+                        }
+
+                        foreach($leftContents as $c) {
+                            echo $this->renderShadow($c, 'left');
+                        }
+                        ?>
+                    </div>
+                <?php } ?>
+
+                <div class="col-md-<?= (string)$countMiddle; ?>">
+                    <?= $content ?>
                 </div>
+
+                <?php
+                if(count($rightContents)) {
+                ?>
+                    <div class="col-md-3">
+                        <?php
+                        foreach($rightContents as $c) {
+                            echo $this->renderShadow($c, 'right');
+                        }
+                        ?>
+                    </div>
+                <?php } ?>
             <?php } ?>
         </div>
     </div>
