@@ -62,17 +62,19 @@ foreach($background as $c) {
         ],
     ]);
 
-    if($this->isAdminArea()) {
-        echo Nav::widget([
-            'options' => ['class' => 'navbar-nav navbar-right'],
-            'items' => [
-                ['label' => 'Log', 'url' => [Yii::$app->seo->relativeAdminRoute('log')]],
-                ['label' => 'Dashboard', 'url' => [Yii::$app->seo->relativeAdminRoute('index')]],
-            ],
-        ]);
-    }else {
-        foreach($this->getContents('navbar') as $c) {
-            echo $this->renderShadow($c, 'navbar');
+    if($this->isAdminArea() || !Yii::$app->cii->package->setting('cii', 'offline')) {
+        if($this->isAdminArea()) {
+            echo Nav::widget([
+                'options' => ['class' => 'navbar-nav navbar-right'],
+                'items' => [
+                    ['label' => 'Log', 'url' => [Yii::$app->seo->relativeAdminRoute('log')]],
+                    ['label' => 'Dashboard', 'url' => [Yii::$app->seo->relativeAdminRoute('index')]],
+                ],
+            ]);
+        }else {
+            foreach($this->getContents('navbar') as $c) {
+                echo $this->renderShadow($c, 'navbar');
+            }
         }
     }
 
