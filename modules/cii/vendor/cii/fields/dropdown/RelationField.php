@@ -36,6 +36,6 @@ abstract class RelationField extends DropdownField {
 		    }
 		}
 
-	    return null;
+	    return Yii::$app->formatter->asText(null);
     }
 }
