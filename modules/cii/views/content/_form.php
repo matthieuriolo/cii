@@ -30,4 +30,8 @@ use cii\widgets\Toggler;
             'form' => $form
         ]); ?>
 	</div>
+
+	<div class="col-md-6">
+		<?= $form->field($model, 'columns_count')->textInput(['maxlength' => true]) ?>
+	</div>
 </div>

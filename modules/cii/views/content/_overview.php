@@ -8,12 +8,13 @@ echo DetailView::widget([
     'model' => $model,
     'attributes' => [
         'name',
-        'enabled:boolean',
-        'created:datetime',
-        
         [
             'attribute' => 'classname',
             'value' => $model->classname->typename
         ],
+
+        'enabled:boolean',
+        'columns_count:integer',
+        'created:datetime',
     ],
 ]); ?>
