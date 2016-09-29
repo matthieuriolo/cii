@@ -13,6 +13,14 @@ class UserLoginContent extends LazyContentModel implements ContentInterface {
     public static $lazyControllerRoute = 'cii/user';
     public $canBeShadowed = true;
     
+    public function init() {
+        if(is_null($this->remember_visible)) {
+            $this->remember_visible = true;
+        }
+
+        return parent::init();
+    }
+
     /**
      * @inheritdoc
      */
@@ -33,6 +41,8 @@ class UserLoginContent extends LazyContentModel implements ContentInterface {
             [['redirect_id'], 'exist', 'skipOnError' => true, 'targetClass' => Route::className(), 'targetAttribute' => ['redirect_id' => 'id']],
             [['register_id'], 'exist', 'skipOnError' => true, 'targetClass' => Route::className(), 'targetAttribute' => ['register_id' => 'id']],
             [['forgot_id'], 'exist', 'skipOnError' => true, 'targetClass' => Route::className(), 'targetAttribute' => ['forgot_id' => 'id']],
+            [['captcha_id'], 'exist', 'skipOnError' => true, 'targetClass' => Route::className(), 'targetAttribute' => ['captcha_id' => 'id']],
+            [['remember_visible'], 'boolean'],
         ];
     }
 
@@ -47,6 +57,10 @@ class UserLoginContent extends LazyContentModel implements ContentInterface {
 
     public function getRegister() {
         return $this->hasOne(Route::className(), ['id' => 'register_id']);
+    }
+
+    public function getCaptcha() {
+        return $this->hasOne(Route::className(), ['id' => 'captcha_id']);
     }
 
     static public function getTypename() {
@@ -65,6 +79,8 @@ class UserLoginContent extends LazyContentModel implements ContentInterface {
             'redirect_id' => Yii::p('cii', 'Redirect'),
             'register_id' => Yii::p('cii', 'Register'),
             'forgot_id' => Yii::p('cii', 'Forgot'),
+            'captcha_id' => Yii::p('cii', 'Captcha'),
+            'remember_visible' => Yii::p('cii', 'Show remember button'),
         ];
     }
 

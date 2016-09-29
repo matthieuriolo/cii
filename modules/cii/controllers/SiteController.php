@@ -17,6 +17,7 @@ use cii\web\SecurityException;
 
 use app\modules\cii\models\Route;
 use app\modules\cii\models\ContentRoute;
+use app\modules\cii\models\CaptchaRoute;
 use app\modules\cii\models\ForgotForm;
 use app\modules\cii\models\LoginForm;
 use app\modules\cii\models\LogoutForm;
@@ -31,20 +32,47 @@ use app\modules\cii\models\UserLogoutContent;
 
 class SiteController extends Controller {
     public function actions() {
-        $url = null;
+        $captchaAction = [
+            'class' => 'cii\captcha\CaptchaAction',
+        ];
+
         if(Yii::$app->seo) {
-            $url = '//' . Yii::$app->seo->getBaseRoute();
+            $captchaAction['url'] = '//' . Yii::$app->seo->getBaseRoute();
+            $route = Yii::$app->seo->getModel();
+
+            if($route instanceof CaptchaRoute) {
+                if($route->length_min) {
+                    $captchaAction['minLength'] = $route->length_min;
+                }
+
+                if($route->length_max) {
+                    $captchaAction['maxLength'] = $route->length_max;
+                }
+
+                if($route->width) {
+                    $captchaAction['width'] = $route->width;
+                }
+
+                if($route->height) {
+                    $captchaAction['height'] = $route->height;
+                }
+
+                if($route->font_color) {
+                    $captchaAction['foreColor'] = hexdec(substr($route->font_color, 1));
+                }
+
+                if($route->limit) {
+                    $captchaAction['testLimit'] = $route->limit;
+                }
+            }
         }
-        
+
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
 
-            'captcha' => [
-                'class' => 'cii\captcha\CaptchaAction',
-                'url' => $url
-            ],
+            'captcha' => $captchaAction,
 
             'doc'=>[
                 'class'=>'yii\web\ViewAction',
@@ -233,7 +261,7 @@ class SiteController extends Controller {
     public function loginShadow($content, $position) {
         $model = new LoginForm();
         $model->setContentFormName($content, $position);
-
+        $model->captchaRoute = $content->captcha;
         $model = $this->processLogin($content, $model);
 
         return $this->renderShadow('login_shadow', [

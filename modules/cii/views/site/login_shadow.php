@@ -4,31 +4,40 @@ use yii\widgets\ActiveForm;
 use yii\captcha\Captcha;
 use cii\widgets\Toggler;
 
+use cii\widgets\EditView;
+
 ?>
 <h3><?= Yii::p('cii', 'Login') ?></h3>
 
-<?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin();
 
-<?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+	echo EditView::widget([
+	    'model' => $model,
+	    'form' => $form,
+	    'columns' => $content->content->columns_count,
+	    'attributes' => [
+	        'email:email',
+	        [
+	        	'attribute' => 'password',
+	        	'format' => 'password',
+	        	'popoverPosition' => $position == 'left' ? 'right' : 'left'
+	        ],
 
-<?= $form->field($model, 'password')->passwordInput([
-	'data-controller' => 'strengthcheck',
-	'data-position' => $position == 'left' ? 'right' : 'left'
-]) ?>
+	        [
+	        	'attribute' => 'captcha',
+	        	'format' => 'captcha',
+	        	'visible' => $model->captchaRoute
+	        ],
 
-	<?php /*if(Captcha::checkRequirements()) {
-		echo $form->field($model, 'captcha')->widget(Captcha::classname(), [
-				'captchaAction' => Yii::$app->seo->relativeRoute('app\modules\cii\routes\Content', 'captcha'),
-				'template' => '<div class="row"><div class="col-md-3" role="button" title="Reload image">{image}</div><div class="col-md-9">{input}</div></div>',
-			]);
-	}*/ ?>
-
-	<?php /* echo Toggler::widget([
-		'form' => $form,
-		'model' => $model,
-		'property' => 'rememberMe'
-	]);*/ ?>
-
+	        [
+	        	'attribute' => 'rememberMe',
+	        	'format' => 'boolean',
+	        	'visible' => $content->remember_visible,
+	        ]
+	    ],
+	]);
+	?>
+	
 	<hr>
 
 	<?php if($content->register_id || $content->forgot_id) { ?>

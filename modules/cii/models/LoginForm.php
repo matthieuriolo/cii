@@ -14,6 +14,8 @@ class LoginForm extends Model {
     //public $captcha;
     public $rememberMe = false;
 
+    public $captchaRoute;
+    public $captcha;
     protected $_user;
 
     /** @inheritdoc */
@@ -32,7 +34,8 @@ class LoginForm extends Model {
             [['password'], 'validatePassword'],
             [['email'], 'activeUser'],
             [['rememberMe'], 'boolean'],
-            //[['captcha'], 'captcha', 'captchaAction' => 'cii/site/captcha', 'skipOnEmpty' => !Captcha::checkRequirements()],
+
+            [['captcha'], 'captcha', 'captchaAction' => 'cii/site/captcha', 'skipOnEmpty' => !Captcha::checkRequirements() || !$this->captchaRoute]
         ];
     }
 

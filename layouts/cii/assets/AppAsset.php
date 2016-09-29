@@ -10,6 +10,7 @@ class AppAsset extends AssetBundle {
     public $css = [
         'css/site.css',
         'css/bootstrap-wysihtml5.css',
+        'css/bootstrap-colorpicker.min.css',
         'css/font-awesome.min.css'
     ];
 
@@ -23,7 +24,7 @@ class AppAsset extends AssetBundle {
     public $depends = [
         'yii\web\YiiAsset',
         //'yii\bootstrap\BootstrapAsset',
-        'yii\bootstrap\BootstrapPluginAsset',
+        'yii\bootstrap\BootstrapPluginAsset'
     ];
 
     static public function register($view) {

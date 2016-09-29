@@ -24,6 +24,7 @@ use app\modules\cii\models\ProfileRoute;
 
 use app\modules\cii\models\Route;
 use app\modules\cii\models\ContentRoute;
+use app\modules\cii\models\CaptchaRoute;
 
 use cii\backend\BackendController;
 use cii\web\SecurityException;
@@ -276,6 +277,24 @@ class UserController extends BackendController
         return $ret + ArrayHelper::map($models, 'route.id', 'route.slug');
     }
 
+    protected function fetchCaptchaRoutes($allowEmpty = true) {
+        $models = CaptchaRoute::find()
+            ->joinWith([
+                'route as route',
+            ])
+            ->where([
+                'route.enabled' => true,
+            ])->all();
+
+        
+        $ret = [];
+        if($allowEmpty) {
+            $ret[null] = Yii::t('app', 'No selection');
+        }
+
+        return $ret + ArrayHelper::map($models, 'route.id', 'route.slug');
+    }
+
 
 
     public function getLazyLoginLabel() {
@@ -295,12 +314,16 @@ class UserController extends BackendController
     }
 
     protected function getLazyLoginForm($model, $form) {
+        
+
+
         return $this->renderAjax('_form_userlogincontent', [
             'model' => $model,
             'form' => $form,
             'routes' => Yii::$app->cii->route->getRoutesForDropdown(),
             'routesRegister' => $this->fetchRoutes('app\modules\cii\models\UserRegisterContent'),
-            'routesForgot' => $this->fetchRoutes('app\modules\cii\models\UserForgotContent')
+            'routesForgot' => $this->fetchRoutes('app\modules\cii\models\UserForgotContent'),
+            'routesCaptcha' => $this->fetchCaptchaRoutes()
         ]);
     }
 
