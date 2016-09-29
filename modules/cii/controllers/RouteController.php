@@ -9,8 +9,10 @@ use cii\base\SearchModel;
 
 use app\modules\cii\models\Route;
 use app\modules\cii\models\Classname;
+use app\modules\cii\models\CaptchaRoute;
 use app\modules\cii\Permission;
 
+use yii\widgets\ActiveForm;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Json;
 use yii\filters\VerbFilter;
@@ -258,5 +260,37 @@ class RouteController extends Controller {
 			'label' => $info['controller']->$info['label'](),
 			'content' => $info['controller']->$info['create']()
 		]);
+    }
+
+
+
+
+
+    public function getLazyLabel() {
+        return '<i class="glyphicon glyphicon-qrcode"></i> Captcha';
+    }
+
+    public function getLazyCreate($model = null, $form = null) {
+        if(!$model) {
+            $model = new CaptchaRoute();
+        }
+
+        return $this->renderAjax('_form_captcharoute', [
+            'model' => $model,
+            'form' => $form ?: ActiveForm::begin()
+        ]);
+    }
+
+    public function getLazyUpdate($model, $form) {
+        return $this->renderAjax('_form_captcharoute', [
+            'model' => $model,
+            'form' => $form
+        ]);
+    }
+
+    public function getLazyView($model) {
+        return $this->renderAjax('_view_captcharoute', [
+            'model' => $model
+        ]);
     }
 }

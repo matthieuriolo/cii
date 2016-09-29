@@ -14,6 +14,13 @@ use cii\helpers\Url;
 
 class CaptchaAction extends CCaptchaAction {
     public $url;
+    public $transparent = true;
+    public $width = 60;
+    public $height = 34;
+
+    public $minLength = 3;
+    public $maxLength = 5;
+
     public function run() {
         if (Yii::$app->request->getQueryParam(self::REFRESH_GET_VAR) !== null) {
             // AJAX request for regenerating code
