@@ -42,9 +42,4 @@ class Controller extends \yii\web\Controller {
         
         return $content;
     }
-
-/*
-	public function getSeoRoute() {
-
-	}*/
 }
