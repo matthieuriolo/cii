@@ -18,7 +18,7 @@ class EditView extends DetailView {
 
     public function init() {
         if(!$this->form) {
-            throw new InvalidConfigException();
+            throw new InvalidConfigException('The form attribute has to be set');
         }
 
         parent::init();
