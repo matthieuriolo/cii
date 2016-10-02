@@ -38,23 +38,30 @@ class Module extends \cii\backend\Package {
             'html' => 'cii\fields\HtmlField',
             'password' => 'cii\fields\PasswordField',
             'texteditor' => 'cii\fields\TexteditorField',
+            'image' => 'cii\fields\ImageField',
+            'captcha' => 'cii\fields\CaptchaField',
+            
 
             'boolean' => 'cii\fields\BooleanField',
             
             'email' => 'cii\fields\EmailField',
+            'color' => 'cii\fields\ColorField',
             'url' => 'cii\fields\UrlField',
             'integer' => 'cii\fields\IntegerField',
             'float' => 'cii\fields\FloatField',
-            //'dropdown' => 'cii\fields\DropdownField',
             
             'datetime' => 'cii\fields\DatetimeField',
             'date' => 'cii\fields\DateField',
             'time' => 'cii\fields\TimeField',
 
-            'route' => 'cii\fields\dropdown\RouteField',
-            'content' => 'cii\fields\dropdown\ContentField',
+            'in' => 'cii\fields\dropdown\InField',
             'language' => 'cii\fields\dropdown\ContentField',
 
+            'extension' => 'cii\fields\dropdown\ExtensionField',
+            
+            'route' => 'cii\fields\dropdown\RouteField',
+            'content' => 'cii\fields\dropdown\ContentField',
+            
             'group' => 'cii\fields\dropdown\GroupField',
             'user' => 'cii\fields\dropdown\UserField',
 
