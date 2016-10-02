@@ -29,6 +29,8 @@ abstract class ExtensionBaseController extends Controller {
     const FILENAME = 'extension.zip';
     const DIRNAME = 'extension.dir';
 
+    public $packageRoute;
+
     public function behaviors() {
         return parent::behaviors() + [
             'verbs' => [
@@ -80,6 +82,7 @@ abstract class ExtensionBaseController extends Controller {
             'modelUrl' => $this->getModelUrl(),
             'model' => $model,
             'searchModel' => $searchModel,
+            'packageRoute' => $this->packageRoute,
             'settings' => new ArrayDataProvider([
                 'allModels' => $models,
                 'sort' => [

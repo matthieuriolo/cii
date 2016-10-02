@@ -37,7 +37,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'encode' => false,
                     'label' => '<i class="glyphicon glyphicon-cog"></i> ' . Yii::p('cii', 'Settings'),
-                    'content' => $this->render('/setting/_list', ['data' => $settings]),
+                    'content' => $this->render('/setting/_list', [
+                        'data' => $settings,
+                        'packageURL' => [Yii::$app->seo->relativeAdminRoute('modules/cii/language/message')],
+                    ]),
                     'headerOptions' => [
                         'class' => count($settings->allModels) ? '' : 'disabled'
                     ]

@@ -31,6 +31,13 @@ $reflection = $model->getReflection();
         ],
 
         [   
+            'label' => Yii::p('cii', 'Translated extension'),
+            'format' => 'extension',
+            'value' => method_exists($reflection, 'getMessageType') ? $model->translatedExtension : null,
+            'visible' => $reflection->type === 'message'
+        ],
+
+        [   
             'label' => Yii::p('cii', 'Created'),
             'format' => 'datetime',
             'value' => $reflection->created

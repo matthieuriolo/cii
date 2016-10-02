@@ -4,17 +4,21 @@ namespace app\modules\cii\controllers\language;
 
 use Yii;
 use app\modules\cii\models\LanguageMessage;
+use app\modules\cii\Permission;
 
 use yii\web\NotFoundHttpException;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
-use cii\backend\BackendController;
 
+use cii\backend\BackendController;
 use cii\base\SearchModel;
 
 
-
 class MessageController extends BackendController {
+    public function getAccessRoles() {
+        return [Permission::MANAGE_LANGUAGE, Permission::MANAGE_EXTENSION, Permission::MANAGE_ADMIN];
+    }
+
     public function actionView($id) {
         $model = $this->findModel($id);
         return $this->render('view', [
@@ -27,7 +31,8 @@ class MessageController extends BackendController {
                         'id',
                         'type',
                         'default',
-                        'value'
+                        'value',
+                        'translatedType',
                     ]
                 ]
             ])

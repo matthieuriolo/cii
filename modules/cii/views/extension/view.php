@@ -26,13 +26,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'encode' => false,
                     'label' => '<i class="glyphicon glyphicon-question-sign"></i> ' . Yii::p('cii', 'Information'),
                     'content' => $this->render('_info', ['model' => $model]),
-                    //'active' => true
                 ],
 
                 [
                     'encode' => false,
                     'label' => '<i class="glyphicon glyphicon-cog"></i> ' . Yii::p('cii', 'Settings'),
-                    'content' => $this->render('/setting/_list', ['data' => $settings, 'model' => $searchModel]),
+                    'content' => $this->render('/setting/_list', [
+                        'data' => $settings,
+                        'model' => $searchModel,
+                        'packageRoute' => $packageRoute,
+                    ]),
                     'headerOptions' => [
                         'class' => count($settings->allModels) ? '' : 'disabled'
                     ]
