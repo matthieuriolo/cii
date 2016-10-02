@@ -10,6 +10,9 @@ use app\modules\cii\models\Package;
 
 Pjax::begin();
 
+if(!isset($packageRoute)) {
+    $packageRoute = 'cii/setting';
+}
 
 if(isset($model)) {
     echo $model->render($this);
@@ -47,16 +50,16 @@ echo GridView::widget([
         [
             'class' => 'yii\grid\ActionColumn',
             'template' => '{update} {delete}',
-            'urlCreator' => function($action, $model, $key, $index) {
+            'urlCreator' => function($action, $model, $key, $index) use($packageRoute) {
                 $params = ['id' => $model->id, 'key' => $model->key, 'type' => $model->extension_type];
                 if($action == 'delete') {
                     $route = [
-                        \Yii::$app->seo->relativeAdminRoute('modules/cii/setting/delete'),
+                        \Yii::$app->seo->relativeAdminRoute('modules/' . $packageRoute . '/delete'),
                         $params
                     ];
                 }else if($action == 'update') {
                     $route = [
-                        \Yii::$app->seo->relativeAdminRoute('modules/cii/setting/update'),
+                        \Yii::$app->seo->relativeAdminRoute('modules/' . $packageRoute . '/update'),
                         $params
                     ];
                 }

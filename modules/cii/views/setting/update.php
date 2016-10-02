@@ -6,8 +6,13 @@ use cii\widgets\Toggler;
 
 
 $this->title = Yii::p('cii', 'Update Setting');
-$this->params['breadcrumbs'][] = ['label' => Yii::p('cii', 'Settings'), 'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/setting/index')]];
+
+foreach($breadcrumbs as $breadcrumb) {
+    $this->params['breadcrumbs'][] = $breadcrumb;    
+}
+
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 
 
@@ -16,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="form-group pull-right">
 	<?php echo Html::a(
         Yii::p('cii', 'Cancel'),
-        [Yii::$app->seo->relativeAdminRoute('modules/cii/setting/index')],
+        $redirectURL,
         ['class' => 'btn btn-warning']
     ); ?>
 
@@ -55,9 +60,16 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
+    <?php if($model->type != 'texteditor') { ?>
     <div class="col-md-6">
         <?= $model->getField()->getEditable($model, $form); ?>
     </div>
+    <?php } ?>
 </div>
+
+<?php if($model->type == 'texteditor') { ?>
+    <hr>
+    <?= $model->getField()->getEditable($model, $form); ?>
+<?php } ?>
 
 <?php ActiveForm::end(); ?>

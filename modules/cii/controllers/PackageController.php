@@ -11,6 +11,8 @@ use app\modules\cii\Permission;
 use yii\data\ActiveDataProvider;
 
 class PackageController extends ExtensionBaseController {
+    public $packageRoute = 'cii/package/setting';
+
     public function getAccessRoles() {
         return [Permission::MANAGE_PACKAGE, Permission::MANAGE_EXTENSION, Permission::MANAGE_ADMIN];
     }

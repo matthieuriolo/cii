@@ -3,7 +3,6 @@
 namespace app\modules\cii\controllers;
 
 use Yii;
-use cii\backend\BackendController as Controller;
 
 use app\modules\cii\models\SettingSearchModel;
 use app\modules\cii\models\Configuration;
@@ -12,7 +11,7 @@ use app\modules\cii\Permission;
 use yii\data\ArrayDataProvider;
 use yii\base\InvalidConfigException;
 
-class SettingController extends Controller {
+class SettingController extends SettingBaseController {
     public function getAccessRoles() {
         return [Permission::MANAGE_SETTING, Permission::MANAGE_ADMIN];
     }
@@ -49,7 +48,7 @@ class SettingController extends Controller {
             'model' => $model
         ]);
     }
-
+/*
     public function actionUpdate($id, $type, $key) {
         $identifier = null;
 
@@ -103,5 +102,5 @@ class SettingController extends Controller {
 
         $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/setting/index')]);
         return;
-    }
+    }*/
 }

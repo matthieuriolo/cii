@@ -8,6 +8,8 @@ use app\modules\cii\Permission;
 use yii\data\ActiveDataProvider;
 
 class LayoutController extends ExtensionBaseController {
+    public $packageRoute = 'cii/layout/setting';
+
     public function getAccessRoles() {
         return [Permission::MANAGE_LAYOUT, Permission::MANAGE_EXTENSION, Permission::MANAGE_ADMIN];
     }
