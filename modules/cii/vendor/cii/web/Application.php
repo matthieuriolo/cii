@@ -3,6 +3,7 @@ namespace cii\web;
 
 use Yii;
 use cii\web\routes\DBRoute;
+use yii\web\Response;
 
 class Application extends \yii\web\Application {
 	public $seo;
