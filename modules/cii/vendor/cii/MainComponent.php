@@ -6,6 +6,7 @@ use yii\base\Component;
 use yii\helpers\FileHelper;
 
 use yii\base\InvalidConfigException;
+use yii\helpers\VarDumper;
 
 use cii\web\SecurityException;
 use cii\helpers\SPL;
@@ -129,6 +130,9 @@ class MainComponent extends Component {
 		$msg->setTo($to);
 
 		$msg->setFrom(Yii::$app->cii->setting('cii', 'sender'));
+
+
+        Yii::info('Sending ' . (is_object($class) ? $class::className() : $class['class']) . ' mail to ' . VarDumper::export($to) , 'mail');
 		return $msg->send();
     }
 
@@ -196,14 +200,22 @@ class MainComponent extends Component {
 
         $thumbnail = $web . '/thumbnails';
         $thumbnailPath = $thumbnail . '/' . $path . '/' . $filename;
+        $thumbnailWebPath = substr($thumbnailPath, strlen($web) + 1);
+        if(file_exists($thumbnailPath) && time() - filemtime($thumbnailPath) < Yii::$app->params['thumnail_duration']) {
+            return $thumbnailWebPath;
+        }
+
 
         $img = $this->image->load($file);
         $img->resize($width, $height, \cii\components\drivers\Kohana\Image::ADAPT);
         FileHelper::createDirectory(dirname($thumbnailPath));
+
         if($img->save($thumbnailPath)) {
-            return substr($thumbnailPath, strlen($web) + 1);
+            Yii::info('Creating thumbnail for ' . $origPath, 'thumbnail');
+            return $thumbnailWebPath;
         }
 
+        Yii::error('Failed to create thumbnail for ' . $origPath, 'thumbnail');
         return $origPath;
     }
 }
