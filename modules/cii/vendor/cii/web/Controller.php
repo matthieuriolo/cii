@@ -14,6 +14,8 @@ class Controller extends \yii\web\Controller {
 			'/main'
 		;
 		$this->setView(Yii::createObject('cii\web\view', []));
+
+		return parent::init();
 	}
 
 	public function getPackage() {
@@ -26,6 +28,21 @@ class Controller extends \yii\web\Controller {
 		}
 
 		return $this->_package;
+	}
+
+	public function goBackToReferrer() {
+		/*
+		 * Thanks to djfly
+		 *
+		 * https://github.com/yiisoft/yii2/issues/4343
+		 * 
+		 */
+
+		if(Yii::$app->request->referrer){
+			return $this->redirect(Yii::$app->request->referrer);
+		}else{
+			return $this->goHome();
+		}
 	}
 
 	public function renderShadow($view, $params = []) {

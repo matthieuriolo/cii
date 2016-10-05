@@ -90,7 +90,7 @@ class View extends \yii\web\View {
 		    }
 		}
 
-		parent::init();
+		return parent::init();
 	}
 
 	public function getContents($name = null) {
