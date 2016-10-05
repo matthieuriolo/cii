@@ -70,7 +70,31 @@ $config = [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
+                    'logVars' => YII_DEBUG ? null : [],
                 ],
+
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'categories' => ['thumbnail'],
+                    'logFile' => '@app/runtime/logs/thumnails.log',
+                    'logVars' => [],
+                ],
+
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'categories' => ['mail'],
+                    'logFile' => '@app/runtime/logs/mails.log',
+                    'logVars' => [],
+                ],
+
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'enabled' => YII_DEBUG,
+                    'logFile' => '@runtime/logs/sql.log',
+                    'logVars' => [],
+                    'levels' => ['profile'],
+                    'categories' => ['yii\db\Command::query', 'yii\db\Command::execute'],
+                ]
             ],
         ],
 
