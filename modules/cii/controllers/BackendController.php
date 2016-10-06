@@ -11,7 +11,6 @@ use app\modules\cii\Permission;
 use yii\log\FileTarget;
 
 use yii\data\ArrayDataProvider;
-use yii\helpers\FileHelper;
 
 class BackendController extends Controller {
     public function getAccessRoles() {
@@ -53,21 +52,7 @@ class BackendController extends Controller {
     }
 
     public function actionFlushthumbnail() {
-        $path = Yii::$app->basePath . '/web/thumbnails/';
-
-        foreach(scandir($path) as $inode) {
-            if(substr($inode, 0, 1) == '.') {
-                continue;
-            }
-
-            $inodePath = $path . $inode;
-            if(is_file($inodePath)) {
-                unlink($inodePath);
-            }else if(is_dir($inodePath)) {
-                FileHelper::removeDirectory($inodePath);
-            }
-        }
-
+        Yii::$app->cii->flushThumbnails();
         return $this->goBackToReferrer();
     }
 

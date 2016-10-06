@@ -218,4 +218,22 @@ class MainComponent extends Component {
         Yii::error('Failed to create thumbnail for ' . $origPath, 'thumbnail');
         return $origPath;
     }
+
+
+    public function flushThumbnails() {
+        $path = Yii::$app->basePath . '/web/thumbnails';
+
+        foreach(scandir($path) as $inode) {
+            if(substr($inode, 0, 1) == '.') {
+                continue;
+            }
+
+            $inodePath = $path . $inode;
+            if(is_file($inodePath)) {
+                unlink($inodePath);
+            }else if(is_dir($inodePath)) {
+                FileHelper::removeDirectory($inodePath);
+            }
+        }
+    }
 }

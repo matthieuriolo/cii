@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-6"><?php echo Html::a(
             Yii::p('cii', 'Create backup'),
             [\Yii::$app->seo->relativeAdminRoute('createbackup')],
-            ['class' => 'btn btn-success']
+            ['class' => 'btn btn-default']
         ); ?>
         </div>
     </div>
@@ -34,14 +34,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-6"><?php echo Html::a(
             Yii::p('cii', 'Clear Cache'),
             [\Yii::$app->seo->relativeAdminRoute('flushcache')],
-            ['class' => 'btn btn-success btn-bottom-padding']
+            ['class' => 'btn btn-default btn-bottom-padding']
         ); ?>
         </div>
 
         <div class="col-md-6"><?php echo Html::a(
             Yii::p('cii', 'Clear logs'),
             [\Yii::$app->seo->relativeAdminRoute('flushlog')],
-            ['class' => 'btn btn-success btn-bottom-padding']
+            ['class' => 'btn btn-default btn-bottom-padding']
         ); ?>
         </div>
     </div>
@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-6"><?php echo Html::a(
             Yii::p('cii', 'Clear thumbnail'),
             [\Yii::$app->seo->relativeAdminRoute('flushthumbnail')],
-            ['class' => 'btn btn-success btn-bottom-padding']
+            ['class' => 'btn btn-default btn-bottom-padding']
         ); ?>
         </div>
     </div>
