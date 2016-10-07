@@ -8,8 +8,11 @@ use app\modules\cii\models\Package as Core_Module;
 use app\modules\cii\models\Configuration as Core_Settings;
 use app\modules\cii\Permission;
 
-use yii\log\FileTarget;
+use cii\db\DbDumper;
 
+
+use yii\log\FileTarget;
+use cii\helpers\FileHelper;
 use yii\data\ArrayDataProvider;
 
 class BackendController extends Controller {
@@ -34,6 +37,26 @@ class BackendController extends Controller {
         return $this->render('application');
     }
 
+    public function actionCreatebackup() {
+        $dumper = DbDumper::getInstance(Yii::$app->db);
+        if($dumper->exportToFile(Yii::$app->runtimePath . '/database.sql')) {
+            if(FileHelper::compressDirectory(
+                Yii::$app->basePath,
+                Yii::$app->basePath . '/web/backup.zip',
+                [
+                    'excludeDirectories' => [Yii::$app->basePath . '/.git'],
+                    'excludeFiles' => [Yii::$app->basePath . '/web/backup.zip'],
+                ])) {
+                Yii::$app->session->setFlash('success', Yii::p('cii', 'Created new backup'));
+            }else {
+                Yii::$app->session->setFlash('error', Yii::p('cii', 'Could not compress files'));
+            }
+        }else {
+            Yii::$app->session->setFlash('error', Yii::p('cii', 'Could not export database'));
+        }
+        
+        return $this->goBackToReferrer();
+    }
 
     public function actionLog() {
     	$logs = [];

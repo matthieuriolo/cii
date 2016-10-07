@@ -1,5 +1,6 @@
 <?php
-use \cii\helpers\Html;
+use cii\helpers\Html;
+use cii\helpers\Url;
 
 $this->title = Yii::p('cii', 'Application');
 $this->params['breadcrumbs'][] = $this->title;
@@ -14,8 +15,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-6"><b><?php
         echo Yii::p('cii', 'Last backup:'), ' ';
 
-        if(false) {
-
+        $file = Yii::$app->basePath . '/web/backup.zip';
+        if(file_exists($file)) {
+            echo Html::a(
+                Yii::$app->formatter->asDatetime(filemtime($file)),
+                Url::base(true) . '/backup.zip'
+            );
         }else {
             echo Yii::$app->formatter->asText(null);
         }
@@ -48,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row">
         <div class="col-md-6"><?php echo Html::a(
-            Yii::p('cii', 'Clear thumbnail'),
+            Yii::p('cii', 'Clear thumbnails'),
             [\Yii::$app->seo->relativeAdminRoute('flushthumbnail')],
             ['class' => 'btn btn-default btn-bottom-padding']
         ); ?>

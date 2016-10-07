@@ -110,12 +110,6 @@ class Menu {
                     'url' => [Yii::$app->seo->relativeAdminRoute('application')],
                     'visible' => self::visible($module, [Permission::MANAGE_ADMIN, Permission::MANAGE_SETTING, Permission::MANAGE_LOG]),
                     'children' => [
-                        /*[
-                            'name' => 'Backups',
-                            'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/user/index')],
-                            'icon' => 'glyphicon glyphicon-hdd'
-                        ],
-                        */
                         [
                             'name' => Yii::p('cii', 'Settings'),
                             'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/setting/index')],
