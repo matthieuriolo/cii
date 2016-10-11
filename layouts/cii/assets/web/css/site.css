@@ -461,15 +461,23 @@ span.list-group-item {
     display: block;
 }
 
-.file-browser .element .buttons {
+
+.file-browser .element .buttons,
+.file-browser .element .permissions {
     position: absolute;
-    left: 4px;
     top: 10px;
     width: 20px;
     font-size: 18px;
-
-    visibility: hidden;
     text-align: center;
+}
+
+.file-browser .element .buttons {
+    visibility: hidden;
+    left: 4px;
+}
+
+.file-browser .element .permissions {
+    right: 4px;
 }
 
 .file-browser .element .buttons > a {
@@ -478,4 +486,91 @@ span.list-group-item {
 
 .file-browser .element:hover .buttons {
     visibility: visible;
+}
+
+
+
+
+
+
+
+/* bootstrap table fix */
+.table {
+    table-layout: fixed;
+}
+
+.table td,
+.table th {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.table .column-width-1 {
+    width: 22px;
+}
+
+.table .column-width-2 {
+    width: 50px;
+}
+
+.table .column-width-3 {
+    width: 68px;
+}
+
+.table .column-width-4 {
+    width: 90px;
+}
+
+.table .column-width-5 {
+    width: 112px;
+}
+
+/* position-overview */
+
+table.position-overview {
+    width: 100%;
+    border-spacing: 10px;
+    border-collapse: separate;
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+table.position-overview .position-overview {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+table.position-overview .inner-table {
+    padding: 0px;
+}
+
+table.position-overview td {
+    text-align: center;
+    padding: 10px;
+}
+
+table.position-overview .framed {
+    color: white;
+    background: lightblue;
+    border: 1px dashed darkblue;
+}
+
+table.position-overview .framed:hover {
+    text-decoration: underline;
+}
+
+table.position-overview .framed.main-frame {
+    background: lightCoral;
+    border: 1px dashed darkred;
+    height: 100px;
+}
+
+table.position-overview .framed.inner-table {
+    background: AliceBlue;
+    border: 1px dashed Aqua;
+}
+
+table.position-overview .framed.grey {
+    background: lightgrey;
+    border: 1px dashed darkgrey;
 }

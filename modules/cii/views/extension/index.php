@@ -41,6 +41,8 @@ echo GridView::widget([
         'enabled:boolean',
         [
             'class' => 'cii\grid\ActionColumn',
+            'headerOptions' => ['class' => 'action-column column-width-3'],
+
             'appendixRoute' => 'modules/cii/extension',
             'template' => '{view} {disable}{enable} {delete}',
             'visibleButtons' => [

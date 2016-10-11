@@ -37,6 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'class' => 'cii\grid\ActionColumn',
+                'headerOptions' => ['class' => 'action-column column-width-3'],
                 'appendixRoute' => 'modules/cii/content'
             ],
         ],

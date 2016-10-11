@@ -44,6 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'cii\grid\ActionColumn',
                 'appendixRoute' => 'modules/cii/package',
                 'template' => '{view} {disable}{enable} {delete}',
+                'headerOptions' => ['class' => 'action-column column-width-3'],
                 'visibleButtons' => [
                     'disable' => function($model, $key, $index) {
                         if(

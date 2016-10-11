@@ -45,6 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'class' => 'cii\grid\ActionColumn',
+                'headerOptions' => ['class' => 'action-column column-width-3'],
                 'visibleButtons' => [
                     'update' => function($model, $key, $index) {
                         return !$model->superadmin;

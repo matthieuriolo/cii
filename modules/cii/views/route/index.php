@@ -70,7 +70,8 @@ $this->params['breadcrumbs'][] = $this->title;
             
             [
                 'class' => ActionColumn::className(),
-                'template' => '{view}{update}{delete}{children}',
+                'template' => '{view} {update} {delete} {children}',
+                'headerOptions' => ['class' => 'action-column column-width-4'],
                 'urlCreator' => function($action, $model, $key, $index) {
                     if($action == 'view') {
                         $route = [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/view'), ['id' => $model['id']]];

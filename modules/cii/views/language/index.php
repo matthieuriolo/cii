@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             
             [
                 'class' => 'cii\grid\ActionColumn',
+                'headerOptions' => ['class' => 'action-column column-width-4'],
                 'appendixRoute' => 'modules/cii/language',
                 'template' => '{view} {update} {enable}{disable} {delete}',
                 'visibleButtons' => [
