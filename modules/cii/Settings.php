@@ -61,7 +61,7 @@ return [
         'label' => Yii::p('cii', 'Mail layout'),
         'default' => 'cii',
         'type' => 'in',
-        'values' => Yii::$app->cii->layout->getMailLayoutsForDropdown()
+        'values' => Yii::$app->cii->layout->getLayoutsForDropdown()
     ],
 
     'metakeys' => [

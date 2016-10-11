@@ -157,19 +157,6 @@ class Layout extends BaseExtension {
 		return null;
 	}
 
-
-	public function getBackendLayoutsForDropdown() {
-		return [];
-	}
-
-	public function getFrontendLayoutsForDropdown() {
-		return [];
-	}
-
-	public function getMailLayoutsForDropdown() {
-		return [];
-	}
-
 	public function getPositionsForDropdown() {
 		$data = [null => Yii::t('app', 'No selection')];
 		$refl = $this->getReflection(Yii::$app->cii->package->setting('cii', 'layout'));
