@@ -30,26 +30,7 @@ use app\modules\cii\Permission;
 /**
  * PositionController implements the CRUD actions for ContentVisibility model.
  */
-class PositionController extends BackendController
-{
-    /**
-     * @inheritdoc
-     */
-    public function behaviors() {
-        return parent::behaviors() + [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
-    public function getAccessRoles() {
-        return [Permission::MANAGE_CONTENT, Permission::MANAGE_ADMIN];
-    }
-
+class PositionController extends PositionBaseController {
     /**
      * Lists all ContentVisibilities models.
      * @return mixed
@@ -66,8 +47,6 @@ class PositionController extends BackendController
             $model->languageFilter('language_id');
         }
 
-        /*$model->nullFilter('activated');
-        $model->booleanFilter('superadmin');*/
 
         if($model->load(Yii::$app->request->get()) && $model->validate()) {
             $query = $model->applyFilter($query);
@@ -83,8 +62,10 @@ class PositionController extends BackendController
                     'ordering',
                     'position',
                     'route.slug',
-                    'content.name',
-                    'content.enabled'
+                    'content' => [
+                        'asc' => ['content.name' => SORT_ASC],
+                        'desc' => ['content.name' => SORT_DESC],
+                    ],
                 ]
             ] 
         ]);
@@ -116,8 +97,7 @@ class PositionController extends BackendController
         $model = $this->findModel($id);
         
         if($model->load(Yii::$app->request->post()) && $model->save()) {
-            $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/position/view'), 'id' => $model->id]);
-            return;
+            return $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/position/view'), 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -125,33 +105,16 @@ class PositionController extends BackendController
         ]);
     }
 
-    /**
-     * Deletes an existing ContentVisibilities model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id) {
-        $model = $this->findModel($id);
-
-        $model->delete();
-        $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/position/index')]);
-        return;
-    }
-
-    /**
-     * Finds the ContentVisibilities model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return ContentVisibilities the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id) {
-        if (($model = ContentVisibilities::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+    public function actionCreate() {
+        $model = new ContentVisibilities();
+        
+        if($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/position/view'), 'id' => $model->id]);
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
 

@@ -3,6 +3,7 @@
 namespace app\modules\cii\models;
 
 use Yii;
+use cii\base\OrderModelInterface;
 
 /**
  * This is the model class for table "Core_ContentVisibilities".
@@ -17,7 +18,7 @@ use Yii;
  * @property CoreRoute $route
  * @property CoreContent $content
  */
-class ContentVisibilities extends \yii\db\ActiveRecord {
+class ContentVisibilities extends \yii\db\ActiveRecord implements OrderModelInterface {
     /**
      * @inheritdoc
      */
@@ -42,7 +43,11 @@ class ContentVisibilities extends \yii\db\ActiveRecord {
     public function beforeSave($insert) {
         if($this->ordering === null) {
             $this->ordering = 1 + (int)$this::find()
-                ->where(['content_id' => $this->content_id])
+                ->where([
+                    'position' => $this->position,
+                    'route_id' => $this->route_id,
+                    'language_id' => $this->language_id
+                ])
                 ->max('ordering')
             ;
         }
@@ -81,5 +86,49 @@ class ContentVisibilities extends \yii\db\ActiveRecord {
      */
     public function getContent() {
         return $this->hasOne(Content::className(), ['id' => 'content_id']);
+    }
+
+
+    public function orderUp() {
+        if($model = $this->previous()) {
+           return $this->switchOrder($model);
+        }
+
+        return true;
+    }
+
+    public function orderDown() {
+        if($model = $this->next()) {
+           return $this->switchOrder($model);
+        }
+
+        return true;
+    }
+
+    public function previous() {
+        return $this::find()
+            ->where([
+                'position' => $this->position,
+            ])
+            ->andWhere(['<', 'ordering', $this->ordering])
+            ->one()
+        ;
+    }
+
+    public function next() {
+        return $this::find()
+            ->where([
+                'position' => $this->position,
+            ])
+            ->andWhere(['>', 'ordering', $this->ordering])
+            ->one()
+        ;
+    }
+
+    protected function switchOrder($model) {
+        $order = $model->ordering;
+        $model->ordering = $this->ordering;
+        $this->ordering = $order;
+        return $this->save() && $model->save();
     }
 }
