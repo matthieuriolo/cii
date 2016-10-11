@@ -14,11 +14,13 @@ The original code of yii 2 has a few changes. Those changes will be provided wit
 - Web installer (init and extensions)
 - User management based on groups and permissions per Module
 - Type based setting managment
-- Extensions (Modules, Language, Layouts)
+- Extensions (Modules, Languages, Layouts)
 - Extendable basic object (routes and contents)
 - Gii support
 - MySQL to migrate
-
+- Backup functionality
+- Integrated file browser
+- Log functionality (Default for mail, thumbnails, sql and common application failures)
 
 # Screenshots
 ![alt tag](screenshots/home.png)
