@@ -39,6 +39,8 @@ class I18N extends \yii\i18n\I18N {
             list($type, $cat) = $category;
             if($type == 'package') {
                 return $this->packageSource;
+            }else if($type == 'layout') {
+                return $this->layoutSource;
             }
 
             return $this->layoutSource;
@@ -46,6 +48,4 @@ class I18N extends \yii\i18n\I18N {
 
         return parent::getMessageSource($category);
     }
-
-
 }
