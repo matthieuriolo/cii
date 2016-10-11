@@ -18,4 +18,8 @@ class LayoutReflection extends BaseReflection {
     public function getPositions() {
     	return isset($this->data['positions']) ? $this->data['positions'] : [];
     }
+
+	public function getOverviewView() {
+		return  isset($this->data['overview']) ? $this->data['overview'] : null;
+	}
 }
