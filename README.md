@@ -21,6 +21,7 @@ The original code of yii 2 has a few changes. Those changes will be provided wit
 - Backup functionality
 - Integrated file browser
 - Log functionality (Default for mail, thumbnails, sql and common application failures)
+- Access counter
 
 # Screenshots
 ![alt tag](screenshots/home.png)
