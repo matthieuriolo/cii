@@ -50,6 +50,7 @@ echo GridView::widget([
         [
             'class' => 'yii\grid\ActionColumn',
             'template' => '{update} {delete}',
+            'headerOptions' => ['class' => 'action-column column-width-2'],
             'urlCreator' => function($action, $model, $key, $index) use($packageRoute) {
                 $params = ['id' => $model->id, 'key' => $model->key, 'type' => $model->extension_type];
                 if($action == 'delete') {
