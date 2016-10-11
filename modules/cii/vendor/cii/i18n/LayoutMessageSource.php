@@ -3,6 +3,8 @@ namespace cii\i18n;
 
 use Yii;
 
-class LayoutMessageSource extends \yii\i18n\PhpMessageSource {
-	
+
+class LayoutMessageSource extends BaseMessageSource {
+    public $basePath = '@app/messages/layouts';
 }
+
