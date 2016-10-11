@@ -31,9 +31,9 @@ class ActionColumn extends \yii\grid\ActionColumn {
 
     protected function initDefaultButtons() {
       parent::initDefaultButtons();
-      if(!isset($this->buttons['enable'])) {
+       if(!isset($this->buttons['enable'])) {
             $this->buttons['enable'] = function ($url, $model, $key) {
-                $options = array_merge([
+                 $options = array_merge([
                     'title' => Yii::t('yii', 'Enable'),
                     'aria-label' => Yii::t('yii', 'Enable'),
                     //'data-method' => 'post',
@@ -43,7 +43,7 @@ class ActionColumn extends \yii\grid\ActionColumn {
             };
         }
 
-      if(!isset($this->buttons['disable'])) {
+       if(!isset($this->buttons['disable'])) {
             $this->buttons['disable'] = function ($url, $model, $key) {
                 $options = array_merge([
                     'title' => Yii::t('yii', 'Disable'),
@@ -52,6 +52,30 @@ class ActionColumn extends \yii\grid\ActionColumn {
                     'data-pjax' => '0',
                 ], $this->buttonOptions);
                 return Html::a('<span class="glyphicon glyphicon-floppy-remove"></span>', $url, $options);
+            };
+        }
+
+        if(!isset($this->buttons['up'])) {
+            $this->buttons['up'] = function ($url, $model, $key) {
+                $options = array_merge([
+                    'title' => Yii::t('yii', 'Order up'),
+                    'aria-label' => Yii::t('yii', 'Order up'),
+                    //'data-method' => 'post',
+                    'data-pjax' => '0',
+                ], $this->buttonOptions);
+                return Html::a('<span class="glyphicon glyphicon-arrow-up"></span>', $url, $options);
+            };
+        }
+
+        if(!isset($this->buttons['down'])) {
+            $this->buttons['down'] = function ($url, $model, $key) {
+                $options = array_merge([
+                    'title' => Yii::t('yii', 'Order down'),
+                    'aria-label' => Yii::t('yii', 'Order down'),
+                    //'data-method' => 'post',
+                    'data-pjax' => '0',
+                ], $this->buttonOptions);
+                return Html::a('<span class="glyphicon glyphicon-arrow-down"></span>', $url, $options);
             };
         }
     }
