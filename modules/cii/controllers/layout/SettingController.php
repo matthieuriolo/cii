@@ -5,6 +5,7 @@ namespace app\modules\cii\controllers\layout;
 use Yii;
 use app\modules\cii\controllers\SettingBaseController;
 use app\modules\cii\Permission;
+use yii\web\NotFoundHttpException;
 
 class SettingController extends SettingBaseController {
     public function getAccessRoles() {
@@ -33,6 +34,11 @@ class SettingController extends SettingBaseController {
     }
 
     public function actionDelete($id, $type, $key) {
+        $model = $this->getExtensionModel($id, 'layout');
+        if(!$model) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
         $this->redirectURL = [
             Yii::$app->seo->relativeAdminRoute('modules/cii/layout/view'),
             'id' => $model->id

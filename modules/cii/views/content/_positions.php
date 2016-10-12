@@ -5,7 +5,9 @@ use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 
-$form = ActiveForm::begin();
+$form = ActiveForm::begin([
+    'action' => [Yii::$app->seo->relativeAdminRoute('modules/cii/content/position/create')]
+]);
 $multilanguage = Yii::$app->cii->package->setting('cii', 'multilanguage');
 
 if($multilanguage) {
@@ -66,7 +68,8 @@ if($multilanguage) {
 
             [
                 'class' => 'cii\grid\ActionColumn',
-                'template' => '{delete}',
+                'template' => '{delete} {up} {down}',
+                'headerOptions' => ['class' => 'action-column column-width-5'],
                 'appendixRoute' => 'modules/cii/content'
             ],
         ],

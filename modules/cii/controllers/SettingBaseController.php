@@ -58,8 +58,7 @@ abstract class SettingBaseController extends BackendController {
         }
 
         if($model->load(Yii::$app->request->post()) && $model->save()) {
-            $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/setting/index')]);
-            return;
+            return $this->redirect($this->redirectURL);
         }
         
         return $this->render('/setting/update', [
