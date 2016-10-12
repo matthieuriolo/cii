@@ -24,9 +24,7 @@ body {
 }
 
 .footer {
-    height: 60px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #ddd;
+    min-height: 60px;
     padding-top: 20px;
 }
 
@@ -562,7 +560,7 @@ table.position-overview .framed:hover {
 table.position-overview .framed.main-frame {
     background: lightCoral;
     border: 1px dashed darkred;
-    height: 100px;
+    height: 200px;
 }
 
 table.position-overview .framed.inner-table {

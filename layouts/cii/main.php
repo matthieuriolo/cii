@@ -57,8 +57,7 @@ foreach($background as $c) {
         'brandLabel' => $label,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-            'style' => 'background-color: ' . Yii::$app->cii->layout->setting('cii', 'navbarcolor') . ';'
+            'class' => 'navbar-inverse navbar-fixed-top'
         ],
     ]);
 
@@ -142,9 +141,21 @@ foreach($background as $c) {
 </div>
 
 <footer class="footer">
+
     <div class="container">
-        <p class="pull-right"><?= Yii::powered() ?></p>
-        <p class="pull-left"><?= Yii::$app->cii->powered() ?></p>
+        <?php
+        $footer = $this->getContents('footer');
+
+        if(count($footer)) {
+                foreach($footer as $c) {
+                    echo $this->renderShadow($c, 'footer');
+                }
+        } ?>
+
+        <?php if(Yii::$app->cii->layout->setting('cii', 'show_copyright')) { ?>
+            <p class="pull-right"><?= Yii::powered() ?></p>
+            <p class="pull-left"><?= Yii::$app->cii->powered() ?></p>
+        <?php } ?>
 
         <div class="text-center social-buttons">
             <i class="fa fa-google-plus-square" data-controller="buttons/google"></i>
@@ -157,16 +168,33 @@ foreach($background as $c) {
 <?php $this->endBody() ?>
 
 <style>
-    .navbar-inverse .navbar-brand,
-    .navbar-inverse .navbar-nav > li > a {
+    .navbar {
+        background-color: <?= Yii::$app->cii->layout->setting('cii', 'navbarcolor'); ?>;
         color: <?= Yii::$app->cii->layout->setting('cii', 'navbarcolor_text'); ?>;
     }
 
-    .navbar-inverse .navbar-brand:hover,
-    .navbar-inverse .navbar-brand:focus,
-    .navbar-inverse .navbar-nav > li > a:hover,
-    .navbar-inverse .navbar-nav > li > a:focus {
-        color: <?= Yii::$app->cii->layout->setting('cii', 'navbarcolor_text_hover'); ?>;
+    .navbar a {
+        color: <?= Yii::$app->cii->layout->setting('cii', 'navbarcolor_link'); ?>;
+    }
+
+    .navbar a:hover,
+    .navbar a:focus {
+        color: <?= Yii::$app->cii->layout->setting('cii', 'navbarcolor_link_hover'); ?>;
+    }
+
+
+    .footer {
+        background-color: <?= Yii::$app->cii->layout->setting('cii', 'footercolor'); ?>;
+        color: <?= Yii::$app->cii->layout->setting('cii', 'footercolor_text'); ?>;
+    }
+
+    .footer a {
+        color: <?= Yii::$app->cii->layout->setting('cii', 'footercolor_link'); ?>;
+    }
+
+    .footer a:hover,
+    .footer a:focus {
+        color: <?= Yii::$app->cii->layout->setting('cii', 'footercolor_link_hover'); ?>;
     }
 </style>
 

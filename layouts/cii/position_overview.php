@@ -21,6 +21,16 @@
 	</tr>
 
 	<tr>
-		<td class="framed grey" width="100%" colspan="3">Footer</td>
+		<td class="framed inner-table" width="100%" colspan="3">
+			
+			<table class="position-overview">
+				<tr>
+					<td class="framed">Footer</td>
+				</tr>
+				<tr>
+					<td class="framed grey" width="20%">Copyright & social media</td>
+				</tr>
+			</table>
+		</td>
 	</tr>
 </table>

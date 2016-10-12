@@ -19,5 +19,7 @@ return [
         'right' => Yii::l('cii', 'Right'),
         'background' => Yii::l('cii', 'Background'),
         'navbar' => Yii::l('cii', 'Navigation'),
+
+        'footer' => Yii::l('cii', 'Footer'),
     ],
 ];
