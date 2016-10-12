@@ -157,8 +157,8 @@ class MainComponent extends Component {
     			'name' => $key,
     		])
     		->one();
-    	
-    	if($model && $model->value) {
+        
+    	if($model && !is_null($model->value)) {
     		return $model->getPreparedValue();
     	}
 
@@ -166,7 +166,7 @@ class MainComponent extends Component {
     		$types = $extension->getSettings();
 
     		if(!isset($types[$key])) {
-                throw new InvalidConfigException();
+                throw new InvalidConfigException('The setting ' . $key . ' does not exists');
     		}
 
     		if(isset($types[$key]['default'])) {
