@@ -83,24 +83,22 @@ class Layout extends BaseExtension {
 			}
 		}
 
-		$where = [
-			'position' => $name,
-			'ext.enabled' => true
-		];
-
-		if(is_int($routeId) || is_null($routeId)) {
-			$where['route_id'] = $routeId;
-		}
-
-
 		$models = ContentVisibilities::find()
 			->joinWith([
 				'content.classname.package.extension as ext'
 			])
-			->where($where)
-			->all()
+			->where([
+				'position' => $name,
+				'ext.enabled' => true
+			])
+			->andWhere([
+				'or',
+				['route_id' => is_int($routeId) ? $routeId : 0],
+				['route_id' => null],
+			])
 		;
 
+		$models = $models->all();
 
 		//outbox
 		$models = array_map(function($model) {
