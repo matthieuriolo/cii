@@ -17,6 +17,15 @@ use Yii;
  */
 class Content extends \yii\db\ActiveRecord {
     public $type;
+
+    public function init() {
+        if(is_null($this->columns_count)) {
+            $this->columns_count = 2;
+        }
+        
+        return parent::init();
+    }
+
     /**
      * @inheritdoc
      */
