@@ -23,7 +23,7 @@ Pjax::begin(); ?>
             [
                 'attribute' => 'position',
                 'value' => function($model) use($positions) {
-                    return $positions[$model->position];
+                    return isset($positions[$model->position]) ? $positions[$model->position] : $model->position;
                 }
             ],
             'route.slug',
