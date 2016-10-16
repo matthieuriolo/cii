@@ -199,6 +199,12 @@ span.list-group-item {
     bottom: 0px;
 }
 
+.input-group-addon a[class~="glyphicon"]:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
 iframe.full {
     display: block;
     width: 100%;
