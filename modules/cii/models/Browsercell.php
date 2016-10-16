@@ -8,6 +8,7 @@ use cii\base\Model;
 use yii\captcha\Captcha;
 use cii\helpers\Html;
 use cii\helpers\Url;
+use cii\helpers\FileHelper;
 
 class Browsercell extends Model {
     public $file;
@@ -42,16 +43,32 @@ class Browsercell extends Model {
         return is_writable($this->file);
     }
 
-    public function getDisplayContent($renameModalId) {
-        return '<div class="element is-' . ($this->isDirectory() ? 'directory' : 'file') . '">' .
+    protected function getUrl($path, $types = null, $iframe = null) {
+        $url = [$this->baseUrl . '/' . $path, 'path' => $this->getFilePath()];
+        if($types) {
+            $url['types'] = implode(',', $types);
+        }
+
+        if($iframe) {
+            $url['iframe'] = $iframe;
+        }
+
+        return Url::to($url);
+    }
+
+    public function getDisplayContent($renameModalId, $types = null, $iframe = null) {
+        $type = FileHelper::getMimeType($this->file);
+        return '<div class="element is-' . ($this->isDirectory() ? 'directory' : 'file')
+                . ' ' . ($types && !in_array($type, $types) ? 'disabled' : '')
+                . '">' .
                 $this->getDisplayPreview() . 
                 '<div class="buttons">' .
-                    ($this->isDirectory() ? '<a title="Open directory" class="button-open-directory" href="' . Url::to([$this->baseUrl . '/index', 'path' => $this->getFilePath()]) . '"><i class="glyphicon glyphicon-share"></i></a>' : '')
-                    . (!$this->isDirectory() ? '<a title="Download file" class="button-download" href="' . Url::to([$this->baseUrl . '/download', 'path' => $this->getFilePath()]) . '"><i class="glyphicon glyphicon-cloud-download"></i></a>' : '')
+                    ($this->isDirectory() ? '<a title="Open directory" class="button-open-directory" href="' . $this->getUrl('index', $types, $iframe) . '"><i class="glyphicon glyphicon-share"></i></a>' : '')
+                    . (!$this->isDirectory() ? '<a title="Download file" class="button-download" href="' . $this->getUrl('download', $types, $iframe) . '"><i class="glyphicon glyphicon-cloud-download"></i></a>' : '')
                     . (
                         $this->isWritable() ?
-                        '<a title="Rename element" class="button-rename" href="#" data-target="#' . $renameModalId . '" data-toggle="modal" data-original-name="'.Html::encode($this->getName()).'"><i class="glyphicon glyphicon-edit"></i></a>'
-                        . '<a title="Remove element" class="button-remove" href="' . Url::to([$this->baseUrl . '/remove', 'path' => $this->getFilePath()]) . '"><i class="glyphicon glyphicon-remove"></i></a>'
+                        '<a title="Rename element" class="button-rename" href="#" data-target="#' . $renameModalId . '" data-toggle="modal" data-original-name="'. Html::encode($this->getName()) .'"><i class="glyphicon glyphicon-edit"></i></a>'
+                        . '<a title="Remove element" class="button-remove" href="' . $this->getUrl('remove', $types, $iframe) . '"><i class="glyphicon glyphicon-remove"></i></a>'
                         :
                         ''
                     ) . 
@@ -59,7 +76,7 @@ class Browsercell extends Model {
                 '<div class="permissions">' .
                     ($this->isWritable() ? '' : '<i title="Not writable" class="glyphicon glyphicon-lock text-danger"></i>')
                 . '</div>' .
-                '<div class="name"><span>' . Html::encode($this->getName()) .'</span></div>' .
+                '<div class="name">' . Html::encode($this->getName()) .'</div>' .
                 
             '</div>';
     }
