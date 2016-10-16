@@ -7,6 +7,23 @@ use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 
 class FileHelper extends \yii\helpers\FileHelper {
+    static public $faviconMimeTypes = ['image/x-icon'];
+    static public $imageMimeTypes = [
+        'image/jpeg',
+        'image/png',
+        'image/gif',
+        'image/tiff',
+        'image/svg+xml',
+    ];
+
+    static public $videoMimeTypes = [
+        'video/mpeg',
+        'video/mp4',
+        'video/quicktime',
+        'video/x-msvideo',
+        'video/x-ms-asf',
+    ];
+
     public static function compressDirectory($dir, $destination, $options = []) {
         $options = $options + [
             'excludeFiles' => [],
