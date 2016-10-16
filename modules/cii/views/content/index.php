@@ -13,34 +13,33 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p class="lead"><?= Yii::p('cii', 'Contents define what data can be accessed (usually through routes)'); ?></p>
 
+    <?php Pjax::begin(); ?>
+        
+        <?= $model->render($this); ?>
 
-<?php Pjax::begin(); ?>
-    
-    <?= $model->render($this); ?>
-
-    <?= GridView::widget([
-        'tableOptions' => [
-            'class' => "table table-striped table-bordered table-hover",
-            'data-controller' => 'singlerowclick'
-        ],
-        'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
-        'columns' => [
-            'name',
-            [
-                'attribute' => 'classname',
-                'value' => 'classname.typename',
+        <?= GridView::widget([
+            'tableOptions' => [
+                'class' => "table table-striped table-bordered table-hover",
+                'data-controller' => 'singlerowclick'
             ],
-            
-            'created:datetime',
-            'enabled:boolean',
+            'dataProvider' => $dataProvider,
+            //'filterModel' => $searchModel,
+            'columns' => [
+                'name',
+                [
+                    'attribute' => 'classname',
+                    'value' => 'classname.typename',
+                ],
+                
+                'created:datetime',
+                'enabled:boolean',
 
-            [
-                'class' => 'cii\grid\ActionColumn',
-                'headerOptions' => ['class' => 'action-column column-width-3'],
-                'appendixRoute' => 'modules/cii/content'
+                [
+                    'class' => 'cii\grid\ActionColumn',
+                    'headerOptions' => ['class' => 'action-column column-width-3'],
+                    'appendixRoute' => 'modules/cii/content'
+                ],
             ],
-        ],
-    ]); ?>
-<?php Pjax::end(); ?>
+        ]); ?>
+    <?php Pjax::end(); ?>
 </div>
