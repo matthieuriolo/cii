@@ -59,4 +59,19 @@ class Controller extends \yii\web\Controller {
         
         return $content;
     }
+
+    public function renderRaw($view, $params = []) {
+    	$tmpLayout = $this->layout;
+		$this->layout = Yii::$app->layoutBasePath .
+			'/' .
+			Yii::$app->cii->package->setting('cii', 'layout') .
+			'/raw'
+		;
+        
+        $content = $this->getView()->render($view, $params, $this);
+        $content = $this->renderContent($content);
+        $this->layout = $tmpLayout;
+        
+        return $content;
+    }
 }
