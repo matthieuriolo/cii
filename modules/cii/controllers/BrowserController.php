@@ -65,8 +65,6 @@ class BrowserController extends BackendController {
 
 
         $uploadModel = new UploadFileForm();
-
-
         $renameModel = new RenameFileForm();
 
 

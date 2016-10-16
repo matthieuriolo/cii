@@ -20,11 +20,13 @@ define(['tinyMCE'], function(tinyMCE) {
 			}
 		}
 
+
+		var initSubmit = false;
 		var type = $(node).data('type');
 		if(type == 'small') {
 			type = {
 				selector: App.getSelector(node),
-				relative_urls: false,
+				relative_urls: true,
 				language: defaultLang,
 				height : "200px",
 				menubar: false,
@@ -37,10 +39,38 @@ define(['tinyMCE'], function(tinyMCE) {
 		}else {
 			type = {
 				selector: App.getSelector(node),
-				relative_urls: false,
+				relative_urls: true,
 				language: defaultLang,
 				height : "400px",
-				file_browser_callback: 'test',
+				
+				file_picker_callback: function(callback, value, meta) {
+					if(!initSubmit) {
+						initSubmit = true;
+						$('#' + $(node).data('browser-image') + '_submit').click(function() {
+							callback($('#' + $(node).data('browser-image') + '_field').val());
+						});
+
+						$('#' + $(node).data('browser-media') + '_submit').click(function() {
+							callback($('#' + $(node).data('browser-media') + '_field').val());
+						});
+
+						$('#' + $(node).data('browser-file') + '_submit').click(function() {
+							callback($('#' + $(node).data('browser-file') + '_field').val());
+						})
+					}
+
+					if(meta.filetype == 'image') {
+						$('#' + $(node).data('browser-image')).modal('show');
+					}
+
+					if(meta.filetype == 'media') {
+						$('#' + $(node).data('browser-media')).modal('show');
+					}
+
+					if(meta.filetype == 'file') {
+						$('#' + $(node).data('browser-file')).modal('show');
+					}
+				},
 				theme: 'modern',
 				skin: 'lightnostatusbar',
 				plugins: 'advlist autolink lists link charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table contextmenu paste image',
