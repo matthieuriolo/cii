@@ -100,21 +100,24 @@ class ContentController extends BackendController {
      */
     public function actionView($id) {
         $visibleModel = new ContentVisibilities();
+        $visibleModel->content_id = $id;
 
-        if($visibleModel->load(Yii::$app->request->post())) {
-            $visibleModel->content_id = $id;
-            if($visibleModel->save()) {
-                $visibleModel = new ContentVisibilities();
-            }
+        if($visibleModel->load(Yii::$app->request->post()) && $visibleModel->save()) {
+            $visibleModel = new ContentVisibilities();
         }
 
         $visibilities = new ActiveDataProvider([
             'query' => ContentVisibilities::find()->where([
                 'content_id' => $id
-            ]),
+            ])->joinWith(['route as route']),
             'sort' => [
                 'attributes' => [
-                    
+                    'position',
+                    'ordering',
+                    'route' => [
+                        'asc' => ['route.slug' => SORT_ASC],
+                        'desc' => ['route.slug' => SORT_DESC],
+                    ]
                 ],
             ],
         ]);

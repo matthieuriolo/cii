@@ -44,14 +44,12 @@ class ContentVisibilities extends \yii\db\ActiveRecord implements OrderModelInte
         if($this->ordering === null) {
             $this->ordering = 1 + (int)$this::find()
                 ->where([
-                    'position' => $this->position,
-                    'route_id' => $this->route_id,
-                    'language_id' => $this->language_id
+                    'position' => $this->position
                 ])
                 ->max('ordering')
             ;
         }
-
+        
         return parent::beforeSave($insert);
     }
 

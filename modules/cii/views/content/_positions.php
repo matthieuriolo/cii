@@ -2,12 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\grid\GridView;
+use cii\grid\GridView;
 use yii\widgets\Pjax;
 
-$form = ActiveForm::begin([
-    'action' => [Yii::$app->seo->relativeAdminRoute('modules/cii/content/position/create')]
-]);
+$form = ActiveForm::begin();
 $multilanguage = Yii::$app->cii->package->setting('cii', 'multilanguage');
 
 if($multilanguage) {
@@ -57,8 +55,8 @@ if($multilanguage) {
         'dataProvider' => $visibilities,
         'columns' => [
             'ordering',
-            'position',
-            'route_id',
+            'position:positionTypes',
+            'route:route',
             [
                 'attribute' => 'language_id',
                 'format' => 'html',
@@ -69,8 +67,17 @@ if($multilanguage) {
             [
                 'class' => 'cii\grid\ActionColumn',
                 'template' => '{delete} {up} {down}',
-                'headerOptions' => ['class' => 'action-column column-width-5'],
-                'appendixRoute' => 'modules/cii/content'
+                'headerOptions' => ['class' => 'action-column column-width-3'],
+                'appendixRoute' => 'modules/cii/content/position',
+                'visibleButtons' => [
+                    'up' => function($model) {
+                        return $model->previous();
+                    },
+
+                    'down' => function($model) {
+                        return $model->next();
+                    },
+                ]
             ],
         ],
     ]); ?>
