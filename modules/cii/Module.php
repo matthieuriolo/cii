@@ -38,9 +38,15 @@ class Module extends \cii\backend\Package {
             'html' => 'cii\fields\HtmlField',
             'password' => 'cii\fields\PasswordField',
             'texteditor' => 'cii\fields\TexteditorField',
-            'image' => 'cii\fields\ImageField',
+            
             'captcha' => 'cii\fields\CaptchaField',
             
+
+            'file' => 'cii\fields\file\FileField',
+            'favicon' => 'cii\fields\file\FaviconField',
+            'image' => 'cii\fields\file\ImageField',
+            'audio' => 'cii\fields\file\AudioField',
+            'movie' => 'cii\fields\file\MovieField',
 
             'boolean' => 'cii\fields\BooleanField',
             

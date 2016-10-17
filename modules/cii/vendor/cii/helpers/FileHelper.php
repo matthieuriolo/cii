@@ -24,6 +24,20 @@ class FileHelper extends \yii\helpers\FileHelper {
         'video/x-ms-asf',
     ];
 
+    static public $audioMimeTypes = [
+        'audio/aiff',
+        'audio/mpeg3',
+        'audio/ogg',
+        'audio/x-wav',
+        'audio/x-realaudio',
+        'audio/wav',
+        'audio/vorbis',
+        'audio/mp4',
+        'audio/midi',
+        'audio/mpeg',
+        'audio/mp3',
+    ];
+
     public static function compressDirectory($dir, $destination, $options = []) {
         $options = $options + [
             'excludeFiles' => [],
