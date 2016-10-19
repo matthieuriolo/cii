@@ -13,8 +13,7 @@ class Controller extends \yii\web\Controller {
 			Yii::$app->cii->package->setting('cii', 'layout') .
 			'/main'
 		;
-		$this->setView(Yii::createObject('cii\web\view', []));
-
+		
 		return parent::init();
 	}
 

@@ -48,6 +48,7 @@ class Application extends \yii\web\Application {
     public function coreComponents() {
         $components = parent::coreComponents();
         $components['i18n'] = ['class' => 'cii\i18n\I18N'];
+        $components['view'] = ['class' => 'cii\web\view'];
         return $components;
     }
 
