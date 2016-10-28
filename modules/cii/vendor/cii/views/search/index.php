@@ -4,8 +4,11 @@ use cii\helpers\Html;
 ?>
 <div class="well">
     <?php $form = ActiveForm::begin([
-        'method' => 'get'
-    ]); 
+        'method' => 'get',
+        'options' => [
+            'data-pjax' => true
+        ]
+    ]);
 
     $count = 0;
     foreach($attributes as $name => $formatter) {
