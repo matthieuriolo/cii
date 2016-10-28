@@ -8,7 +8,7 @@ use yii\helpers\Html;
 class ActionColumn extends \yii\grid\ActionColumn {
 	public $relativeRoute = 'app\modules\cii\routes\Backend';
 	public $appendixRoute;
-
+    public $optionsRoute;
 
 	public function init() {
 		if($this->appendixRoute === null) {
@@ -23,6 +23,10 @@ class ActionColumn extends \yii\grid\ActionColumn {
             return call_user_func($this->urlCreator, $action, $model, $key, $index);
         } else {
            $params = is_array($key) ? $key : ['id' => (string) $key];
+           if(is_array($this->optionsRoute)) {
+            $params = $params + $this->optionsRoute;
+           }
+
            $route = [\Yii::$app->seo->relativeRoute($this->relativeRoute, $this->appendixRoute . '/' . $action), $params];
 
            return Yii::$app->urlManager->createUrl($route);
