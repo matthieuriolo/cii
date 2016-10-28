@@ -9,7 +9,8 @@ class SearchModel extends \yii\base\DynamicModel {
 	protected $model;
 	protected $attributeFormatters = [];
 	protected $attributeLabels = [];
-
+	
+	public $pjaxid;
 	public $basePath = '@vendor/cii/views/search';
 
 	public function __construct($model, $config = []) {
