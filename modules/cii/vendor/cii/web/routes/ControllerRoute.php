@@ -10,10 +10,6 @@ use app\modules\cii\models\Route;
 class ControllerRoute extends DBRoute {
     public $baseRoute;
     
-    public function getModel() {
-        return $this->parentRoute->getDBModel()->outbox();
-    }
-    
     public function init() {
         if($this->baseRoute === null) {
             throw new InvalidConfigException('UrlRule::baseRoute must be set.');

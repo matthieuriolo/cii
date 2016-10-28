@@ -38,7 +38,7 @@ class SiteController extends Controller {
 
         if(Yii::$app->seo) {
             $captchaAction['url'] = '//' . Yii::$app->seo->getBaseRoute();
-            $route = Yii::$app->seo->getModel();
+            $route = Yii::$app->seo->getCalledModelRoute();
 
             if($route instanceof CaptchaRoute) {
                 if($route->length_min) {
