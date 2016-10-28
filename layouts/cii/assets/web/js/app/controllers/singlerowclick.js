@@ -17,7 +17,7 @@ define([], function() {
 				if(link.length) {
 					link = link[0]
 					if(link.href) {
-						window.location = link.href
+						$(link).click()
 					}
 				}
 			})
