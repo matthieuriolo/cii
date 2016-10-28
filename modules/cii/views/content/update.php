@@ -3,30 +3,55 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\bootstrap\Tabs;
-use cii\helpers\SPL;
+use yii\widgets\Pjax;
 
+use cii\widgets\PjaxBreadcrumbs;
+use cii\helpers\SPL;
 
 $this->title = Yii::p('cii', 'Update {modelClass} - ', [
     'modelClass' => Yii::p('cii', 'Content'),
 ]) . $model->name;
 $this->params['breadcrumbs'][] = [
 	'label' => Yii::p('cii', 'Contents'),
-	'url' => [Yii::$app->seo->relativeAdminRoute('index')]
+	'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/content/index')]
 ];
 $this->params['breadcrumbs'][] = [
 	'label' => $model->name,
-	'url' => [Yii::$app->seo->relativeAdminRoute('view'), 'id' => $model->id]
+	'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/content/view'), 'id' => $model->id]
 ];
 $this->params['breadcrumbs'][] = Yii::p('cii', 'Update');
+
+
+
+if($pjaxid) {
+    Pjax::begin([
+        'id' => $pjaxid,
+    ]);
+
+    echo PjaxBreadcrumbs::widget([
+        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        'pjaxid' => $pjaxid,
+    ]);
+}
 ?>
 <div class="content-update">
-	<?php $form = ActiveForm::begin(); ?>
+	<?php $form = ActiveForm::begin([
+        'action' => [
+            Yii::$app->seo->relativeAdminRoute('modules/cii/content/update'),
+            'id' => $model->id,
+        ] + ($pjaxid ? ['pjaxid' => $pjaxid] : []),
+        'options' => [
+            'data-pjax' => (bool)$pjaxid
+        ]
+    ]); ?>
 
 	<div class="form-group pull-right">
 		<?php
 		echo Html::a(
             Yii::p('cii', 'Cancel'),
-            [\Yii::$app->seo->relativeAdminRoute('modules/cii/content/index')],
+            [
+                \Yii::$app->seo->relativeAdminRoute('modules/cii/content/index')
+            ] + ($pjaxid ? ['pjaxid' => $pjaxid]: []),
             ['class' => 'btn btn-warning']
         ),
         '&nbsp;',
@@ -45,6 +70,7 @@ $this->params['breadcrumbs'][] = Yii::p('cii', 'Update');
                     'model' => $model,
                     'form' => $form,
                     'types' => $types,
+                    'pjaxid' => $pjaxid,
                 ])
             ]
         ];
@@ -58,14 +84,20 @@ $this->params['breadcrumbs'][] = Yii::p('cii', 'Update');
                     'encode' => false,
                     'label' => $info['controller']->$info['label'](),
                     'content' => $info['controller']->$info['update']($topmodel, $form),
+                    'pjaxid' => $pjaxid,
                 ]);
             }
         }
 
         echo Tabs::widget([
+            'id' => uniqid(),
             'items' => $items
         ]); ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 </div>
+<?php
+if($pjaxid) {
+    Pjax::end();
+}

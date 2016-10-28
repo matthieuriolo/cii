@@ -2,7 +2,14 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\Tabs;
+use yii\widgets\Pjax;
+
 use cii\helpers\SPL;
+use cii\widgets\PjaxBreadcrumbs;
+
+
+use app\modules\cii\Permission;
+
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = [
@@ -52,23 +59,49 @@ if(SPL::hasInterface($info, 'app\modules\cii\base\LazyModelInterface') && $info:
     ]);
 }
 
+$editable = Yii::$app->user->can(['cii', Permission::MANAGE_CONTENT]) || Yii::$app->user->can(['cii', Permission::MANAGE_ADMIN]);
+if($pjaxid) {
+    Pjax::begin([
+        'id' => $pjaxid,
+    ]);
 
+    echo PjaxBreadcrumbs::widget([
+        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        'pjaxid' => $pjaxid,
+    ]);
+}
 ?>
 <div class="content-view">
-    <p class="pull-right">
-        <?= Html::a(Yii::p('cii', 'Update'), [Yii::$app->seo->relativeAdminRoute('modules/cii/content/update'), 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::p('cii', 'Delete'), [Yii::$app->seo->relativeAdminRoute('modules/cii/content/delete'), 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::p('cii', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+    <?php if($editable) { ?>
+        <p class="pull-right">
+            <?= Html::a(Yii::p('cii', 'Update'), [
+                Yii::$app->seo->relativeAdminRoute('modules/cii/content/update'),
+                'id' => $model->id
+            ] + ($pjaxid ? ['pjaxid' => $pjaxid] : []), [
+                'class' => 'btn btn-primary'
+            ]) ?>
+            <?= Html::a(Yii::p('cii', 'Delete'), [
+                Yii::$app->seo->relativeAdminRoute('modules/cii/content/delete'),
+                'id' => $model->id
+            ] + ($pjaxid ? ['pjaxid' => $pjaxid] : []), [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => Yii::p('cii', 'Are you sure you want to delete this item?'),
+                    'method' => 'post',
+                ],
+            ]) ?>
+        </p>
+    <?php } ?>
     
     <h1><?= Html::encode($this->title) ?></h1>
     <?= Tabs::widget([
-            'items' => $items
-        ]);
+        'id' => uniqid(),
+        'items' => $items
+    ]);
     ?>
 </div>
+
+<?php
+if($pjaxid) {
+    Pjax::end();
+}

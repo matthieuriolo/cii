@@ -4,11 +4,37 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 
+
+use cii\helpers\Url;
+use cii\widgets\PjaxBreadcrumbs;
+
+use app\modules\cii\Permission;
+
+$editable = Yii::$app->user->can(['cii', Permission::MANAGE_CONTENT]) || Yii::$app->user->can(['cii', Permission::MANAGE_ADMIN]);
+
 $this->title = Yii::p('cii', 'Contents');
 $this->params['breadcrumbs'][] = $this->title;
+if($pjaxid) {
+    Pjax::begin([
+        'id' => $pjaxid,
+    ]);
+
+    echo PjaxBreadcrumbs::widget([
+        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        'pjaxid' => $pjaxid,
+    ]);
+}
 ?>
+
+
 <div class="content-index">
-    <?= Html::a(Yii::p('cii', 'Create Content'), [\Yii::$app->seo->relativeAdminRoute('modules/cii/content/create')], ['class' => 'btn btn-success pull-right']) ?>
+    <?php if($editable) { ?>
+        <?= Html::a(Yii::p('cii', 'Create Content'), [
+            \Yii::$app->seo->relativeAdminRoute('modules/cii/content/create')
+            ] + ($pjaxid ? ['pjaxid' => $pjaxid] : []), [
+                'class' => 'btn btn-success pull-right'
+            ]) ?>
+    <?php } ?>
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p class="lead"><?= Yii::p('cii', 'Contents define what data can be accessed (usually through routes)'); ?></p>
@@ -18,12 +44,22 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $model->render($this); ?>
 
         <?= GridView::widget([
+            'rowOptions' => function($model, $key, $index, $grid) {
+                return [
+                    'data-value' => $model->id,
+                    'data-url' => Url::to([
+                        Yii::$app->seo->relativeAdminRoute('modules/cii/content/view'),
+                        'id' => $model->id
+                    ]),
+                    'data-name' => Html::encode($model->name),
+                ];
+            },
+
             'tableOptions' => [
-                'class' => "table table-striped table-bordered table-hover",
-                'data-controller' => 'singlerowclick'
+                'class' => "table table-striped table-bordered table-hover" . ($pjaxid ? ' table-select': ''),
+                'data-controller' => 'dataselect',
             ],
             'dataProvider' => $dataProvider,
-            //'filterModel' => $searchModel,
             'columns' => [
                 'name',
                 [
@@ -36,10 +72,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 [
                     'class' => 'cii\grid\ActionColumn',
-                    'headerOptions' => ['class' => 'action-column column-width-3'],
-                    'appendixRoute' => 'modules/cii/content'
+                    'visibleButtons' => [
+                        'update' => $editable,
+                        'delete' => $editable,
+                    ],
+                    'headerOptions' => ['class' => 'action-column ' . ($editable ? 'column-width-3' : 'column-width-1')],
+                    'buttonOptions' => $pjaxid ? ['data-pjax' => '#' . $pjaxid] : [],
+
+                    'appendixRoute' => 'modules/cii/content',
+                    'optionsRoute' => $pjaxid ? ['pjaxid' => $pjaxid] : [],
                 ],
             ],
         ]); ?>
     <?php Pjax::end(); ?>
 </div>
+<?php
+if($pjaxid) {
+    Pjax::end();
+}
+?>

@@ -3,8 +3,10 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\bootstrap\Tabs;
+use yii\widgets\Pjax;
+
 use cii\helpers\SPL;
-use dosamigos\tinymce\TinyMce;
+use cii\widgets\PjaxBreadcrumbs;
 
 $this->title = Yii::p('cii', 'Create Content');
 $this->params['breadcrumbs'][] = [
@@ -12,15 +14,35 @@ $this->params['breadcrumbs'][] = [
 	'url' => [\Yii::$app->seo->relativeAdminRoute('modules/cii/content/index')]
 ];
 $this->params['breadcrumbs'][] = $this->title;
+
+if($pjaxid) {
+    Pjax::begin([
+        'id' => $pjaxid,
+    ]);
+
+    echo PjaxBreadcrumbs::widget([
+        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        'pjaxid' => $pjaxid,
+    ]);
+}
 ?>
 
 <div class="content-create">
-	<?php $form = ActiveForm::begin(); ?>
+	<?php $form = ActiveForm::begin([
+        'action' => [
+            Yii::$app->seo->relativeAdminRoute('modules/cii/content/create'),
+        ] + ($pjaxid ? ['pjaxid' => $pjaxid] : []),
+        'options' => [
+            'data-pjax' => (bool)$pjaxid
+        ]
+    ]); ?>
 	<div class="form-group pull-right">
 		<?php
 		echo Html::a(
             Yii::p('cii', 'Cancel'),
-            [\Yii::$app->seo->relativeAdminRoute('modules/cii/content/index')],
+            [
+                \Yii::$app->seo->relativeAdminRoute('modules/cii/content/index')
+            ] + ($pjaxid ? ['pjaxid' => $pjaxid] : []),
             ['class' => 'btn btn-warning']
         ),
         '&nbsp;',
@@ -38,6 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $model,
                     'form' => $form,
                     'types' => $types,
+                    'pjaxid' => $pjaxid,
                 ])
             ],
         ];
@@ -50,13 +73,22 @@ $this->params['breadcrumbs'][] = $this->title;
                     'encode' => false,
                     'label' => $info['controller']->$info['label'](),
                     'content' => $info['controller']->$info['create']($topmodel, $form),
+                    'pjaxid' => $pjaxid,
                 ];
             }
         }
 
-        echo Tabs::widget(['items' => $items]);
+        echo Tabs::widget([
+            'id' => uniqid(),
+            'items' => $items
+        ]);
         ?>
     </div>
     
     <?php ActiveForm::end(); ?>
 </div>
+<?php
+if($pjaxid) {
+    Pjax::end();
+}
+?>

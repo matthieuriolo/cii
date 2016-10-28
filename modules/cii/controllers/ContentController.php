@@ -51,7 +51,7 @@ class ContentController extends BackendController {
      * Lists all Content models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex($pjaxid = null) {
         $query = Content::find();
 
 
@@ -66,6 +66,7 @@ class ContentController extends BackendController {
         $model = new SearchModel(Content::className());
         $model->stringFilter('name');
         $model->booleanFilter('enabled');
+        $model->pjaxid = $pjaxid;
 
         if($model->load(Yii::$app->request->get()) && $model->validate()) {
             $query = $model->applyFilter($query);
@@ -90,6 +91,7 @@ class ContentController extends BackendController {
         return $this->render('index', [
             'model' => $model,
             'dataProvider' => $dataProvider,
+            'pjaxid' => $pjaxid
         ]);
     }
 
@@ -98,7 +100,7 @@ class ContentController extends BackendController {
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id) {
+    public function actionView($id, $pjaxid = null) {
         $visibleModel = new ContentVisibilities();
         $visibleModel->content_id = $id;
 
@@ -130,6 +132,8 @@ class ContentController extends BackendController {
             'routes' => Yii::$app->cii->route->getRoutesForDropdown(),
             'positions' => Yii::$app->cii->layout->getPositionsForDropdown(),
             'languages' => Yii::$app->cii->language->getLanguagesForDropdown(),
+
+            'pjaxid' => $pjaxid,
         ]);
     }
 
@@ -138,7 +142,7 @@ class ContentController extends BackendController {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($parent = null) {
+    public function actionCreate($parent = null, $pjaxid = null) {
         $connection = Yii::$app->db;
         $transaction = $connection->beginTransaction();
         
@@ -171,9 +175,15 @@ class ContentController extends BackendController {
                     
                     if($topmodel->save()) {
                         Yii::$app->cii->layout->clearCache();
-                        $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/content/view'), ['id' => $model->id]]);
                         $transaction->commit();
-                        return;
+                        if($pjaxid) {
+                            return $this->run("content/view", [
+                                'id' => $model->id,
+                                'pjaxid' => $pjaxid
+                            ]);
+                        }else {
+                            return $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/content/view'), ['id' => $model->id]]);
+                        }
                     }
                 }
             }
@@ -189,6 +199,7 @@ class ContentController extends BackendController {
             'topmodel' => $topmodel,
 
             'types' => Yii::$app->cii->layout->getContentTypesForDropdown(),
+            'pjaxid' => $pjaxid,
         ]);
     }
 
@@ -199,7 +210,7 @@ class ContentController extends BackendController {
      * @return mixed
      */
 
-    public function actionUpdate($id) {
+    public function actionUpdate($id, $pjaxid = null) {
         if(($model = Content::findOne($id)) === null) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
@@ -241,9 +252,18 @@ class ContentController extends BackendController {
 
                 if($modelValid && $topmodelValid && $model->save() && $topmodel->save()) {
                     Yii::$app->cii->layout->clearCache();
-                    $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/content/view'), 'id' => $model->id]);
                     $transaction->commit();
-                    return;
+                    if($pjaxid) {
+                        return $this->run("content/view", [
+                            'id' => $model->id,
+                            'pjaxid' => $pjaxid
+                        ]);
+                    }else {
+                        return $this->redirect([
+                            Yii::$app->seo->relativeAdminRoute('modules/cii/content/view'),
+                            'id' => $model->id
+                        ]);
+                    }
                 }
             }
         }catch(\Exception $e) {
@@ -256,6 +276,7 @@ class ContentController extends BackendController {
             'model' => $model,
             'topmodel' => $topmodel,
             'types' => Yii::$app->cii->layout->getContentTypesForDropdown(),
+            'pjaxid' => $pjaxid
         ]);
     }
 
@@ -265,7 +286,7 @@ class ContentController extends BackendController {
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id, $pjaxid = null) {
         $this->findModel($id)->delete();
         Yii::$app->cii->layout->clearCache();
         $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/content/index')]);
