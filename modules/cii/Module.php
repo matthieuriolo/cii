@@ -61,18 +61,18 @@ class Module extends \cii\backend\Package {
             'time' => 'cii\fields\TimeField',
 
             'in' => 'cii\fields\dropdown\InField',
-            'language' => 'cii\fields\dropdown\ContentField',
+            'language' => 'cii\fields\select\LanguageField',
 
-            'extension' => 'cii\fields\dropdown\ExtensionField',
+            'extension' => 'cii\fields\select\ExtensionField',
             
-            'route' => 'cii\fields\dropdown\RouteField',
-            'content' => 'cii\fields\dropdown\ContentField',
+            'route' => 'cii\fields\select\RouteField',
+            'content' => 'cii\fields\select\ContentField',
             
-            'group' => 'cii\fields\dropdown\GroupField',
-            'user' => 'cii\fields\dropdown\UserField',
+            'group' => 'cii\fields\select\GroupField',
+            'user' => 'cii\fields\select\UserField',
 
-            'fieldtypes' => 'cii\fields\dropdown\FieldTypesField',
-            'positiontypes' => 'cii\fields\dropdown\PositionTypesField',
+            'fieldtypes' => 'cii\fields\select\FieldTypesField',
+            'positiontypes' => 'cii\fields\select\PositionTypesField',
         ];
     }
 
