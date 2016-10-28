@@ -4,6 +4,7 @@ namespace cii\backend;
 use Yii;
 use cii\web\Controller;
 use yii\filters\AccessControl;
+use yii\base\InvalidConfigException;
 
 class BackendController extends Controller {
 	public $package;
@@ -13,23 +14,28 @@ class BackendController extends Controller {
 	}
 
 	public function behaviors() {
-		$roles = array_map(function($elem) {
-			if(is_int($elem)) {
-				return [$this->getPackage()->getIdentifier(), $elem];
-			}
+		$rules = [];
+		foreach($this->getAccessRoles() as $role) {
+			if(is_array($role)) {
+				$rs = [];
+				foreach($role['roles'] as $r) {
+					$rs[] = [$this->getPackage()->getIdentifier(), $r];
+				}
 
-			return $elem;
-		}, $this->getAccessRoles());
+				$role['roles'] = $rs;
+				$rules[] = $role;
+			}else if(is_int($role)) {
+				$rules[] = [
+                    'allow' => true,
+                    'roles' => [$this->getPackage()->getIdentifier(), $role],
+                ];
+			}
+		}
 
 		return [
 			'access' => [
 	            'class' => AccessControl::className(),
-	            'rules' => [
-	                [
-	                    'allow' => true,
-	                    'roles' => $roles,
-	                ],
-	            ],
+	            'rules' => $rules
 	        ],
 	    ];
 	}
