@@ -11,13 +11,21 @@ class AppAsset extends AssetBundle {
         'css/site.css',
         'css/bootstrap-wysihtml5.css',
         'css/bootstrap-colorpicker.min.css',
-        'css/font-awesome.min.css'
+        'css/font-awesome.min.css',
+
+        //'css/bootstrap-modal-bs3patch.css',
+        //'css/bootstrap-modal.css',
     ];
 
     public $js = [
+        'js/bootstrap-modalmanager.js',
+        'js/bootstrap-modal.js',
+
         'js/tabhack.js',
         'js/rivets.min.js',
         'js/moment-with-locales.js',
+
+
         //['js/require.min.js', 'data-main' => 'js/app/init.js']
     ];
 
