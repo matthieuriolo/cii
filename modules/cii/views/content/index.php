@@ -44,6 +44,11 @@ if($pjaxid) {
         <?= $model->render($this); ?>
 
         <?= GridView::widget([
+            'tableOptions' => [
+                'class' => "table table-striped table-bordered table-hover" . ($pjaxid ? ' table-select': ''),
+                'data-controller' => $pjaxid ? 'dataselect' : 'singlerowclick',
+            ],
+            
             'rowOptions' => function($model, $key, $index, $grid) {
                 return [
                     'data-value' => $model->id,
@@ -55,10 +60,7 @@ if($pjaxid) {
                 ];
             },
 
-            'tableOptions' => [
-                'class' => "table table-striped table-bordered table-hover" . ($pjaxid ? ' table-select': ''),
-                'data-controller' => 'dataselect',
-            ],
+            
             'dataProvider' => $dataProvider,
             'columns' => [
                 'name',

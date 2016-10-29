@@ -1,34 +1,58 @@
 <?php
 
-use yii\grid\GridView;
-use yii\grid\ActionColumn;
 use yii\data\ArrayDataProvider;
-use cii\helpers\Html;
 use yii\widgets\Breadcrumbs;
-use yii\widgets\Pjax;
 
+
+use cii\widgets\Pjax;
+use cii\grid\GridView;
+use cii\helpers\Url;
+use cii\helpers\Html;
+use cii\widgets\PjaxBreadcrumbs;
+use app\modules\cii\Permission;
 
 $this->title = Yii::p('cii', 'Routes');
 $this->params['breadcrumbs'][] = $this->title;
+
+$editable = Yii::$app->user->can(['cii', Permission::MANAGE_ROUTE]) || Yii::$app->user->can(['cii', Permission::MANAGE_ADMIN]);
+
+$pjaxid = Yii::$app->request->pjaxid();
+if($pjaxid) {
+    echo PjaxBreadcrumbs::widget([
+        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : []
+    ]);
+}
 ?>
 <div class="site-index">
-    <?php echo Html::a(
-        Yii::p('cii', 'Create Route'),
-        [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/create'), ['parent' => $parent ? $parent->id : null]],
-        ['class' => 'btn btn-success pull-right']
-    ); ?>
+    <?php if($editable) { ?>
+        <?php echo Html::a(
+            Yii::p('cii', 'Create Route'),
+            [
+                \Yii::$app->seo->relativeAdminRoute('modules/cii/route/create'),
+                ['parent' => $parent ? $parent->id : null]
+            ],
+            ['class' => 'btn btn-success pull-right']
+        ); ?>
+    <?php } ?>
 
     <h1><?= Yii::p('cii', 'Routes') ?></h1>
     
     <p class="lead"><?= Yii::p('cii', 'Routes define how the URL looks like and which content can be accessed') ?></p>
+   
+    <?php 
+    Pjax::begin();
 
-    <?php
+    echo $model->render($this);
+
     if($parent) {
         $slugs = $parent->getParentChain();
         $links = array_map(function($route) {
             return [
                 'label' => $route->slug,
-                'url' => [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/index'), ['parent' => $route->parent_id]]
+                'url' => [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/index'), [
+                        'parent' => $route->parent_id
+                    ]
+                ]
             ];
         }, $slugs);
 
@@ -37,18 +61,25 @@ $this->params['breadcrumbs'][] = $this->title;
             'links' => $links
         ]);
     }
-    ?>
-   
-    <?php 
-    Pjax::begin();
-
-    echo $model->render($this);
 
     echo GridView::widget([
         'tableOptions' => [
-            'class' => "table table-striped table-bordered table-hover",
-            'data-controller' => 'singlerowclick'
+            'class' => "table table-striped table-bordered table-hover" . ($this->getIsPjax() ? ' table-select': ''),
+            'data-controller' => $this->getIsPjax() ? 'dataselect' : 'singlerowclick',
         ],
+
+
+        'rowOptions' => function($model, $key, $index, $grid) {
+            return [
+                'data-value' => $model->id,
+                'data-url' => Url::to([
+                    Yii::$app->seo->relativeAdminRoute('modules/cii/route/view'),
+                    'id' => $model->id
+                ]),
+                'data-name' => Html::encode($model->slug),
+            ];
+        },
+
         'dataProvider' => $data,
         'columns' => [
             'slug',
@@ -69,10 +100,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'enabled:boolean',
             
             [
-                'class' => ActionColumn::className(),
+                'class' => 'cii\grid\ActionColumn',
+                'appendixRoute' => true,
                 'template' => '{view} {update} {delete} {children}',
-                'headerOptions' => ['class' => 'action-column column-width-4'],
-                'urlCreator' => function($action, $model, $key, $index) {
+                
+                'urlCreator' => function($action, $model, $key, $index) use($pjaxid) {
                     if($action == 'view') {
                         $route = [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/view'), ['id' => $model['id']]];
                     }else if($action == 'children') {
@@ -83,9 +115,22 @@ $this->params['breadcrumbs'][] = $this->title;
                         $route = [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/update'), ['id' => $model['id']]];
                     }
 
+                    if($pjaxid) {
+                        //$route[1]['pjaxid'] = $pjaxid;
+                    }
+
                     return \Yii::$app->urlManager->createUrl($route);
                 },
 
+                'headerOptions' => ['class' => 'action-column ' . ($editable ? 'column-width-4' : 'column-width-2')],
+                'buttonOptions' => $pjaxid ? ['data-pjax' => '#' . $pjaxid] : [],
+                
+                'visibleButtons' => [
+                    'update' => $editable,
+                    'delete' => $editable,
+                ],
+
+                
                 'buttons' => [
                     'children' => function($url, $model, $key) {
                         if(!$model->hasChildren()) {
@@ -93,8 +138,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
 
                         $options = [
-                            'title' => Yii::p('cii', 'Disable'),
-                            'aria-label' => Yii::p('cii', 'Disable'),
+                            'title' => Yii::p('cii', 'See child routes'),
+                            'aria-label' => Yii::p('cii', 'See child routes'),
                             'data-pjax' => '0',
                         ];
 

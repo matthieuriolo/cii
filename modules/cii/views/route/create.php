@@ -6,6 +6,9 @@ use yii\bootstrap\Tabs;
 use cii\helpers\SPL;
 
 
+use cii\widgets\Pjax;
+use cii\widgets\PjaxBreadcrumbs;
+
 
 $this->title = Yii::p('cii', 'Create Route');
 
@@ -15,8 +18,15 @@ $this->params['breadcrumbs'][] = [
     'url' => [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/index'), ['parent' => $parentId]]
 ];
 $this->params['breadcrumbs'][] = $this->title;
-?>
 
+$pjaxid = Yii::$app->request->pjaxid();
+if($pjaxid) {
+    echo PjaxBreadcrumbs::widget([
+        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        'pjaxid' => $pjaxid,
+    ]);
+}
+?>
 <div class="site-index">
 	<?php $form = ActiveForm::begin(); ?>
 
@@ -68,10 +78,12 @@ $this->params['breadcrumbs'][] = $this->title;
 	        }
         }
 
-		echo Tabs::widget(['items' => $items]);
+		echo Tabs::widget([
+			'id' => uniqid(),
+			'items' => $items
+		]);
         ?>
 		
 	</div>
 	<?php ActiveForm::end(); ?>
 </div>
-

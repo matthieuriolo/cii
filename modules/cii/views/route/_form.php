@@ -36,7 +36,10 @@ use cii\widgets\Toggler;
 
 <div class="row">
 	<div class="col-md-6">
-		<?php echo $form->field($model, 'parent_id')->dropDownList($parentRoutes); ?>
+		<?php
+		$field = Yii::$app->cii->createFieldObject('route', ['attribute' => 'parent_id']);
+		echo $field->getEditable($model, $form);
+		?>
 	</div>
 
 	<?php if(Yii::$app->cii->package->setting('cii', 'multilanguage')) { ?>

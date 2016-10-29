@@ -1,9 +1,6 @@
 <?php
 use cii\helpers\Html;
 use cii\widgets\DetailView;
-use app\modules\cii\models\ContentRoute;
-
-//$outbox = $model->outbox();
 
 echo DetailView::widget([
     'model' => $model,
@@ -28,7 +25,15 @@ echo DetailView::widget([
         [
         	'attribute' => 'breadcrumb',
         	'format' => 'html',
-        	'value' => Html::a($model->getBreadcrumbs(), ['//'.$model->getBreadcrumbs()])
+            'value' => Html::a(
+                $model->getBreadcrumbs(),
+                ['//'.$model->getBreadcrumbs()],
+                [
+                    'class' => 'sdasd asd ',
+                    'target' => '_blank',
+                    'data-pjax' => false,   
+                ]
+            )
         ]
     ],
 ]);?>

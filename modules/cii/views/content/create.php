@@ -15,14 +15,11 @@ $this->params['breadcrumbs'][] = [
 ];
 $this->params['breadcrumbs'][] = $this->title;
 
-if($pjaxid) {
-    Pjax::begin([
-        'id' => $pjaxid,
-    ]);
 
+$pjaxid = Yii::$app->request->pjaxid();
+if($pjaxid) {
     echo PjaxBreadcrumbs::widget([
-        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        'pjaxid' => $pjaxid,
+        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : []
     ]);
 }
 ?>
@@ -31,7 +28,7 @@ if($pjaxid) {
 	<?php $form = ActiveForm::begin([
         'action' => [
             Yii::$app->seo->relativeAdminRoute('modules/cii/content/create'),
-        ] + ($pjaxid ? ['pjaxid' => $pjaxid] : []),
+        ],
         'options' => [
             'data-pjax' => (bool)$pjaxid
         ]
@@ -42,7 +39,7 @@ if($pjaxid) {
             Yii::p('cii', 'Cancel'),
             [
                 \Yii::$app->seo->relativeAdminRoute('modules/cii/content/index')
-            ] + ($pjaxid ? ['pjaxid' => $pjaxid] : []),
+            ],
             ['class' => 'btn btn-warning']
         ),
         '&nbsp;',
@@ -60,7 +57,6 @@ if($pjaxid) {
                     'model' => $model,
                     'form' => $form,
                     'types' => $types,
-                    'pjaxid' => $pjaxid,
                 ])
             ],
         ];
@@ -73,7 +69,6 @@ if($pjaxid) {
                     'encode' => false,
                     'label' => $info['controller']->$info['label'](),
                     'content' => $info['controller']->$info['create']($topmodel, $form),
-                    'pjaxid' => $pjaxid,
                 ];
             }
         }
@@ -87,8 +82,3 @@ if($pjaxid) {
     
     <?php ActiveForm::end(); ?>
 </div>
-<?php
-if($pjaxid) {
-    Pjax::end();
-}
-?>

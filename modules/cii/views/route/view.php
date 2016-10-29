@@ -5,6 +5,10 @@ use cii\helpers\Html;
 use yii\bootstrap\Tabs;
 use cii\helpers\SPL;
 
+
+use cii\widgets\Pjax;
+use cii\widgets\PjaxBreadcrumbs;
+
 $outbox = $model->outbox();
 
 $this->title = Yii::p('cii', 'Route') . ' - ' . $model->slug;
@@ -16,6 +20,13 @@ $this->params['breadcrumbs'][] = [
 $this->params['breadcrumbs'][] = $this->title;
 
 
+$pjaxid = Yii::$app->request->pjaxid();
+if($pjaxid) {
+    echo PjaxBreadcrumbs::widget([
+        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        'pjaxid' => $pjaxid,
+    ]);
+}
 
 
 
@@ -45,8 +56,17 @@ if(SPL::hasInterface($outbox, 'app\modules\cii\base\LazyModelInterface') && $inf
 
 <div class="site-index">
 	<p class="pull-right">
-        <?= Html::a(Yii::p('cii', 'Update'), [Yii::$app->seo->relativeAdminRoute('modules/cii/route/update'), 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::p('cii', 'Delete'), [Yii::$app->seo->relativeAdminRoute('modules/cii/route/delete'), 'id' => $model->id], [
+        <?= Html::a(Yii::p('cii', 'Update'), [
+            Yii::$app->seo->relativeAdminRoute('modules/cii/route/update'),
+            'id' => $model->id
+            ],
+            [
+                'class' => 'btn btn-primary'
+        ]) ?>
+        <?= Html::a(Yii::p('cii', 'Delete'), [
+            Yii::$app->seo->relativeAdminRoute('modules/cii/route/delete'),
+            'id' => $model->id
+        ], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => Yii::p('cii', 'Are you sure you want to delete this item?'),
@@ -58,7 +78,10 @@ if(SPL::hasInterface($outbox, 'app\modules\cii\base\LazyModelInterface') && $inf
 	<h1><?= Html::encode($this->title) ?></h1>
 
     <div class="body-content">
-    	<?php echo Tabs::widget(['items' => $items]); ?>
+    	<?php echo Tabs::widget([
+            'id' => uniqid(),
+            'items' => $items,
+        ]); ?>
 	</div>
 </div>
 
