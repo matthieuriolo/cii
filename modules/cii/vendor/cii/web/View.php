@@ -102,4 +102,24 @@ class View extends \yii\web\View {
 		$controller = Yii::$app->createController($info['route'])[0];
 		return $controller->$info['action']($content, $position);
 	}
+
+	public function renderShadows($position) {
+		$contents = $this->getContents($position);
+		$ret = '';
+		foreach($contents as $content) {
+			$ret .= $this->renderShadow($position);
+		}
+
+		return $ret;
+	}
+
+
+
+	public function getIsPjax() {
+		return Yii::$app->request->getIsPjax();
+	}
+
+	public function pjaxid() {
+		return Yii::$app->request->pjaxid();
+	}
 }

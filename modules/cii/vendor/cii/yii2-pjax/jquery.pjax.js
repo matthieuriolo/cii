@@ -422,6 +422,8 @@ function pjax(options) {
 //
 // Returns whatever $.pjax returns.
 function pjaxReload(container, options) {
+  alert('Content could not be loaded, please try again or reload the page');
+  /* original code
   var defaults = {
     url: window.location.href,
     push: false,
@@ -430,6 +432,7 @@ function pjaxReload(container, options) {
   }
 
   return pjax($.extend(defaults, optionsFor(container, options)))
+  */
 }
 
 // Internal: Hard replace current state with url.

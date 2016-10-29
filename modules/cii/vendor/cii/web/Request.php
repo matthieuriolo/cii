@@ -5,6 +5,8 @@ use Yii;
 use yii\web\NotFoundHttpException;
 
 class Request extends \yii\web\Request {
+    
+
 	 /**
      * Resolves the current request into a route and the associated parameters.
      * @return array the first element is the route, and the second is the associated parameters.
@@ -24,5 +26,18 @@ class Request extends \yii\web\Request {
         } else {
             throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
         }
+    }
+
+
+
+    public function pjaxid() {
+        $headers = $this->getHeaders();
+        
+        if($this->getIsPjax() && $headers->get('X-Pjax-Container')) {
+            return substr(explode(' ', $headers->get('X-Pjax-Container'))[0], 1);
+            //return $_SERVER['HTTP_X_PJAX'];
+        }
+
+        return null;
     }
 }
