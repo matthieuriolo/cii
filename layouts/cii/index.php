@@ -15,11 +15,16 @@ return [
     'overview' => 'position_overview',
 
     'positions' => [
+        'background' => Yii::l('cii', 'Background'),
+        
         'left' => Yii::l('cii', 'Left'),
         'right' => Yii::l('cii', 'Right'),
-        'background' => Yii::l('cii', 'Background'),
         'navbar' => Yii::l('cii', 'Navigation'),
-
         'footer' => Yii::l('cii', 'Footer'),
+
+        'before_main' => Yii::l('cii', 'Before Main'),
+        'after_main' => Yii::l('cii', 'After Main'),
+        'inner_main' => Yii::l('cii', 'Inner Main'),
+        'outer_main' => Yii::l('cii', 'Outer Main'),
     ],
 ];
