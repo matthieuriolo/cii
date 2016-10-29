@@ -9,6 +9,9 @@ use cii\helpers\Html;
 abstract class PjaxField extends AbstractField {
     protected $pjaxid;
     public $pjaxUrl;
+    public $header;
+
+    public $viewNameAttribute = 'name';
 
     public function init() {
         $this->pjaxid = uniqid();
@@ -16,11 +19,23 @@ abstract class PjaxField extends AbstractField {
     }
 
     abstract protected function getPjaxUrl();
+    protected function getViewUrl($model, $data) {
+        return null;
+    }
+
+    public function getView($model) {
+        $name = $this->viewNameAttribute;
+        if($model->$name) {
+            return Yii::$app->formatter->asText($model->$name);
+        }
+        return Yii::$app->formatter->asText(null);
+    }
 
 	public function getEditable($model, $form) {
         return PjaxModal::widget([
                 'id' => $id = uniqid(),
                 'pjaxid' => $this->pjaxid,
+                'header' => $this->header,
                 'callbackSubmit' => '
                     $("input[name=\"' . Html::getInputName($model, $this->attribute) . '\"]").val($("#' . $id . '_field").val());
                     var link = $("#' . $id . '_link");
@@ -58,7 +73,8 @@ abstract class PjaxField extends AbstractField {
                         history: false,
                         timeout: 5000,
                     });
-                    \$('#" . $id . "').modal('show')})()\"></a>"
+                    \$('#" . $id . "').modal('show');
+                    })()\"></a>"
                 . "</span></div>\n{hint}\n{error}"
         ])->hiddenInput();
     }

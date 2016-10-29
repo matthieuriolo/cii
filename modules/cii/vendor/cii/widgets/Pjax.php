@@ -19,10 +19,10 @@ class Pjax extends \yii\widgets\Pjax {
         $js = '';
         if ($this->linkSelector !== false) {
             $linkSelector = Json::htmlEncode($this->linkSelector !== null ? $this->linkSelector : '#' . $id . ' a');
-            $js .= "jQuery(document).pjax($linkSelector, \"#$id\", $options);";
             if($this->beforePjax) {
                 $js .= $this->beforePjax;
             }
+            $js .= "jQuery(document).pjax($linkSelector, \"#$id\", $options);";
         }
 
         if ($this->formSelector !== false) {

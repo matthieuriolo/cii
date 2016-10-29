@@ -13,14 +13,15 @@ use cii\helpers\Url;
 class PjaxModal extends Modal {
     public $pjaxid;
     public $callbackSubmit;
+    public $clientOptions = ['backdrop' => 'static', 'keyboard' => false];
 
     public function init() {
         if(!$this->pjaxid) {
-            throw new InvalidConfigException('The attribute pjaxid must be set');
+            $this->pjaxid = Yii::$app->request->pjaxid();
         }
 
         if(!$this->header) {
-            $this->header = Yii::p('cii', 'Select a content');
+            $this->header = Yii::p('cii', 'Select an item');
         }
         
         $this->size = 'modal-pjax modal-full';
@@ -68,7 +69,10 @@ class PjaxModal extends Modal {
                 Yii::p('cii', 'Cancel'),
                 '#',
                 [
-                    'data-dismiss' => 'modal',
+                    'onclick' => '(function(evt) {
+                        evt.preventDefault();
+                        $(\'#' . $this->id . '\').modal(\'hide\');
+                    })(event)',
                     'class' => 'btn btn-warning'
                 ]
             )
@@ -76,11 +80,18 @@ class PjaxModal extends Modal {
             . Html::a(Yii::p('cii', 'Select'), '#', [
                 'class' => 'btn btn-primary disabled',
                 'id' => $this->id . '_submit',
-                'data-dismiss' => 'modal',
-                'onclick' => '(function() {
+                'onclick' => '(function(evt) {
+                    evt.preventDefault();
+                    $(\'#' . $this->id . '\').modal(\'hide\');
                     ' . ($this->callbackSubmit ? $this->callbackSubmit : '') . '
-                })();'
+                })(event);'
             ])
         . '</div>';
+    }
+
+    protected function initOptions() {
+        parent::initOptions();
+        unset($this->closeButton['data-dismiss']);
+        $this->closeButton['onclick'] = '(function(evt) { $(\'#' . $this->id . '\').modal(\'hide\'); })(event)';
     }
 }

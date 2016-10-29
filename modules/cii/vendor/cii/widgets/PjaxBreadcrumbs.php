@@ -9,6 +9,12 @@ class PjaxBreadcrumbs extends Widget {
     public $links;
     public $pjaxid;
 
+    public function init() {
+        if(!$this->pjaxid) {
+            $this->pjaxid = Yii::$app->request->pjaxid();
+        }
+    }
+
     public function run() {
         $params = $this->links;
         foreach($params as &$param) {
