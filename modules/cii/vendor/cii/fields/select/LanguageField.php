@@ -3,9 +3,15 @@ namespace cii\fields\select;
 
 use Yii;
 use cii\helpers\Url;
-use cii\fields\PjaxField;
+use cii\fields\PjaxObjectField;
 
-class LanguageField extends PjaxField {
+use app\modules\cii\models\Language;
+
+class LanguageField extends PjaxObjectField {
+	protected function fetchModel($id) {
+		return Language::findOne($id);
+	}
+
 	protected function getPjaxUrl() {
         return [
             Yii::$app->seo->relativeAdminRoute('modules/cii/language/index'),
