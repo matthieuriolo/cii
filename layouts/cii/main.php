@@ -8,6 +8,7 @@ use app\layouts\cii\assets\AppAsset;
 
 
 use cii\widgets\BackendMenu;
+use cii\widgets\Pjax;
 
 AppAsset::register($this);
 ?>
@@ -31,12 +32,7 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="homepage-background"><?php
-$background = $this->getContents('background');
-foreach($background as $c) {
-    echo $this->renderShadow($c, 'background');
-}
-?></div>
+<div class="homepage-background"><?= $this->renderShadows('background'); ?></div>
 
 <div class="wrap">
     <?php
@@ -62,6 +58,8 @@ foreach($background as $c) {
     ]);
 
     if($this->isAdminArea() || !Yii::$app->cii->package->setting('cii', 'offline')) {
+        echo $this->renderShadows('navbar');
+
         if($this->isAdminArea()) {
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
@@ -70,10 +68,6 @@ foreach($background as $c) {
                     ['label' => 'Dashboard', 'url' => [Yii::$app->seo->relativeAdminRoute('index')]],
                 ],
             ]);
-        }else {
-            foreach($this->getContents('navbar') as $c) {
-                echo $this->renderShadow($c, 'navbar');
-            }
         }
     }
 
@@ -81,6 +75,8 @@ foreach($background as $c) {
     ?>
 
     <div class="container">
+        <?= $this->renderShadows('before_main'); ?>
+
         <?php if(!$this->isAdminArea() && Yii::$app->cii->package->setting('cii', 'offline')) {
             echo Yii::$app->cii->package->setting('cii', 'offline_description');
         }else { ?>
@@ -120,9 +116,25 @@ foreach($background as $c) {
                     </div>
                 <?php } ?>
 
-                <div class="col-md-<?= (string)$countMiddle; ?>">
-                    <?= $content ?>
-                </div>
+                <main class="col-md-<?= (string)$countMiddle; ?>">
+                    <?= $this->renderShadows('inner_main'); ?>
+
+                    <?php
+                    if($this->getIsPjax()) {
+                        Pjax::begin([
+                            'id' => $this->pjaxid()
+                        ]);
+                    }
+
+                    echo $content;
+                    
+                    if($this->getIsPjax()) {
+                        Pjax::end();
+                    }
+                    ?>
+
+                    <?= $this->renderShadows('outer_main'); ?>
+                </main>
 
                 <?php
                 if(count($rightContents)) {
@@ -137,6 +149,8 @@ foreach($background as $c) {
                 <?php } ?>
             <?php } ?>
         </div>
+
+        <?= $this->renderShadows('after_main'); ?>
     </div>
 </div>
 
