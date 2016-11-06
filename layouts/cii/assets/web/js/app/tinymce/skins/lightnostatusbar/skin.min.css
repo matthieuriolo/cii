@@ -100,6 +100,16 @@
 	opacity: .5;
 }
 
+
+.mce-floatpanel {
+	/*z-index: 65536;*/
+	z-index: 1049 !important;
+}
+
+#mce-modal-block {
+	z-index: 1048 !important;
+}
+
 .mce-textbox {
 	border-radius: 4px;
 }
