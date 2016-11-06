@@ -8,8 +8,8 @@ echo DetailView::widget([
         'slug',
         'enabled:boolean',
         [
-        	'attribute' => 'classname',
-            'value' => $model->classname->typename
+        	'attribute' => 'classname.path',
+            'format' => 'routetypes',
         ],
 
         'title',
@@ -17,9 +17,8 @@ echo DetailView::widget([
         
         [
         	'attribute' => 'language_id',
-        	'format' => 'html',
-        	'value' => empty($model->language_id) ? '-' : Html::a($model->language->name, [Yii::$app->seo->relativeAdminRoute('modules/cii/language/view'), 'id' => $model->language->id]),
-            'visible' => Yii::$app->cii->package->setting('cii', 'multilanguage')
+        	'format' => 'language',
+        	'visible' => Yii::$app->cii->package->setting('cii', 'multilanguage')
         ],
 
         [
@@ -42,12 +41,12 @@ echo DetailView::widget([
 echo DetailView::widget([
     'model' => $model,
     'attributes' => [
-        'hits',
-        'averageHits',
-        'dailyHits',
-        'weeklyHits',
-        'monthlyHits',
-        'yearlyHits',
+        'hits:integer',
+        'averageHits:integer',
+        'dailyHits:integer',
+        'weeklyHits:integer',
+        'monthlyHits:integer',
+        'yearlyHits:integer',
     ],
 ]);
 ?>

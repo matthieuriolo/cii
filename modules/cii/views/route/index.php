@@ -115,10 +115,6 @@ if($pjaxid) {
                         $route = [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/update'), ['id' => $model['id']]];
                     }
 
-                    if($pjaxid) {
-                        //$route[1]['pjaxid'] = $pjaxid;
-                    }
-
                     return \Yii::$app->urlManager->createUrl($route);
                 },
 
@@ -140,7 +136,6 @@ if($pjaxid) {
                         $options = [
                             'title' => Yii::p('cii', 'See child routes'),
                             'aria-label' => Yii::p('cii', 'See child routes'),
-                            'data-pjax' => '0',
                         ];
 
                         return Html::a('<span class="glyphicon glyphicon-open"></span>', $url, $options);

@@ -1,7 +1,27 @@
 <?php
 use cii\helpers\Url;
 use cii\widgets\Toggler;
+use cii\widgets\EditView;
+
+echo EditView::widget([
+	'model' => $model,
+     'form' => $form,
+     'attributes' => [
+	    'slug',
+		'type:routetypes',
+		'enabled:boolean',
+		'title',
+		'parent_id:route',
+		[
+			'attribute' => 'language_id',
+			'format' => 'language',
+			'visible' => Yii::$app->cii->package->setting('cii', 'multilanguage'),
+		]
+	]
+]);
 ?>
+
+<?php /*
 <div class="row">
 	<div class="col-md-6">
 		<?php echo $form->field($model, 'slug'); ?>
@@ -48,3 +68,4 @@ use cii\widgets\Toggler;
 	</div>
 	<?php } ?>
 </div>
+*/ ?>

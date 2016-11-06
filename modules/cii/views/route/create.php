@@ -59,9 +59,6 @@ if($pjaxid) {
                 'content' => $this->render('_form', [
                 	'model' => $model,
                 	'form' => $form,
-                	'types' => $types,
-                	'parentRoutes' => $parentRoutes,
-                	'languages' => $languages
                 ])
             ],
         ];
