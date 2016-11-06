@@ -34,7 +34,7 @@ class Fields {
             'date' => 'cii\fields\DateField',
             'time' => 'cii\fields\TimeField',
 
-            'in' => 'cii\fields\dropdown\InField',
+            'in' => 'cii\fields\InField',
             
             'extension' => 'cii\fields\select\ExtensionField',
             'language' => 'cii\fields\select\LanguageField',

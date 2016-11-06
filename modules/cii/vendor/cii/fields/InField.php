@@ -1,5 +1,5 @@
 <?php
-namespace cii\fields\dropdown;
+namespace cii\fields;
 
 use Yii;
 use cii\fields\DropdownField;
