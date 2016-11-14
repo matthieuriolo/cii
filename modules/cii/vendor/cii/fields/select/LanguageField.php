@@ -5,7 +5,7 @@ use Yii;
 use cii\helpers\Url;
 use cii\fields\PjaxObjectField;
 
-use app\modules\cii\models\Language;
+use app\modules\cii\models\extension\Language;
 
 class LanguageField extends PjaxObjectField {
 	protected function fetchModel($id) {

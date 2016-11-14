@@ -5,7 +5,7 @@ use Yii;
 use cii\helpers\Url;
 use cii\fields\PjaxObjectField;
 
-use app\modules\cii\models\Route;
+use app\modules\cii\models\common\Route;
 
 class RouteField extends PjaxObjectField {
 	public function init() {

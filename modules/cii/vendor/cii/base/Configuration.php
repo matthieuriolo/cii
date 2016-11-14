@@ -82,7 +82,7 @@ class Configuration extends Model {
     }
 
     public function getExtension() {
-        $ext = 'app\modules\cii\models\\'. ucfirst($this->extension_type);
+        $ext = 'app\modules\cii\models\extension\\'. ucfirst($this->extension_type);
         return $ext::find()->joinWith('extension as ext')->where(['ext.name' => $this->id])->one();
     }
 }

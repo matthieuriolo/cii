@@ -8,8 +8,8 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
 
 
-use app\modules\cii\models\Extension as Core_Extension;
-use app\modules\cii\models\Classname as Classname;
+use app\modules\cii\models\extension\Extension as Core_Extension;
+use app\modules\cii\models\extension\Classname;
 use yii\db\Expression;
 
 use yii\base\Object;

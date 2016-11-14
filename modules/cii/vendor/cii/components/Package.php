@@ -3,8 +3,7 @@ namespace cii\components;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use app\modules\cii\models\Package as MPackage;
-use cii\web\controllers\BackendCon;
+use app\modules\cii\models\extension\Package as MPackage;
 use cii\base\PackageReflection;
 
 class Package extends BaseExtension {

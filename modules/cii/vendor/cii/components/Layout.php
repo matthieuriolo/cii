@@ -2,9 +2,9 @@
 namespace cii\components;
 
 use Yii;
-use app\modules\cii\models\Content;
-use app\modules\cii\models\ContentVisibilities;
-use app\modules\cii\models\Layout as MLayout;
+use app\modules\cii\models\common\Content;
+use app\modules\cii\models\common\ContentVisibilities;
+use app\modules\cii\models\extension\Layout as MLayout;
 
 use cii\base\LayoutReflection;
 

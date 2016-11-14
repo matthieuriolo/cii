@@ -4,7 +4,7 @@
 namespace cii\base;
 
 use Yii;
-use app\modules\cii\models\Layout;
+use app\modules\cii\models\extension\Layout;
 
 class LayoutReflection extends BaseReflection {
     protected function getInstallationPath() {

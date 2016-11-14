@@ -3,7 +3,7 @@ namespace cii\components;
 
 use Yii;
 use yii\base\Component;
-use app\modules\cii\models\Language as MLanguage;
+use app\modules\cii\models\extension\Language as MLanguage;
 use yii\base\InvalidConfigException;
 
 

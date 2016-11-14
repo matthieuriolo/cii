@@ -1,15 +1,10 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
 namespace cii\base;
 
 use Yii;
 use yii\base\Module;
-use app\modules\cii\models\Package as Core_Module;
+use app\modules\cii\models\extension\Package as Core_Module;
 
 class Package extends Module {
     protected $_reflection;
