@@ -63,7 +63,7 @@ abstract class PjaxField extends AbstractField {
 
                 . "<span class=\"input-group-addon\">"
                 . "<a class=\"glyphicon glyphicon glyphicon-link\" onclick=\"(function() {
-                    jQuery('#" . $this->pjaxid . "').html('<div class=\'text-center\'><i class=\'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom\'></i></div>')
+                    jQuery('#" . $this->pjaxid . "').html('<div class=\'vertical-align\'><div class=\'text-center vertical-align-inner\'><i class=\'fa fa-spinner fa-pulse fa-3x fa-fw\'></i></div></div>')
                     $.pjax({
                         url: '" . Url::toRoute($this->getPjaxUrl(), true) . "',
                         container: '#" . $this->pjaxid . "',

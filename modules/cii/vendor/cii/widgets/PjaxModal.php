@@ -55,7 +55,7 @@ class PjaxModal extends Modal {
                 \$('#" . $this->id . "_field').val('');
             });"
         ]);
-        echo '<div class="text-center"><i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i></div>';
+        echo '<div class="vertical-align"><div class="text-center vertical-align-inner"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div></div>';
         Pjax::end();
         
         echo $this->getButtons();
