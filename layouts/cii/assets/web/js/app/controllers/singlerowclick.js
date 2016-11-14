@@ -13,12 +13,9 @@ define([], function() {
 					return true;
 				}
 
-				var link = $(this).find('td:last a:first')
-				if(link.length) {
-					link = link[0]
-					if(link.href) {
-						$(link).click()
-					}
+				var link = $(this).find('td:last a:first');
+				if(link.length && link[0].click) {
+					link[0].click();
 				}
 			})
 		}
