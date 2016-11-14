@@ -4,7 +4,7 @@ namespace app\modules\cii\controllers;
 
 use Yii;
 use cii\backend\BackendController;
-use app\modules\cii\models\Configuration;
+use app\modules\cii\models\extension\Configuration;
 use yii\base\InvalidConfigException;
 
 abstract class SettingBaseController extends BackendController {
@@ -21,7 +21,7 @@ abstract class SettingBaseController extends BackendController {
     }
 
     protected function getExtensionModel($id, $type) {
-        $extension = 'app\modules\cii\models\\' . ucfirst($type);
+        $extension = 'app\modules\cii\models\extension\\' . ucfirst($type);
         return $extension::find()
             ->joinWith('extension as ext')
             ->where([

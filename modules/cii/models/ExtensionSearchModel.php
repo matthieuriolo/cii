@@ -6,10 +6,10 @@ use Yii;
 
 use cii\base\SearchModel;
 
-use app\modules\cii\models\Classname;
-use app\modules\cii\models\Package;
-use app\modules\cii\models\Layout;
-use app\modules\cii\models\LanguageMessage;
+use app\modules\cii\models\common\Classname;
+use app\modules\cii\models\extension\Package;
+use app\modules\cii\models\extension\Layout;
+use app\modules\cii\models\extension\LanguageMessage;
 
 class ExtensionSearchModel extends SearchModel {
     protected $_extensionTypes;

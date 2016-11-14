@@ -3,14 +3,13 @@
 namespace app\modules\cii\controllers;
 
 use Yii;
-use app\modules\cii\models\User;
-use app\modules\cii\models\UserSearch;
-use app\modules\cii\models\Group;
-use app\modules\cii\models\GroupMember;
-use app\modules\cii\models\UpdateForm;
-use app\modules\cii\models\PasswordForm;
-use app\modules\cii\models\EmailForm;
-use app\modules\cii\models\DeleteForm;
+use app\modules\cii\models\auth\User;
+use app\modules\cii\models\auth\Group;
+use app\modules\cii\models\auth\GroupMember;
+use app\modules\cii\models\auth\UpdateForm;
+use app\modules\cii\models\auth\PasswordForm;
+use app\modules\cii\models\auth\EmailForm;
+use app\modules\cii\models\auth\DeleteForm;
 
 
 use yii\web\NotFoundHttpException;

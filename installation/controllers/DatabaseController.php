@@ -13,15 +13,15 @@ use app\base\PackageReflection;
 
 
 
-require_once(__DIR__ . '/../../modules/cii/models/classname.php');
-require_once(__DIR__ . '/../../modules/cii/models/extension.php');
-require_once(__DIR__ . '/../../modules/cii/models/package.php');
+require_once(__DIR__ . '/../../modules/cii/models/common/classname.php');
+require_once(__DIR__ . '/../../modules/cii/models/extension/extension.php');
+require_once(__DIR__ . '/../../modules/cii/models/extension/package.php');
 use app\modules\cii\models\Extension as Ext;
 
-require_once(__DIR__ . '/../../modules/cii/models/Language.php');
-require_once(__DIR__ . '/../../modules/cii/models/Layout.php');
-require_once(__DIR__ . '/../../modules/cii/models/User.php');
-require_once(__DIR__ . '/../../modules/cii/models/UserCreateForm.php');
+require_once(__DIR__ . '/../../modules/cii/models/auth/Language.php');
+require_once(__DIR__ . '/../../modules/cii/models/auth/Layout.php');
+require_once(__DIR__ . '/../../modules/cii/models/auth/User.php');
+require_once(__DIR__ . '/../../modules/cii/models/auth/UserCreateForm.php');
 use app\modules\cii\models\UserCreateForm as User;
 
 class DatabaseController extends Controller {

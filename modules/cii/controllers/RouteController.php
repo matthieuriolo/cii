@@ -7,9 +7,9 @@ use cii\backend\BackendController as Controller;
 use cii\web\SecurityException;
 use cii\base\SearchModel;
 
-use app\modules\cii\models\Route;
-use app\modules\cii\models\Classname;
-use app\modules\cii\models\CaptchaRoute;
+use app\modules\cii\models\common\Route;
+use app\modules\cii\models\common\Classname;
+use app\modules\cii\models\route\CaptchaRoute;
 use app\modules\cii\Permission;
 
 use yii\widgets\ActiveForm;
@@ -39,6 +39,7 @@ class RouteController extends Controller {
     }
 
     public function actionIndex($parent = null) {
+        sleep(10);
         $query = Route::find()
             ->joinWith([
                 'language as language',
@@ -174,10 +175,6 @@ class RouteController extends Controller {
         	'parentId' => $parent,
             'model' => $model,
             'topmodel' => $topmodel,
-
-            'types' => Yii::$app->cii->route->getTypesForDropdown(),
-        	'parentRoutes' => Yii::$app->cii->route->getParentRoutesForDropdown(),
-        	'languages' => Yii::$app->cii->language->getLanguagesForDropdown(),
         ]);
     }
 
@@ -237,9 +234,6 @@ class RouteController extends Controller {
         return $this->render('update', [
             'model' => $model,
             'topmodel' => $topmodel,
-            'types' => Yii::$app->cii->route->getTypesForDropdown(),
-            'parentRoutes' => Yii::$app->cii->route->getParentRoutesForDropdown(),
-            'languages' => Yii::$app->cii->language->getLanguagesForDropdown(),
         ]);
     }
 

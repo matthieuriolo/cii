@@ -2,7 +2,7 @@
 
 namespace cii\rbac;
 
-use app\modules\cii\models\Permission;
+use app\modules\cii\models\auth\Permission;
 use yii\base\Component;
 use yii\di\Instance;
 use yii\db\Connection;

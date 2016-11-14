@@ -9,8 +9,8 @@ use cii\base\SearchModel;
 use cii\backend\BackendController;
 
 use app\modules\cii\Permission;
-use app\modules\cii\models\UploadFileForm;
-use app\modules\cii\models\RenameFileForm;
+use app\modules\cii\models\browser\UploadFileForm;
+use app\modules\cii\models\browser\RenameFileForm;
 use app\modules\cii\controllers\BrowserBaseController;
 
 class BrowserController extends BrowserBaseController {

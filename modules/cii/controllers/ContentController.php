@@ -3,12 +3,11 @@
 namespace app\modules\cii\controllers;
 
 use Yii;
-use app\modules\cii\models\RedirectRoute;
-use app\modules\cii\models\ContentRoute;
-use app\modules\cii\models\Content;
-use app\modules\cii\models\ContentSearch;
-use app\modules\cii\models\Classname;
-use app\modules\cii\models\ContentVisibilities;
+use app\modules\cii\models\route\RedirectRoute;
+use app\modules\cii\models\route\ContentRoute;
+use app\modules\cii\models\common\Content;
+use app\modules\cii\models\common\Classname;
+use app\modules\cii\models\common\ContentVisibilities;
 
 use cii\web\SecurityException;
 use cii\backend\BackendController;

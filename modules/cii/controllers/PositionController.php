@@ -3,15 +3,13 @@
 namespace app\modules\cii\controllers;
 
 use Yii;
-use app\modules\cii\models\ContentVisibilities;
-use app\modules\cii\models\ContentVisibilitiesSearch;
-use app\modules\cii\models\Group;
-use app\modules\cii\models\GroupMember;
 
 
-
-use app\modules\cii\models\Route;
-use app\modules\cii\models\ContentRoute;
+use app\modules\cii\models\auth\Group;
+use app\modules\cii\models\auth\GroupMember;
+use app\modules\cii\models\common\ContentVisibilities;
+use app\modules\cii\models\common\Route;
+use app\modules\cii\models\route\ContentRoute;
 
 use cii\backend\BackendController;
 use cii\web\SecurityException;

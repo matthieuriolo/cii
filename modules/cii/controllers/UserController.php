@@ -3,28 +3,26 @@
 namespace app\modules\cii\controllers;
 
 use Yii;
-use app\modules\cii\models\User;
-use app\modules\cii\models\UserSearch;
-use app\modules\cii\models\Group;
-use app\modules\cii\models\GroupMember;
-
-
-use app\modules\cii\models\UserCreateForm;
-use app\modules\cii\models\UserUpdateForm;
+use app\modules\cii\models\auth\User;
+use app\modules\cii\models\auth\UserSearch;
+use app\modules\cii\models\auth\Group;
+use app\modules\cii\models\auth\GroupMember;
+use app\modules\cii\models\auth\UserCreateForm;
+use app\modules\cii\models\auth\UserUpdateForm;
 
 use app\modules\cii\models\UserMailForm;
 
-use app\modules\cii\models\UserLoginContent;
-use app\modules\cii\models\UserLogoutContent;
-use app\modules\cii\models\UserRegisterContent;
-use app\modules\cii\models\UserActivateContent;
-use app\modules\cii\models\UserForgotContent;
-use app\modules\cii\models\ProfileRoute;
+use app\modules\cii\models\content\UserLoginContent;
+use app\modules\cii\models\content\UserLogoutContent;
+use app\modules\cii\models\content\UserRegisterContent;
+use app\modules\cii\models\content\UserActivateContent;
+use app\modules\cii\models\content\UserForgotContent;
+use app\modules\cii\models\route\ProfileRoute;
 
 
-use app\modules\cii\models\Route;
-use app\modules\cii\models\ContentRoute;
-use app\modules\cii\models\CaptchaRoute;
+use app\modules\cii\models\common\Route;
+use app\modules\cii\models\route\ContentRoute;
+use app\modules\cii\models\route\CaptchaRoute;
 
 use cii\backend\BackendController;
 use cii\web\SecurityException;

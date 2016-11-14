@@ -4,11 +4,10 @@ namespace app\modules\cii\controllers;
 
 use Yii;
 
-use app\modules\cii\models\Group;
-use app\modules\cii\models\GroupMember;
-use app\modules\cii\models\GroupSearch;
-use app\modules\cii\models\Permission;
-use app\modules\cii\models\PermissionForm;
+use app\modules\cii\models\auth\Group;
+use app\modules\cii\models\auth\GroupMember;
+use app\modules\cii\models\auth\Permission;
+use app\modules\cii\models\auth\PermissionForm;
 
 use app\modules\cii\Permission as MPermission;
 

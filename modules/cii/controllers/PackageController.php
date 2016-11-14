@@ -4,7 +4,7 @@ namespace app\modules\cii\controllers;
 
 use Yii;
 use cii\backend\BackendController as Controller;
-use app\modules\cii\models\Package;
+use app\modules\cii\models\extension\Package;
 use app\modules\cii\Permission;
 
 

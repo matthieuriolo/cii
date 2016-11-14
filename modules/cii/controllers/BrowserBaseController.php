@@ -8,12 +8,9 @@ use yii\filters\VerbFilter;
 use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 
-
-use app\modules\cii\models\Route;
-use app\modules\cii\models\ContentRoute;
 use app\modules\cii\Permission;
-use app\modules\cii\models\UploadFileForm;
-use app\modules\cii\models\RenameFileForm;
+use app\modules\cii\models\browser\UploadFileForm;
+use app\modules\cii\models\browser\RenameFileForm;
 
 use cii\backend\BackendController;
 use cii\web\SecurityException;

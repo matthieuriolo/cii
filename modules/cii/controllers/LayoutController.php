@@ -3,7 +3,7 @@
 namespace app\modules\cii\controllers;
 
 use Yii;
-use app\modules\cii\models\Layout;
+use app\modules\cii\models\extension\Layout;
 use app\modules\cii\Permission;
 use yii\data\ActiveDataProvider;
 

@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use app\modules\cii\Permission;
-use app\modules\cii\models\ContentVisibilities;
+use app\modules\cii\models\common\ContentVisibilities;
 
 class PositionBaseController extends BackendController {
     public function actions() {

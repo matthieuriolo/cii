@@ -9,11 +9,12 @@ use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 
 
-use app\modules\cii\models\Route;
-use app\modules\cii\models\ContentRoute;
+
 use app\modules\cii\Permission;
-use app\modules\cii\models\UploadFileForm;
-use app\modules\cii\models\RenameFileForm;
+use app\modules\cii\models\common\Route;
+use app\modules\cii\models\route\ContentRoute;
+use app\modules\cii\models\browser\UploadFileForm;
+use app\modules\cii\models\browser\RenameFileForm;
 
 use cii\backend\BackendController;
 use cii\web\SecurityException;
@@ -57,7 +58,7 @@ class BrowserController extends BackendController {
 
         $files = array_map(function($file) use($path, $basePath) {
             return Yii::createObject([
-                'class' => 'app\modules\cii\models\browsercell',
+                'class' => 'app\modules\cii\models\browser\browsercell',
                 'basePath' => $basePath,
                 'file' => $basePath . '/' . ($path ? $path . '/' : '') . $file
             ]);

@@ -4,8 +4,8 @@ namespace app\modules\cii\controllers;
 
 use Yii;
 use cii\backend\BackendController as Controller;
-use app\modules\cii\models\Package as Core_Module;
-use app\modules\cii\models\Configuration as Core_Settings;
+use app\modules\cii\models\extension\Package as Core_Module;
+use app\modules\cii\models\extension\Configuration as Core_Settings;
 use app\modules\cii\Permission;
 
 use cii\db\DbDumper;

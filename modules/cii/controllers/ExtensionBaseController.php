@@ -18,9 +18,9 @@ use yii\helpers\FileHelper;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 
-use app\modules\cii\models\Configuration as Core_Settings;
-use app\modules\cii\models\UploadExtensionForm;
-use app\modules\cii\models\Extension;
+use app\modules\cii\models\extension\Configuration as Core_Settings;
+use app\modules\cii\models\extension\UploadExtensionForm;
+use app\modules\cii\models\extension\Extension;
 use app\modules\cii\models\ExtensionSearchModel as SearchModel;
 use app\modules\cii\models\SettingSearchModel;
 

@@ -3,7 +3,7 @@
 namespace app\modules\cii\controllers;
 
 use Yii;
-use app\modules\cii\models\Extension;
+use app\modules\cii\models\extension\Extension;
 use app\modules\cii\Permission;
 
 

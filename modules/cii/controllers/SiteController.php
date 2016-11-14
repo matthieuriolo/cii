@@ -15,15 +15,15 @@ use cii\web\routes\StartpageRoute;
 use cii\helpers\SPL;
 use cii\web\SecurityException;
 
-use app\modules\cii\models\Route;
-use app\modules\cii\models\ContentRoute;
-use app\modules\cii\models\CaptchaRoute;
-use app\modules\cii\models\ForgotForm;
-use app\modules\cii\models\LoginForm;
-use app\modules\cii\models\LogoutForm;
-use app\modules\cii\models\RegisterForm;
-use app\modules\cii\models\User;
-use app\modules\cii\models\GroupMember;
+use app\modules\cii\models\common\Route;
+use app\modules\cii\models\route\ContentRoute;
+use app\modules\cii\models\route\CaptchaRoute;
+use app\modules\cii\models\auth\ForgotForm;
+use app\modules\cii\models\auth\LoginForm;
+use app\modules\cii\models\auth\LogoutForm;
+use app\modules\cii\models\auth\RegisterForm;
+use app\modules\cii\models\auth\User;
+use app\modules\cii\models\auth\GroupMember;
 
 
 use app\modules\cii\models\UserLoginContent;
@@ -82,20 +82,17 @@ class SiteController extends Controller {
     }
 
     public function actionIndex() {
-        //this should only happen if there is no startpage
-        if($route_id = Yii::$app->cii->package->setting('cii', 'startroute')) {
-            $model = Route::findOne(['id' => $route_id]);
-            if($model) {
-                $model = $model->outbox();
-                Yii::$app->seo = Yii::createObject([
-                    'class' => 'cii\web\routes\StartpageRoute',
-                    'loadedModel' => $model,
-                    'route_id' => $route_id
-                ]);
-                return $model->forwardToController($this);
-            }
+        if($model = Yii::$app->cii->package->setting('cii', 'startroute')) {
+            $model = $model->outbox();
+            Yii::$app->seo = Yii::createObject([
+                'class' => 'cii\web\routes\StartpageRoute',
+                'loadedModel' => $model,
+                'route_id' => $model->route_id,
+            ]);
+            return $model->forwardToController($this);
         }
 
+        //this should only happen if there is no startpage
         return $this->render('index');
     }
 
@@ -109,7 +106,9 @@ class SiteController extends Controller {
 
     public function actionLogin() {
         $content = Yii::$app->seo->getModel()->content->outbox();
-        
+        if(!Yii::$app->user->isGuest) {
+            $this->redirectByContent($content);
+        }
 
         $model = $this->processLogin($content);
 
@@ -120,11 +119,6 @@ class SiteController extends Controller {
     }
 
     protected function processLogin($content, $model = null) {
-        if(!Yii::$app->user->isGuest) {
-            $this->redirectByContent($content);
-            return;
-        }
-
         if(!$model) {
             $model = new LoginForm();
         }
@@ -132,7 +126,6 @@ class SiteController extends Controller {
         if($model->load(Yii::$app->request->post()) && $model->login()) {
             Yii::$app->session->setFlash('success', 'You have been logged in successfully');
             $this->redirectByContent($content);
-            return;
         }
 
         return $model;
@@ -263,7 +256,6 @@ class SiteController extends Controller {
         $model->setContentFormName($content, $position);
         $model->captchaRoute = $content->captcha;
         $model = $this->processLogin($content, $model);
-
         return $this->renderShadow('login_shadow', [
             'model' => $model,
             'content' => $content,

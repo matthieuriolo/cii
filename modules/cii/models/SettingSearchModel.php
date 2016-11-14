@@ -5,7 +5,7 @@ namespace app\modules\cii\models;
 use Yii;
 
 use cii\base\SearchModel;
-use app\modules\cii\models\Configuration;
+use app\modules\cii\models\extension\Configuration;
 
 class SettingSearchModel extends SearchModel {
     public function __construct() {

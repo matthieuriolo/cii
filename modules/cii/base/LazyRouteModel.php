@@ -5,7 +5,7 @@ namespace app\modules\cii\base;
 use Yii;
 use cii\behavior\ExtendableInterface;
 use yii\base\InvalidConfigException;
-use app\modules\cii\models\Route;
+use app\modules\cii\models\common\Route;
 
 
 abstract class LazyRouteModel extends LazyModel implements ExtendableInterface {

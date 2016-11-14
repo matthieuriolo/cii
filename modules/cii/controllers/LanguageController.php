@@ -3,9 +3,9 @@
 namespace app\modules\cii\controllers;
 
 use Yii;
-use app\modules\cii\models\Language;
-use app\modules\cii\models\LanguageMessage;
-use app\modules\cii\models\FormatterExample;
+use app\modules\cii\models\extension\Language;
+use app\modules\cii\models\extension\LanguageMessage;
+use app\modules\cii\models\extension\FormatterExample;
 use app\modules\cii\Permission;
 
 use yii\web\NotFoundHttpException;

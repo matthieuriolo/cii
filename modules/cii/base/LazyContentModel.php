@@ -4,7 +4,7 @@ namespace app\modules\cii\base;
 
 use Yii;
 use cii\behavior\ExtendableInterface;
-use app\modules\cii\models\Content;
+use app\modules\cii\models\common\Content;
 
 abstract class LazyContentModel extends LazyModel implements ExtendableInterface {
     public $canBeShadowed = false;
