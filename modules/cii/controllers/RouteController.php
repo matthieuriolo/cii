@@ -39,7 +39,6 @@ class RouteController extends Controller {
     }
 
     public function actionIndex($parent = null) {
-        sleep(10);
         $query = Route::find()
             ->joinWith([
                 'language as language',
