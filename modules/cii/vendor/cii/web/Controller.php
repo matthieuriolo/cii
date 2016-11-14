@@ -39,7 +39,7 @@ class Controller extends \yii\web\Controller {
 
 		if(Yii::$app->request->referrer){
 			return $this->redirect(Yii::$app->request->referrer);
-		}else{
+		}else {
 			return $this->goHome();
 		}
 	}

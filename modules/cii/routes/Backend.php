@@ -6,7 +6,7 @@ class Backend extends \cii\web\routes\ControllerRoute {
     public $baseRoute = 'cii/backend';
     public function getSubRoutes() {
     	return [
-    		'app\modules\cii\routes\BackendModules'
+    		'app\modules\cii\routes\BackendModules',
     	];
     }
 }

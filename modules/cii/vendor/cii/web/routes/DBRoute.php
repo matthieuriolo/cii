@@ -5,8 +5,8 @@ use Yii;
 use yii\base\Object;
 use yii\base\InvalidConfigException;
 
-use app\modules\cii\models\Route;
-use app\modules\cii\models\CountAccess;
+use app\modules\cii\models\common\Route;
+use app\modules\cii\models\common\CountAccess;
 
 
 use cii\helpers\UTC;

@@ -20,18 +20,4 @@ class User extends \yii\web\User {
         list($packageId, $permission) = $permissionName;
         return $manager->checkAccess($this->getId(), $packageId, $permission, $params);
     }
-
-
-    /*
-	if($this->superadmin) {
-			return true;
-		}
-
-        if(($manager = $this->getAuthManager()) === null) {
-            return false;
-        }
-
-
-        return $manager->checkAccess($packageId, $this->getId(), $permissionName, $params);
-    */
 }
