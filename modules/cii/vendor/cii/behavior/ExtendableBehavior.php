@@ -4,7 +4,7 @@ namespace cii\behavior;
 
 use Yii;
 use yii\base\Behavior;
-use app\modules\cii\models\Classname;
+use app\modules\cii\models\common\Classname;
 
 
 class ExtendableBehavior extends Behavior {
