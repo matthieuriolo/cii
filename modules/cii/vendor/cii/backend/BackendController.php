@@ -27,7 +27,7 @@ class BackendController extends Controller {
 			}else if(is_int($role)) {
 				$rules[] = [
                     'allow' => true,
-                    'roles' => [$this->getPackage()->getIdentifier(), $role],
+                    'roles' => [[$this->getPackage()->getIdentifier(), $role]],
                 ];
 			}
 		}
