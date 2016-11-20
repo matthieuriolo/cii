@@ -60,12 +60,13 @@ AppAsset::register($this);
     if($this->isAdminArea() || !Yii::$app->cii->package->setting('cii', 'offline')) {
         echo $this->renderShadows('navbar');
 
-        if($this->isAdminArea()) {
+        if($this->isAdminArea() && !Yii::$app->user->isGuest) {
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
                     ['label' => 'Log', 'url' => [Yii::$app->seo->relativeAdminRoute('log')]],
                     ['label' => 'Dashboard', 'url' => [Yii::$app->seo->relativeAdminRoute('index')]],
+                    ['label' => 'Logout', 'url' => [Yii::$app->seo->relativeAdminRoute('logout')]],
                 ],
             ]);
         }
@@ -100,12 +101,12 @@ AppAsset::register($this);
                     $countMiddle -= 3;
                 }
 
-                if(count($leftContents) || $this->isAdminArea()) {
+                if(count($leftContents) || ($this->isAdminArea() && !Yii::$app->user->isGuest)) {
                     $countMiddle -= 3;
                 ?>
                     <div class="col-md-3">
                         <?php
-                        if($this->isAdminArea()) {
+                        if($this->isAdminArea() && !Yii::$app->user->isGuest) {
                             echo BackendMenu::widget();
                         }
 

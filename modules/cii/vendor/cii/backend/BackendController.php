@@ -19,7 +19,11 @@ class BackendController extends Controller {
 			if(is_array($role)) {
 				$rs = [];
 				foreach($role['roles'] as $r) {
-					$rs[] = [$this->getPackage()->getIdentifier(), $r];
+					if(is_int($r)) {
+						$rs[] = [$this->getPackage()->getIdentifier(), $r];
+					}else {
+						$rs[] = $r;
+					}
 				}
 
 				$role['roles'] = $rs;
@@ -29,9 +33,14 @@ class BackendController extends Controller {
                     'allow' => true,
                     'roles' => [[$this->getPackage()->getIdentifier(), $role]],
                 ];
+			}else {
+				$rules[] = [
+                    'allow' => true,
+                    'roles' => [$role],
+                ];
 			}
 		}
-
+		
 		return [
 			'access' => [
 	            'class' => AccessControl::className(),

@@ -6,6 +6,7 @@ use Yii;
 use cii\backend\BackendController as Controller;
 use app\modules\cii\models\extension\Package as Core_Module;
 use app\modules\cii\models\extension\Configuration as Core_Settings;
+use app\modules\cii\models\auth\LoginForm;
 use app\modules\cii\Permission;
 
 use cii\db\DbDumper;
@@ -17,7 +18,33 @@ use yii\data\ArrayDataProvider;
 
 class BackendController extends Controller {
     public function getAccessRoles() {
-        return [Permission::MANAGE_LOG, Permission::MANAGE_ADMIN];
+        return [
+            Permission::MANAGE_LOG,
+            Permission::MANAGE_ADMIN,
+            [
+                'actions' => ['login', 'captcha'],
+                'allow' => true,
+                'roles' => ['?'],
+            ]
+        ];
+    }
+
+    public function actions() {
+        $captchaAction = [
+            'class' => 'cii\captcha\CaptchaAction',
+        ];
+
+        return [
+            'captcha' => [
+                'class' => 'cii\captcha\CaptchaAction',
+                'url' => Yii::$app->seo->relativeAdminRoute('captcha')
+            ],
+            /*
+            'doc'=>[
+                'class'=>'yii\web\ViewAction',
+                'viewPrefix' => 'doc'
+            ],*/
+        ];
     }
 
     public function actionIndex() {
@@ -92,5 +119,25 @@ class BackendController extends Controller {
     public function actionFlushcache() {
         Yii::$app->cache->flush();
         return $this->goBackToReferrer();
+    }
+
+    public function actionLogin() {
+        $model = new LoginForm();
+        
+        if($model->load(Yii::$app->request->post()) && $model->login()) {
+            Yii::$app->session->setFlash('success', 'You have been logged in successfully');
+            return $this->redirect([Yii::$app->seo->relativeAdminRoute('index')]);
+        }
+
+        return $this->render('login', [
+            'model' => $model
+        ]);
+    }
+
+
+    public function actionLogout() {
+        Yii::$app->user->logout();
+        Yii::$app->session->setFlash('success', Yii::p('cii', 'You have been logged out successfully'));
+        return $this->goHome();
     }
 }

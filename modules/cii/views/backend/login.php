@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<div class="col-md-6">
 					<?php 
 					echo $form->field($model, 'captcha')->widget(Captcha::classname(), [
-						'captchaAction' => Yii::$app->seo->relativeRoute('app\modules\cii\routes\Content', 'captcha'),
+						'captchaAction' => Yii::$app->seo->relativeAdminRoute('captcha'),
 						'template' => '<div class="row"><div class="col-md-3" role="button" title="Reload image">{image}</div><div class="col-md-9">{input}</div></div>',
 					]); ?>
 				</div>
@@ -45,18 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		</div>
 		
 		<hr>
-		<?php if($content->register_id) { ?>
-			<p class="text-center"><?php
-				echo Yii::p('cii', 'Create a new {link}', ['link' => Html::a(Yii::p('cii', 'account'), ['//' . $content->register->getBreadcrumbs()])]);
-			?></p>
-		<?php } ?>
-
-		<?php if($content->forgot_id) { ?>
-			<p class="text-center"><?php
-				echo Yii::p('cii', 'Did you {link} your password?', ['link' => Html::a(Yii::p('cii', 'forgot'), ['//' . $content->forgot->getBreadcrumbs()])]);
-			?></p>
-		<?php } ?>
-
+		
 		<div class="form-group buttons text-center">
 			<?php echo Html::submitButton(Yii::p('cii', 'Login'), array('class' => 'btn btn-primary')); ?>
 		</div>

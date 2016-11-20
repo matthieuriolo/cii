@@ -133,7 +133,7 @@ class SiteController extends Controller {
 
     public function actionLogout() {
         Yii::$app->user->logout();
-        Yii::$app->session->setFlash('success', 'You have been logged out successfully');
+        Yii::$app->session->setFlash('success', Yii::p('cii', 'You have been logged out successfully'));
         $content = Yii::$app->seo->getModel()->content->outbox();
         $this->redirectByContent($content);
         return;

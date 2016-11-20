@@ -47,7 +47,7 @@ $config = [
             'class' => 'cii\web\User',
             'identityClass' => 'app\modules\cii\models\auth\User',
             'enableAutoLogin' => true,
-            'loginUrl' => ['login']
+            'loginUrl' => ['admin/login']
         ],
 
         'errorHandler' => [
