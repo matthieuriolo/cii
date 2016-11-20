@@ -10,11 +10,16 @@ abstract class PjaxField extends AbstractField {
     protected $pjaxid;
     public $pjaxUrl;
     public $header;
-
+    public $emptyField;
     public $viewNameAttribute = 'name';
 
     public function init() {
         $this->pjaxid = uniqid();
+
+        if($this->emptyField === null) {
+            $this->emptyField = Yii::$app->formatter->asText(null);
+        }
+
         parent::init();
     }
 
@@ -50,15 +55,15 @@ abstract class PjaxField extends AbstractField {
             . $form->field($model, $this->attribute, [
                 'template' => "{label}\n"
                 . "<div class=\"input-group\">"
-                . '<a id="' . $id . '_link" href="" class="form-control disabled" target="_blank" data-pjax="0">' . Yii::$app->formatter->asText(null) . '</a>'
+                . '<a id="' . $id . '_link" href="" class="form-control disabled" target="_blank" data-pjax="0" data-empty="' . Html::encode($this->emptyField) . '">' . $this->emptyField . '</a>'
                 . "{input}"
 
 
                 . "<span class=\"input-group-addon input-group-addons\">"
-                . "<a class=\"glyphicon glyphicon glyphicon-remove\" onclick=\"(function() {"
-                    . "\$('input[name=\'" . Html::getInputName($model, $this->attribute) . "\']').val('');"
-                    . "\$('#" . $id . "_link').addClass('disabled').attr('href', '').text('');"
-                . "})()\"></a>"
+                    . "<a class=\"glyphicon glyphicon glyphicon-remove\" onclick=\"(function() {"
+                        . "\$('input[name=\'" . Html::getInputName($model, $this->attribute) . "\']').val('');"
+                        . "\$('#" . $id . "_link').addClass('disabled').attr('href', '').html(\$('#" . $id . "_link').data('empty'));"
+                    . "})()\"></a>"
                 . "</span>"
 
                 . "<span class=\"input-group-addon\">"
