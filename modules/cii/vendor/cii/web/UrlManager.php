@@ -41,14 +41,10 @@ class UrlManager extends \yii\web\UrlManager {
     }
 
     public function parseRequest($request) {
-		if($this->enablePrettyUrl) {
-			$route = $request->getPathInfo();
-		}else {
-			$route = $request->getQueryParam($this->routeParam, '');
-	        if(!is_string($route)) {
-	            $route = '';
-	        }
-	    }
+		$route = $request->getQueryParam($this->routeParam, '');
+        if(!is_string($route)) {
+            $route = '';
+        }
 
 
 	    if(empty($route)) {
@@ -83,17 +79,21 @@ class UrlManager extends \yii\web\UrlManager {
 
         $baseUrl = $this->showScriptName || !$this->enablePrettyUrl ? $this->getScriptUrl() : $this->getBaseUrl();
 
-        $url = "$baseUrl?{$this->routeParam}=" . urlencode($route);
-        if(!empty($params)) {
-            
-        
-            if(isset($params[1]) && is_array($params[1]) && ($query = http_build_query($params[1])) !== '') {
-        	   $url .= '&' . $query;
-            }else if(($query = http_build_query($params)) !== '') {
-               $url .= '&' . $query;
-            }
+        if($this->enablePrettyUrl) {
+            $url = $baseUrl . '/' . $route;
+        }else {
+            $url = "$baseUrl?{$this->routeParam}=" . urlencode($route);
         }
 
+        if(!empty($params)) {
+            $sep = $this->enablePrettyUrl ? '?' : '&';
+            if(isset($params[1]) && is_array($params[1]) && ($query = http_build_query($params[1])) !== '') {
+        	   $url .= $sep . $query;
+            }else if(($query = http_build_query($params)) !== '') {
+               $url .= $sep . $query;
+            }
+        }
+        
         return $url . $anchor;
     
     }

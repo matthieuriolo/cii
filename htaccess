@@ -1,0 +1,19 @@
+# No directory listings
+IndexIgnore *
+
+# resolve symlinks
+Options +FollowSymlinks
+
+
+# turn on rewrite module
+RewriteEngine On
+
+
+# no rewrite when matching physical files or folders
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+
+
+
+# rewrite pretty url to index.php?r=
+RewriteRule ^web/(.*)$ web/index.php?r=$1 [QSA]

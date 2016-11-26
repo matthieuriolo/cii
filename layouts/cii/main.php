@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Json;
-use yii\helpers\Html;
+use cii\helpers\Html;
+use cii\helpers\Url;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
@@ -40,9 +41,8 @@ AppAsset::register($this);
     $label = '<div class="brand-label pull-right">' . Yii::$app->cii->package->setting('cii', 'name') . '</div>';
 
     if($logo = Yii::$app->cii->layout->setting('cii', 'logo')) {
-        //$label .= '<div class="brand-logo pull-left" style="background-image: url(' . $logo . ')"></div>';
         $label = '<div class="brand-logo pull-left">' .
-            Html::img($logo) . 
+            Html::img(Url::base(true) . '/' . $logo) . 
             '</div>' .
             (Yii::$app->cii->layout->setting('cii', 'onlylogo') ? '' : $label)
         ;
