@@ -16,12 +16,33 @@ class PathsController extends Controller {
 		    ),
 
 		    array(
+		        'path' => $helper->installationBase() . '../layouts',
+		        'isWritable' => true
+		    ),
+
+		    array(
+		        'path' => $helper->installationBase() . '../messages',
+		        'isWritable' => true
+		    ),
+
+		    array(
+		        'path' => $helper->installationBase() . '../favicon.ico',
+		        'isWritable' => true,
+		        'isFile' => true
+		    ),
+		    
+		    array(
 		        'path' => $helper->installationBase() . '../runtime',
 		        'isWritable' => true
 		    ),
 
 		    array(
-		        'path' => $helper->installationBase() . '../web/assets',
+		        'path' => $helper->installationBase() . '../assets',
+		        'isWritable' => true
+		    ),
+
+		    array(
+		        'path' => $helper->installationBase() . '../thumbnails',
 		        'isWritable' => true
 		    ),
 
@@ -51,21 +72,6 @@ class PathsController extends Controller {
     public function actionAfter() {
     	$helper = new CiiPathHelper();
   		$requirements = array(
-		    array(
-		        'path' => $helper->installationBase() . '../modules',
-		        'isWritable' => true
-		    ),
-
-		    array(
-		        'path' => $helper->installationBase() . '../runtime',
-		        'isWritable' => true
-		    ),
-
-		    array(
-		        'path' => $helper->installationBase() . '../web/assets',
-		        'isWritable' => true
-		    ),
-
 		    array(
 		        'path' => $helper->installationBase() . '../config/db.php',
 		        'isWritable' => false,

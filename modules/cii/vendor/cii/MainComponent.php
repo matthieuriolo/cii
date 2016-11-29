@@ -10,7 +10,7 @@ use yii\helpers\VarDumper;
 
 use cii\web\SecurityException;
 use cii\helpers\SPL;
-use app\modules\cii\models\Configuration;
+use app\modules\cii\models\extension\Configuration;
 
 class MainComponent extends Component {
 	public $layout = ['class' => 'cii\components\layout'];
@@ -22,11 +22,15 @@ class MainComponent extends Component {
         'driver' => 'GD',
     ];
 
+    public $extension = ['class' => 'cii\components\extension'];
+
+
 	public function init() {
 		$this->layout = Yii::createObject($this->layout);
 		$this->package = Yii::createObject($this->package);
 		$this->route = Yii::createObject($this->route);
 		$this->language = Yii::createObject($this->language);
+        $this->extension = Yii::createObject($this->extension);
 
         $this->image = Yii::createObject($this->image);
 		parent::init();
@@ -139,7 +143,7 @@ class MainComponent extends Component {
 
     public function setting($type, $package, $key, $defaultValue = null) {
     	$identifier = null;
-        $extension = 'app\modules\cii\models\\' . ucfirst($type);
+        $extension = 'app\modules\cii\models\extension\\' . ucfirst($type);
 
         $extension = $extension::find()
             ->joinWith('extension as ext')
@@ -181,7 +185,7 @@ class MainComponent extends Component {
 
 
     public function thumbnail($file, $width, $height) {
-        $web = Yii::$app->basePath . '/web';
+        $web = Yii::$app->basePath;
         if(!is_readable($file) || strpos($file, $web) !== 0) {
             throw new SecurityException();
         }
@@ -221,7 +225,7 @@ class MainComponent extends Component {
 
 
     public function flushThumbnails() {
-        $path = Yii::$app->basePath . '/web/thumbnails';
+        $path = Yii::$app->basePath . '/thumbnails';
 
         foreach(scandir($path) as $inode) {
             if(substr($inode, 0, 1) == '.') {

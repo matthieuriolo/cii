@@ -37,7 +37,7 @@ class BrowserController extends BackendController {
     }
     
     public function actionIndex($path = null) {
-        $basePath = Yii::$app->basePath . '/web';
+        $basePath = Yii::$app->basePath;
 
         if($path) {
             $apath = realpath($basePath . '/' . $path);
@@ -78,7 +78,7 @@ class BrowserController extends BackendController {
     }
 
     public function actionDownload($path = null) {
-        $basePath = Yii::$app->basePath . '/web';
+        $basePath = Yii::$app->basePath;
         $dstPath = realpath($basePath . '/' . $path);
         if(strpos($dstPath, $basePath) !== 0) {
             throw new SecurityException();
@@ -96,7 +96,7 @@ class BrowserController extends BackendController {
     }
 
     public function actionRemove($path) {
-        $basePath = Yii::$app->basePath . '/web';
+        $basePath = Yii::$app->basePath;
         $dstPath = realpath($basePath . '/' . $path);
         if(strpos($dstPath, $basePath) !== 0) {
             throw new SecurityException();
@@ -112,7 +112,7 @@ class BrowserController extends BackendController {
     }
 
     public function actionRename($path = null) {
-        $basePath = Yii::$app->basePath . '/web';
+        $basePath = Yii::$app->basePath;
         $dstPath = realpath($basePath . '/' . $path);
         if(strpos($dstPath, $basePath) !== 0) {
             throw new SecurityException();
@@ -128,7 +128,7 @@ class BrowserController extends BackendController {
 
 
     public function actionUpload($path = null) {
-        $basePath = Yii::$app->basePath . '/web';
+        $basePath = Yii::$app->basePath;
         $dstPath = realpath($basePath . '/' . $path);
         if(strpos($dstPath, $basePath) !== 0) {
             throw new SecurityException();
