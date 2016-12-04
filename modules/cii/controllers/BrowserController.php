@@ -16,22 +16,10 @@ use app\modules\cii\models\route\ContentRoute;
 use app\modules\cii\models\browser\UploadFileForm;
 use app\modules\cii\models\browser\RenameFileForm;
 
-use cii\backend\BackendController;
 use cii\web\SecurityException;
 use cii\base\SearchModel;
 
-class BrowserController extends BackendController {
-    public function behaviors() {
-        return parent::behaviors() + [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
+class BrowserController extends BrowserBaseController {
     public function getAccessRoles() {
         return [Permission::MANAGE_BROWSER, Permission::MANAGE_ADMIN];
     }
@@ -76,7 +64,19 @@ class BrowserController extends BackendController {
             'renameModel' => $renameModel
         ]);
     }
-
+/*
+    
+    public function behaviors() {
+        return parent::behaviors() + [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+    
     public function actionDownload($path = null) {
         $basePath = Yii::$app->basePath;
         $dstPath = realpath($basePath . '/' . $path);
@@ -148,5 +148,5 @@ class BrowserController extends BackendController {
             }
         }
         $this->redirect([Yii::$app->seo->relativeAdminRoute('modules/cii/browser/index'), 'path' => $path]);
-    }
+    }*/
 }

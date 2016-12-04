@@ -20,6 +20,18 @@ return [
     ],
     */
 
+    'resize_uploaded_image' => [
+        'label' => Yii::p('cii', 'Uploaded resized images'),
+        'type' => 'boolean',
+        'default' => true
+    ],
+
+    'size_uploaded_image' => [
+        'label' => Yii::p('cii', 'Maximal size for uploaded images'),
+        'type' => 'integer',
+        'default' => 1200
+    ],
+
     'offline' => [
         'label' => Yii::p('cii', 'Website offline'),
         'type' => 'boolean',

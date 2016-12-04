@@ -30,7 +30,7 @@ class BrowserBaseController extends BackendController {
     }
 
     public function actionDownload($path = null) {
-        $basePath = Yii::$app->basePath . '/web';
+        $basePath = Yii::$app->basePath;
         $dstPath = realpath($basePath . '/' . $path);
         if(strpos($dstPath, $basePath) !== 0) {
             throw new SecurityException();
@@ -48,7 +48,7 @@ class BrowserBaseController extends BackendController {
     }
 
     public function actionRemove($path) {
-        $basePath = Yii::$app->basePath . '/web';
+        $basePath = Yii::$app->basePath;
         $dstPath = realpath($basePath . '/' . $path);
         if(strpos($dstPath, $basePath) !== 0) {
             throw new SecurityException();
@@ -64,7 +64,7 @@ class BrowserBaseController extends BackendController {
     }
 
     public function actionRename($path = null) {
-        $basePath = Yii::$app->basePath . '/web';
+        $basePath = Yii::$app->basePath;
         $dstPath = realpath($basePath . '/' . $path);
         if(strpos($dstPath, $basePath) !== 0) {
             throw new SecurityException();
@@ -80,7 +80,7 @@ class BrowserBaseController extends BackendController {
 
 
     public function actionUpload($path = null) {
-        $basePath = Yii::$app->basePath . '/web';
+        $basePath = Yii::$app->basePath;
         $dstPath = realpath($basePath . '/' . $path);
         if(strpos($dstPath, $basePath) !== 0) {
             throw new SecurityException();
@@ -90,9 +90,18 @@ class BrowserBaseController extends BackendController {
         $uploadModel = new UploadFileForm();
         $uploadModel->files = UploadedFile::getInstances($uploadModel, 'files');
         foreach($uploadModel->files as $file) {
-            $filePath = $dstPath . '/' . $file->baseName . '.' . $file->extension;
+            $filePath = $dstPath . '/' . $file->name;
+            $size = (int)Yii::$app->cii->package->setting('cii', 'size_uploaded_image');
 
-            if(!is_file($filePath)) {
+            if(!
+                (Yii::$app->cii->package->setting('cii', 'resize_uploaded_image')
+                && $size > 0
+                && ($img = Yii::$app->cii->image->load($file->tempName))
+                && (($img->height > $size) || ($img->width > $size))
+                && $img->resize($size, null, \cii\components\drivers\Kohana\Image::ADAPT)
+                && $img->save($filePath)
+                )
+            ) {
                 $file->saveAs($filePath);
             }
         }

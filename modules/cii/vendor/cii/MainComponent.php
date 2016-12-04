@@ -210,13 +210,17 @@ class MainComponent extends Component {
         }
 
 
-        $img = $this->image->load($file);
-        $img->resize($width, $height, \cii\components\drivers\Kohana\Image::ADAPT);
-        FileHelper::createDirectory(dirname($thumbnailPath));
+        if(
+            ($img = $this->image->load($file))
+            &&
+            $img->resize($width, $height, \cii\components\drivers\Kohana\Image::ADAPT)
+        ) {
+            FileHelper::createDirectory(dirname($thumbnailPath));
 
-        if($img->save($thumbnailPath)) {
-            Yii::info('Creating thumbnail for ' . $origPath, 'thumbnail');
-            return $thumbnailWebPath;
+            if($img->save($thumbnailPath)) {
+                Yii::info('Creating thumbnail for ' . $origPath, 'thumbnail');
+                return $thumbnailWebPath;
+            }
         }
 
         Yii::error('Failed to create thumbnail for ' . $origPath, 'thumbnail');
@@ -232,7 +236,8 @@ class MainComponent extends Component {
                 continue;
             }
 
-            $inodePath = $path . $inode;
+
+            $inodePath = $path . '/' . $inode;
             if(is_file($inodePath)) {
                 unlink($inodePath);
             }else if(is_dir($inodePath)) {
