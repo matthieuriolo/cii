@@ -26,8 +26,8 @@ use app\modules\cii\models\auth\User;
 use app\modules\cii\models\auth\GroupMember;
 
 
-use app\modules\cii\models\UserLoginContent;
-use app\modules\cii\models\UserLogoutContent;
+use app\modules\cii\models\content\UserLoginContent;
+use app\modules\cii\models\content\UserLogoutContent;
 
 
 class SiteController extends Controller {

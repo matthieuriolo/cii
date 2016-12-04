@@ -4,7 +4,7 @@ namespace app\modules\cii\models\auth;
 
 use Yii;
 use yii\base\Model;
-use app\modules\cii\models\Permission;
+use app\modules\cii\models\Permission as APermission;
 
 class PermissionForm extends Model {
     public $value;
@@ -38,7 +38,7 @@ class PermissionForm extends Model {
     public function assign($groupId) {
         list($module, $permission) = explode('-', $this->value);
 
-        $perm = new Permission();
+        $perm = new APermission();
         $perm->group_id = $groupId;
         $perm->permission_id = $permission;
         $perm->package_id = Yii::$app->getModule($module)->getIdentifier();

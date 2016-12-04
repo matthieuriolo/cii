@@ -3,6 +3,8 @@
 namespace app\modules\cii\models\auth;
 
 use Yii;
+use app\modules\cii\models\extension\Package;
+
 
 class Permission extends \yii\db\ActiveRecord {
     
