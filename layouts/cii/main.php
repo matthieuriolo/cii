@@ -78,6 +78,11 @@ AppAsset::register($this);
     <div class="container">
         <?= $this->renderShadows('before_main'); ?>
 
+        <noscript>
+            <p class="alert alert-danger"><?= Yii::l('cii', 'Your browser does not seem to support the required JavaScript configuration'); ?></p>
+        </noscript>
+
+
         <?php if(!$this->isAdminArea() && Yii::$app->cii->package->setting('cii', 'offline')) {
             echo Yii::$app->cii->package->setting('cii', 'offline_description');
         }else { ?>
