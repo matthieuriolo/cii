@@ -20,6 +20,16 @@ return [
     ],
     */
 
+    'google_site_verification_id' => [
+        'label' => Yii::l('cii', 'Identifier for the Google Verification API'),
+        'type' => 'string'
+    ],
+
+    'google_analytics_id' => [
+        'label' => Yii::l('cii', 'Identifier for the Google Verification API'),
+        'type' => 'string'
+    ],
+
     'resize_uploaded_image' => [
         'label' => Yii::p('cii', 'Uploaded resized images'),
         'type' => 'boolean',
@@ -39,7 +49,7 @@ return [
     ],
 
     'offline_description' => [
-        'label' => Yii::p('cii', 'Website description'),
+        'label' => Yii::p('cii', 'Website offline description'),
         'type' => 'texteditor',
         'default' => Yii::p('cii', 'The website is currently offline')
     ],
