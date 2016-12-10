@@ -58,5 +58,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'btn btn-default btn-bottom-padding']
         ); ?>
         </div>
+
+        <div class="col-md-6"><?php echo Html::a(
+            Yii::p('cii', 'Clear route statistics'),
+            [\Yii::$app->seo->relativeAdminRoute('flushroutestatistics')],
+            ['class' => 'btn btn-default btn-bottom-padding']
+        ); ?>
+        </div>
     </div>
 </div>

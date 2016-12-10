@@ -3,7 +3,8 @@ namespace cii\components;
 
 use Yii;
 use yii\base\Component;
-use app\modules\cii\models\Route as MRoute;
+use app\modules\cii\models\common\Route as MRoute;
+use app\modules\cii\models\common\CountAccess;
 
 class Route extends Component {
 	public $cache = 'cache';
@@ -20,6 +21,11 @@ class Route extends Component {
 		$this->cache->delete(__CLASS__ . '_getRoutesForDropdown_yes');
 		$this->cache->delete(__CLASS__ . '_getRoutesForDropdown_no');
 		$this->cache->delete(__CLASS__ . '_typeValues');
+	}
+
+	public function flushStatistics() {
+		return MRoute::updateAll(['hits' => 0])
+			+ CountAccess::deleteAll();
 	}
 
 	public function getTypes() {

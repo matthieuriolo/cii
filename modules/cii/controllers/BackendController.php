@@ -121,6 +121,11 @@ class BackendController extends Controller {
         return $this->goBackToReferrer();
     }
 
+    public function actionFlushroutestatistics() {
+        Yii::$app->cii->route->flushStatistics();
+        return $this->goBackToReferrer();
+    }
+
     public function actionLogin() {
         $model = new LoginForm();
         
