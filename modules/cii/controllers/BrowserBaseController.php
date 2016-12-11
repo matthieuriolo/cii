@@ -93,15 +93,19 @@ class BrowserBaseController extends BackendController {
             $filePath = $dstPath . '/' . $file->name;
             $size = (int)Yii::$app->cii->package->setting('cii', 'size_uploaded_image');
 
-            if(!
-                (Yii::$app->cii->package->setting('cii', 'resize_uploaded_image')
-                && $size > 0
-                && ($img = Yii::$app->cii->image->load($file->tempName))
-                && (($img->height > $size) || ($img->width > $size))
-                && $img->resize($size, null, \cii\components\drivers\Kohana\Image::ADAPT)
-                && $img->save($filePath)
-                )
-            ) {
+            try {
+                if(!
+                    (Yii::$app->cii->package->setting('cii', 'resize_uploaded_image')
+                    && $size > 0
+                    && ($img = Yii::$app->cii->image->load($file->tempName))
+                    && (($img->height > $size) || ($img->width > $size))
+                    && $img->resize($size, null, \cii\components\drivers\Kohana\Image::ADAPT)
+                    && $img->save($filePath)
+                    )
+                ) {
+                    $file->saveAs($filePath);
+                }
+            }catch(\Exception $e) {
                 $file->saveAs($filePath);
             }
         }
