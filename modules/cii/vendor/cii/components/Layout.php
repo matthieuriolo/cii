@@ -85,10 +85,12 @@ class Layout extends BaseExtension {
 
 		$models = ContentVisibilities::find()
 			->joinWith([
+				'content as content',
 				'content.classname.package.extension as ext'
 			])
 			->where([
 				'position' => $name,
+				'content.enabled' => true,
 				'ext.enabled' => true
 			])
 			->andWhere([
