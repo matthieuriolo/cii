@@ -7,7 +7,7 @@ use Yii;
 use cii\base\Model;
 use yii\captcha\Captcha;
 
-class LoginForm extends Model {
+abstract class LoginForm extends Model {
     
     public $email;
     public $password;
@@ -17,7 +17,9 @@ class LoginForm extends Model {
     public $captchaRoute;
     public $captcha;
     protected $_user;
-
+    
+    abstract protected function getCaptchaAction();
+    
     /** @inheritdoc */
     public function attributeLabels() {
         return [
@@ -35,7 +37,7 @@ class LoginForm extends Model {
             [['email'], 'activeUser'],
             [['rememberMe'], 'boolean'],
 
-            [['captcha'], 'captcha', 'captchaAction' => 'cii/site/captcha', 'skipOnEmpty' => !Captcha::checkRequirements() || !$this->captchaRoute]
+            [['captcha'], 'captcha', 'captchaAction' => $this->getCaptchaAction(), 'skipOnEmpty' => !Captcha::checkRequirements() || !$this->captchaRoute]
         ];
     }
 
