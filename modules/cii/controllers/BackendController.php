@@ -6,7 +6,7 @@ use Yii;
 use cii\backend\BackendController as Controller;
 use app\modules\cii\models\extension\Package as Core_Module;
 use app\modules\cii\models\extension\Configuration as Core_Settings;
-use app\modules\cii\models\auth\LoginForm;
+use app\modules\cii\models\auth\AdminLoginForm;
 use app\modules\cii\Permission;
 
 use cii\db\DbDumper;
@@ -30,12 +30,9 @@ class BackendController extends Controller {
     }
 
     public function actions() {
-        $captchaAction = [
-            'class' => 'cii\captcha\CaptchaAction',
-        ];
-
         return [
             'captcha' => [
+                
                 'class' => 'cii\captcha\CaptchaAction',
                 'url' => Yii::$app->seo->relativeAdminRoute('captcha')
             ],
@@ -127,7 +124,7 @@ class BackendController extends Controller {
     }
 
     public function actionLogin() {
-        $model = new LoginForm();
+        $model = new AdminLoginForm();
         
         if($model->load(Yii::$app->request->post()) && $model->login()) {
             Yii::$app->session->setFlash('success', 'You have been logged in successfully');

@@ -19,7 +19,7 @@ use app\modules\cii\models\common\Route;
 use app\modules\cii\models\route\ContentRoute;
 use app\modules\cii\models\route\CaptchaRoute;
 use app\modules\cii\models\auth\ForgotForm;
-use app\modules\cii\models\auth\LoginForm;
+use app\modules\cii\models\auth\UserLoginForm;
 use app\modules\cii\models\auth\LogoutForm;
 use app\modules\cii\models\auth\RegisterForm;
 use app\modules\cii\models\auth\User;
@@ -120,7 +120,7 @@ class SiteController extends Controller {
 
     protected function processLogin($content, $model = null) {
         if(!$model) {
-            $model = new LoginForm();
+            $model = new UserLoginForm();
         }
 
         if($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -252,7 +252,7 @@ class SiteController extends Controller {
     }
 
     public function loginShadow($content, $position) {
-        $model = new LoginForm();
+        $model = new UserLoginForm();
         $model->setContentFormName($content, $position);
         $model->captchaRoute = $content->captcha;
         $model = $this->processLogin($content, $model);
