@@ -20,7 +20,7 @@ class TabbedPanel extends Panel {
         $this->preRun(
             Html::dropDownList($this->id . '-selector', null, $options, ['data-controller' => 'tabbed-panel-selector'])
         );
-
+        
         echo Tabs::widget([
             'id' => $this->id,
             'items' => $this->items

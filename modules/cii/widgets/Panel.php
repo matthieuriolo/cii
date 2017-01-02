@@ -42,10 +42,11 @@ class Panel extends Widget {
         echo '</div>';
             
         echo '<div class="panel-body no-padding">';
+
+        echo $this->content;
     }
 
     protected function postRun() {
-        echo $this->content;
         echo '</div>';
         echo '</div>';
     }
