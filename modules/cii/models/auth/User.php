@@ -11,6 +11,9 @@ use yii\base\NotSupportedException;
 use app\modules\cii\models\extension\Language;
 use app\modules\cii\models\extension\Layout;
 
+
+use cii\helpers\Plotter;
+
 /**
  * This is the model class for table "{{%Cii_User}}".
  *
@@ -157,5 +160,32 @@ class User extends ActiveRecord implements IdentityInterface {
                 'create' => 'created'
             ]
         ];
+    }
+
+    protected static function countCreationStats($range, $steps) {
+        $cache = Yii::$app->cache;
+        $cacheKey = get_called_class() . '_' . $range . '_' . $steps;
+        
+        if($data = $cache->get($cacheKey)) {
+            //return $data;
+        }
+
+        $data = Plotter::plotDatetime(self::find(), 'created', $range, $steps);
+        
+        $cache->set($cacheKey, $data, 60 * 60);
+
+        return $data;
+    }
+
+    public static function weeklyCreationStats() {
+        return self::countCreationStats('D', 7);
+    }
+
+    public static function monthlyCreationStats() {
+        return self::countCreationStats('D', 30);
+    }
+
+    public static function yearlyCreationStats() {
+        return self::countCreationStats('M', 12);
     }
 }

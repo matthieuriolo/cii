@@ -6,30 +6,40 @@ use Yii;
 use yii\helpers\Json;
 use yii\base\Widget;
 use yii\base\InvalidConfigException;
-
+use yii\web\JsExpression;
 
 use cii\helpers\Html;
 use app\layouts\cii\assets\FlotAsset;
 
 class LineFlot extends Widget {
     public $lines = [];
-    public $xaxis = 'time';
-    public $yaxis = 'number';
+    public $xaxis = 'date';
+    public $yaxis = 'integer';
+
+    public $axisDateFormat = "%d.%m";
 
     protected function getAxis($axis) {
         if(is_array($axis)) {
             return Json::encode($axis);
         }
 
-        if($axis === 'number') {
+        if($axis === 'float') {
             return Json::encode([
                     'min' => 0,
                     'minTickSize' => 1
                 ]);
-        }else if($axis === 'time') {
+        }else if($axis === 'integer') {
+            return Json::encode([
+                    'min' => 0,
+                    'minTickSize' => 1,
+                    'tickFormatter' => new JsExpression('function(val, axis) {
+                        return val.toFixed(0);
+                    }')
+                ]);
+        }else if($axis === 'date') {
             return Json::encode([
                     'mode' => "time",
-                    'timeformat' => "%d.%m",
+                    'timeformat' => $this->axisDateFormat,
                     'minTickSize' => [1, "day"]
                 ]);
         }
@@ -95,9 +105,9 @@ class LineFlot extends Widget {
                 if(item) {
                     $("#flot-tooltip").html("Total: " + item.datapoint[1])
                         .css({top: item.pageY + 5, left: item.pageX + 5})
-                        .fadeIn();
+                        .show();
                 } else {
-                    $("#flot-tooltip").fadeOut();
+                    $("#flot-tooltip").hide();
                 }
             });
         ');
