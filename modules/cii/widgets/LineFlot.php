@@ -54,7 +54,7 @@ class LineFlot extends Widget {
         FlotAsset::register($view);
         echo Html::tag('div', '', [
             'id' => $id,
-            'class' => 'flot-chart',
+            'class' => 'flot-chart flot-chart-line',
         ]);
 
         $lines = [];

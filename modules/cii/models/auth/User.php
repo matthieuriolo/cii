@@ -6,6 +6,7 @@ use Yii;
 
 use yii\web\IdentityInterface;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\base\NotSupportedException;
 
 use app\modules\cii\models\extension\Language;
@@ -13,7 +14,8 @@ use app\modules\cii\models\extension\Layout;
 
 
 use cii\helpers\Plotter;
-
+use cii\helpers\UTC;
+        
 /**
  * This is the model class for table "{{%Cii_User}}".
  *
@@ -167,7 +169,7 @@ class User extends ActiveRecord implements IdentityInterface {
         $cacheKey = get_called_class() . '_' . $range . '_' . $steps;
         
         if($data = $cache->get($cacheKey)) {
-            //return $data;
+            return $data;
         }
 
         $data = Plotter::plotDatetime(self::find(), 'created', $range, $steps);
@@ -187,5 +189,63 @@ class User extends ActiveRecord implements IdentityInterface {
 
     public static function yearlyCreationStats() {
         return self::countCreationStats('M', 12);
+    }
+
+
+    public static function metadataLanguageStats() {
+        $cache = Yii::$app->cache;
+        $cacheKey = get_called_class() . '_metadataLanguageStats';
+        
+        if($data = $cache->get($cacheKey)) {
+            return $data;
+        }
+        
+        $values = ArrayHelper::map(Language::find()->all(), 'name', 'id');
+        $values['Default'] = null;
+
+        $data = Plotter::plotByValues(self::find(), 'language_id', $values);
+        $cache->set($cacheKey, $data, 60 * 60);
+
+        return $data;
+    }
+
+    public static function metadataTimezoneStats() {
+        $cache = Yii::$app->cache;
+        $cacheKey = get_called_class() . '_metadataTimezoneStats';
+        
+        if($data = $cache->get($cacheKey)) {
+            return $data;
+        }
+
+        $values = array_flip(UTC::timezones());
+        $values['Default'] = null;
+
+        $data = Plotter::plotByValues(self::find(), 'timezone', $values);
+        $cache->set($cacheKey, $data, 60 * 60);
+
+        return $data;
+    }
+
+    public static function metadataLayoutStats() {
+        $cache = Yii::$app->cache;
+        $cacheKey = get_called_class() . '_metadataLayoutStats';
+        
+        if($data = $cache->get($cacheKey)) {
+            return $data;
+        }
+
+        $values = ArrayHelper::map(
+            Layout::find()
+                ->joinWith('extension as ext')
+                ->all(),
+            'extension.name',
+            'id'
+        );
+        $values['Default'] = null;
+
+        $data = Plotter::plotByValues(self::find(), 'layout_id', $values);
+        $cache->set($cacheKey, $data, 60 * 60);
+
+        return $data;
     }
 }

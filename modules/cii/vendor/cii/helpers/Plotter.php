@@ -1,7 +1,6 @@
 <?php
 namespace cii\helpers;
 
-use cii\helpers\UTC;
 
 class Plotter {
 	public static function plotDatetime($query, $attribute, $range, $steps) {
@@ -26,6 +25,35 @@ class Plotter {
         return $data;
     }
 
+    public static function plotByValues($query, $attribute, $values) {
+        $data = [];
+
+        foreach($values as $key => $value) {
+            if($value === null) {
+                $data[$key] = $query
+                    ->where($attribute . ' IS NULL')
+                    ->count();
+            }else {
+                $data[$key] = $query
+                    ->andWhere([$attribute => $value])
+                    ->count();
+            }
+        }
+
+        return $data;
+    }
+
+    public static function transformToFlotSegments($data) {
+        $ret = [];
+        foreach($data as $key => $value) {
+            $ret[] = [
+                'label' => $key,
+                'data' => $value
+            ];
+        }
+
+        return $ret;
+    }
 
     public static function transformToFlotDatetime($data) {
     	$ret = [];
