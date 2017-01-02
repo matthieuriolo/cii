@@ -11,7 +11,7 @@ class FlotAsset extends AssetBundle {
         'jquery.flot.js',
         'excanvas.min.js',
         'jquery.colorhelpers.js',
-        'jquery.flot.canvas.js',
+        //'jquery.flot.canvas.js',
         'jquery.flot.resize.js',
         'jquery.flot.pie.js',
         'jquery.flot.image.js',
