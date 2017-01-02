@@ -5,7 +5,7 @@ namespace app\layouts\cii\assets;
 use yii\web\AssetBundle;
 
 class AppAsset extends AssetBundle {
-    public $sourcePath = '@app/layouts/cii/assets/web';
+    public $sourcePath = '@app/layouts/cii/assets/app';
 
     public $css = [
         'css/site.css',

@@ -84,6 +84,21 @@ body {
     vertical-align: middle;
 }
 
+.flot-chart {
+    height: 200px;
+}
+
+#flot-tooltip {
+    position: absolute;
+    display: none;
+    border: 1px solid #fdd;
+    padding: 2px;
+    background-color: #fee;
+    opacity: 0.80;
+    border-radius: 4px;
+}
+
+
 /* add sorting icons to gridview sort links */
 a.asc:after, a.desc:after {
     position: relative;
@@ -352,6 +367,10 @@ table.table-select > tbody > tr.selected > td:first-child {
 /* tab */
 .tab-pane {
     padding-top: 10px;
+}
+
+.tabbed-panel > .panel-body > .nav.nav-tabs {
+    display: none;
 }
 
 /* strength check */
