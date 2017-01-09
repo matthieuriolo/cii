@@ -45,6 +45,10 @@ class Group extends \yii\db\ActiveRecord {
         return $this->hasMany(GroupMember::className(), ['group_id' => 'id']);
     }
 
+    public function countMembers() {
+        return $this->getMembers()->count();
+    }
+
     public function getPermissions() {
         return $this->hasMany(Permission::className(), ['group_id' => 'id']);
     }
