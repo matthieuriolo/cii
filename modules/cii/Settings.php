@@ -59,6 +59,12 @@ return [
         'type' => 'route',
     ],
 
+    'onlyglobalmandate' => [
+        'label' => Yii::p('cii', 'Website turn off mandate system'),
+        'type' => 'boolean',
+        'default' => true
+    ],
+
     'multilanguage' => [
         'label' => Yii::p('cii', 'Website is multilanguage'),
         'type' => 'boolean',

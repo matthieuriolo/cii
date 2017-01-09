@@ -19,6 +19,7 @@ class Permission {
     const MANAGE_BROWSER = 9;
 
     const MANAGE_ADMIN = 10;
+    const MANAGE_MANDATE = 11;
     
     static public function getPermissions() {
     	return [

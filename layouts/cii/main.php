@@ -66,6 +66,7 @@ AppAsset::register($this);
                 'items' => [
                     ['label' => 'Log', 'url' => [Yii::$app->seo->relativeAdminRoute('log')]],
                     ['label' => 'Dashboard', 'url' => [Yii::$app->seo->relativeAdminRoute('index')]],
+                    ['label' => 'Documentation', 'url' => [Yii::$app->seo->relativeAdminRoute('doc')]],
                     ['label' => 'Logout', 'url' => [Yii::$app->seo->relativeAdminRoute('logout')]],
                 ],
             ]);
