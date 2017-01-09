@@ -32,15 +32,13 @@ class BackendController extends Controller {
     public function actions() {
         return [
             'captcha' => [
-                
                 'class' => 'cii\captcha\CaptchaAction',
                 'url' => Yii::$app->seo->relativeAdminRoute('captcha')
             ],
-            /*
+            
             'doc'=>[
-                'class'=>'yii\web\ViewAction',
-                'viewPrefix' => 'doc'
-            ],*/
+                'class'=>'app\modules\cii\actions\BackendDocumentationAction',
+            ],
         ];
     }
 
