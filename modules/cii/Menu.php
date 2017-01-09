@@ -25,6 +25,13 @@ class Menu {
             'visible' => true,
             'children' => [
                 [
+                    'name' => Yii::p('cii', 'Documentation'),
+                    'url' => [Yii::$app->seo->relativeAdminRoute('doc')],
+                    'icon' => 'glyphicon glyphicon-book',
+                    'visible' => self::visible($module, Permission::MANAGE_ADMIN),
+                ],
+
+                [
                     'name' => Yii::p('cii', 'Dashboard'),
                     'url' => [Yii::$app->seo->relativeAdminRoute('index')],
                     'icon' => 'glyphicon glyphicon-blackboard',
@@ -94,13 +101,12 @@ class Menu {
                             'visible' => self::visible($module, [Permission::MANAGE_ADMIN, Permission::MANAGE_GROUP]),
                         ],
 
-                        /*[
+                        [
                             'name' => Yii::p('cii', 'Mandante'),
                             'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/mandate/index')],
                             'icon' => 'glyphicon glyphicon-piggy-bank',
-                            'visible' => self::visible($module, [Permission::MANAGE_ADMIN]),
+                            'visible' => self::visible($module, [Permission::MANAGE_ADMIN, Permission::MANAGE_MANDATE]) && !Yii::$app->cii->package->setting('cii', 'onlyglobalmandate'),
                         ],
-                        */
                     ]
                 ],
 
