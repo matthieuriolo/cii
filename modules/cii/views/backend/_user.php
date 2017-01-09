@@ -58,33 +58,73 @@ echo TabbedPanel::widget([
     ],
 
     'content' => 'Shows the creation progress of users'
-]);
+]); ?>
 
-echo TabbedPanel::widget([
-    'title' => 'Metadata',
-    'items' => [
-        [
-            'label' => 'Language',
-            'content' => PieFlot::widget([
-                'segments' => Plotter::transformToFlotSegments(User::metadataLanguageStats())
-            ])
-        ],
+<div class="row">
+    <div class="col-md-6"><?php
+        echo TabbedPanel::widget([
+            'title' => 'Activity',
+            'content' => 'Activities of the users',
 
-        [
-            'label' => 'Timezone',
-            'content' => PieFlot::widget([
-                'segments' => Plotter::transformToFlotSegments(User::metadataTimezoneStats())
-            ])
-        ],
+            'items' => [
+                [
+                    'label' => 'Last login',
+                    'content' => PieFlot::widget([
+                        'segments' => Plotter::transformToFlotSegments(User::lastLoginStats())
+                    ]),
+                ],
 
-        [
-            'label' => 'Layout',
-            'content' => PieFlot::widget([
-                'segments' => Plotter::transformToFlotSegments(User::metadataLayoutStats())
-            ])
-        ],
-    ],
+                [
+                    'label' => 'Groups',
+                    'content' => PieFlot::widget([
+                        'segments' => Plotter::transformToFlotSegments(User::groupStats())
+                    ]),
+                ],
 
-    'content' => 'Metadata about users'
-]);
+                /*[
+                    'label' => 'Mandates',
+                    'content' => PieFlot::widget([
+                        'segments' => Plotter::transformToFlotSegments(User::lastLoginStats())
+                    ]),
+                ],*/
+            ]
+        ]);
+    ?>
+    </div>
+    <div class="col-md-6"><?php
+        echo TabbedPanel::widget([
+            'title' => 'Metadata',
+            'items' => [
+                [
+                    'label' => 'Language',
+                    'content' => PieFlot::widget([
+                        'segments' => Plotter::transformToFlotSegments(User::metadataLanguageStats())
+                    ])
+                ],
 
+                [
+                    'label' => 'Timezone',
+                    'content' => PieFlot::widget([
+                        'segments' => Plotter::transformToFlotSegments(User::metadataTimezoneStats())
+                    ])
+                ],
+
+                [
+                    'label' => 'Layout',
+                    'content' => PieFlot::widget([
+                        'segments' => Plotter::transformToFlotSegments(User::metadataLayoutStats())
+                    ])
+                ],
+
+                /*[
+                    'label' => 'Identities',
+                    'content' => PieFlot::widget([
+                        'segments' => Plotter::transformToFlotSegments(User::metadataLayoutStats())
+                    ])
+                ],*/
+            ],
+
+            'content' => 'Metadata about users'
+        ]);
+    ?></div>
+</div>

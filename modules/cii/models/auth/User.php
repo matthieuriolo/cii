@@ -11,7 +11,8 @@ use yii\base\NotSupportedException;
 
 use app\modules\cii\models\extension\Language;
 use app\modules\cii\models\extension\Layout;
-
+use app\modules\cii\models\auth\Group;
+use app\modules\cii\models\auth\GroupMember;
 
 use cii\helpers\Plotter;
 use cii\helpers\UTC;
@@ -83,8 +84,8 @@ class User extends ActiveRecord implements IdentityInterface {
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getGroupMembers() {
-        return $this->hasMany(GroupMembers::className(), ['user_id' => 'id']);
+    public function getGroupmembers() {
+        return $this->hasMany(GroupMember::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -172,7 +173,7 @@ class User extends ActiveRecord implements IdentityInterface {
             return $data;
         }
 
-        $data = Plotter::plotDatetime(self::find(), 'created', $range, $steps);
+        $data = Plotter::plotByDatetime(self::find(), 'created', $range, $steps);
         
         $cache->set($cacheKey, $data, 60 * 60);
 
@@ -244,6 +245,40 @@ class User extends ActiveRecord implements IdentityInterface {
         $values['Default'] = null;
 
         $data = Plotter::plotByValues(self::find(), 'layout_id', $values);
+        $cache->set($cacheKey, $data, 60 * 60);
+
+        return $data;
+    }
+
+
+    public static function lastLoginStats() {
+        $cache = Yii::$app->cache;
+        $cacheKey = get_called_class() . '_lastLoginStats';
+        
+        if($data = $cache->get($cacheKey)) {
+            return $data;
+        }
+
+        $data = Plotter::plotByDateSegments(self::find(), 'last_login');
+        $cache->set($cacheKey, $data, 60 * 60);
+
+        return $data;
+    }
+
+    public static function groupStats() {
+        $cache = Yii::$app->cache;
+        $cacheKey = get_called_class() . '_groupStats';
+        
+        if($data = $cache->get($cacheKey)) {
+            return $data;
+        }
+
+        $data = Plotter::plotByTableRelation(Group::tableName(), GroupMember::tableName(), 'group_id');
+        $data['No Group'] = self::find()
+            ->joinWith('groupmembers as member')
+            ->where(['member.id' => null])
+            ->count()
+        ;
         $cache->set($cacheKey, $data, 60 * 60);
 
         return $data;

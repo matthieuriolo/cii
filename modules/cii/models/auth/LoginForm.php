@@ -85,7 +85,10 @@ abstract class LoginForm extends Model {
      */
     public function login() {
         if($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? Yii::$app->cii->package->setting('cii', 'rememberduration') : 0);
+            $user = $this->getUser();
+            $user->touch('last_login');
+            $user->save();
+            return Yii::$app->user->login($user, $this->rememberMe ? Yii::$app->cii->package->setting('cii', 'rememberduration') : 0);
         } else {
             return false;
         }
