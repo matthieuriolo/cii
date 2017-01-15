@@ -22,17 +22,17 @@ class BackendMenu extends Widget {
         foreach(Yii::$app->cii->package->all(true) as $pkg) {
             $items = $pkg->getBackendItems();
             $this->printNestedMenu($items, function($item) {
-                $itemUrl = Url::toRoute($item['url']);
-                $appUrl = Yii::$app->getRequest()->getUrl();
+                $itemUrl = ltrim($item['url'][0], '/');
+                $appUrl = Yii::$app->urlManager->getCalledRoute();
                 
-                if($itemUrl == $appUrl) {
+                //url overlap
+                if($itemUrl == $appUrl || (count(explode('/', $appUrl)) == 1 && $appUrl . '/index' == $itemUrl)) {
                     return true;
+                //url is equal
                 }else {
-                    $itemUrl = $item['url'][0];
-                    $appUrl = Yii::$app->urlManager->getCalledRoute();
                     
-                    if(strpos($itemUrl, '/admin/modules') === 0) {
-                        if(strpos(dirname($appUrl), dirname(ltrim($itemUrl, '/'))) === 0) {
+                    if(count(explode('/', $appUrl)) >= 3 && count(explode('/', $itemUrl)) >= 3) {
+                        if(strpos(dirname($appUrl), dirname($itemUrl)) === 0) {
                             return true;
                         }
                     }
