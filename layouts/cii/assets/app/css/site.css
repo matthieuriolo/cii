@@ -691,7 +691,8 @@ table.table-select > tbody > tr.selected > td:first-child {
 }
 
 .table .column-width-1 {
-    width: 22px;
+    /* width: 22px; */
+    width: 30px;
 }
 
 .table .column-width-2 {
