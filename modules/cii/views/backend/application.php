@@ -7,9 +7,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-index">
     <h1><?= Html::encode($this->title); ?></h1>
-    <p class="lead"><?= Yii::p('cii', 'Additional functions of the application'); ?></p>
-    
-    <hr>
+    <p class="lead"><?= Yii::p('cii', 'Additional functions and informations of the application'); ?></p>
+
+    <?php 
+    echo $this->render('_application_information');
+    ?>
 
     <div class="row">
         <div class="col-md-6"><b><?php

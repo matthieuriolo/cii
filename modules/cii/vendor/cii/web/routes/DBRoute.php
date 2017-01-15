@@ -10,6 +10,7 @@ use app\modules\cii\models\common\CountAccess;
 
 
 use cii\helpers\UTC;
+use cii\helpers\Url;
 
 class DBRoute extends AbstractRoute {
     protected function getRouteName() {
@@ -76,9 +77,31 @@ class DBRoute extends AbstractRoute {
             $model->created = UTC::date();
         }
 
+        $bounceRate = false;
+        if(!empty(Yii::$app->request->referrer)) {
+            $info = parse_url(Yii::$app->request->referrer);
+            if(!empty($info) && $info['host'] == $_SERVER['SERVER_NAME']) {
+                $bounceRate = true;
+            }
+        }
+
+        $isBot = false;
+        if(!empty($_SERVER['HTTP_USER_AGENT'])) {
+            if(preg_match('/bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'])) {
+                $isBot = true;
+            }
+        }
+
+        if($bounceRate) $model->bounceHits++;
+        if($isBot) $model->botHits++;
+
         $model->hits++;
         $model->save();
 
+
+        if($bounceRate) $db->bounceHits++;
+        if($isBot) $db->botHits++;
+        
         $db->hits++;
         $db->save();
     }

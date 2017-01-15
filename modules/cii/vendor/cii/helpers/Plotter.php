@@ -9,7 +9,7 @@ use yii\db\Query;
 use yii\helpers\ArrayHelper;
 
 class Plotter {
-	public static function plotByDatetime($query, $attribute, $range, $steps) {
+	public static function plotByDatetime($query, $attribute, $range, $steps, $aggregator = 'count', $aggregatorOptions = []) {
         $data = [];
 
         for($i = 0; $i < $steps; $i++) {
@@ -21,28 +21,30 @@ class Plotter {
             $datetime->sub(new DateInterval('P1' . $range));
             $startDate = $datetime->format('Y-m-d');
 
-            $data[$startDate] = $query
+            $query
                 ->andWhere($attribute . ' >= :startDate', ['startDate' => $startDate . ' 00:00:00'])
                 ->andWhere($attribute . ' <= :endDate', ['endDate' => $endDate . ' 23:59:59'])
-                ->count();
+            ;
+
+            $data[$startDate] = call_user_func_array([$query, $aggregator], $aggregatorOptions);
         }
 
         $data = array_reverse($data);
         return $data;
     }
 
-    public static function plotByValues($query, $attribute, $values) {
+    public static function plotByValues($query, $attribute, $values, $aggregator = 'count') {
         $data = [];
 
         foreach($values as $key => $value) {
             if($value === null) {
                 $data[$key] = $query
                     ->where($attribute . ' IS NULL')
-                    ->count();
+                    ->$aggregator();
             }else {
                 $data[$key] = $query
                     ->andWhere([$attribute => $value])
-                    ->count();
+                    ->$aggregator();
             }
         }
 
@@ -68,16 +70,16 @@ class Plotter {
     }
 
 
-    public static function plotByDateSegments($query, $attribute) {
+    public static function plotByDateSegments($query, $attribute, $aggregator = 'count') {
         $ret = [];
-        $dates = self::plotByDatetime($query, $attribute, 'D', 7);
+        $dates = self::plotByDatetime($query, $attribute, 'D', 7, $aggregator);
         $i = 0;
         foreach($dates as $date) {
             $i++;
             $ret[$i . ' days'] = $date;
         }
 
-        $dates = self::plotByDatetime($query, $attribute, 'W', 4);
+        $dates = self::plotByDatetime($query, $attribute, 'W', 4, $aggregator);
         $i = 0;
         foreach($dates as $date) {
             //skip first entry
@@ -88,7 +90,7 @@ class Plotter {
             $i++;
         }
 
-        $dates = self::plotByDatetime($query, $attribute, 'M', 6);
+        $dates = self::plotByDatetime($query, $attribute, 'M', 6, $aggregator);
         $i = 0;
         foreach($dates as $date) {
             //skip first entry
@@ -106,7 +108,7 @@ class Plotter {
         $ret['Rest'] = $query
                 ->andWhere($attribute . ' <= :endDate', ['endDate' => $datetime->format('Y-m-d H:i:s') . ' 23:59:59'])
                 ->orWhere($attribute . ' IS NULL')
-                ->count();
+                ->$aggregator();
 
         return $ret;
     }
@@ -127,7 +129,12 @@ class Plotter {
     	$ret = [];
 
     	foreach($data as $key => $value) {
-    		$ret[UTC::strtotime($key) * 1000] = $value;
+            $idx = UTC::strtotime($key) * 1000;
+            if(is_null($value)) {
+                $ret[$idx] = 0;
+            }else {
+        		$ret[$idx] = $value;
+            }
     	}
 
     	return $ret;

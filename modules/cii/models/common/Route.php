@@ -4,7 +4,9 @@ namespace app\modules\cii\models\common;
 
 use Yii;
 use yii\db\ActiveRecord;
+
 use app\modules\cii\models\extension\Language;
+use cii\helpers\Plotter;
 
 class Route extends ActiveRecord {
     public $type;
@@ -85,6 +87,10 @@ class Route extends ActiveRecord {
         return $this->hasOne(Language::className(), ['id' => 'language_id']);
     }
 
+    public function getAccesses() {
+        return $this->hasMany(CountAccess::className(), ['route_id' => 'id']);
+    }
+
     public function attributeLabels() {
         return [
             'slug' => Yii::p('cii', 'Address path'),
@@ -103,6 +109,9 @@ class Route extends ActiveRecord {
             'yearlyHits' => Yii::p('cii', 'Yearly accesses'),
         ];
     }
+
+
+
 
     public function getDailyHits() {
         return $this->countHits('1D');
@@ -139,7 +148,60 @@ class Route extends ActiveRecord {
         return $query->$func('hits') ?: 0;
     }
 
+    protected static function countViewStats($column, $range, $steps) {
+        $cache = Yii::$app->cache;
+        $cacheKey = get_called_class() . '_' . $column . '_' . $range . '_' . $steps;
+        
+        if($data = $cache->get($cacheKey)) {
+            return $data;
+        }
 
+        $data = Plotter::plotByDatetime(
+            self::find()
+                ->joinWith('accesses as countaccess')
+            , 'countaccess.created', $range, $steps, 'sum', ['countaccess.' . $column]
+        );
+        
+        $cache->set($cacheKey, $data, 60 * 60);
+
+        return $data;
+    }
+
+    public static function weeklyViewStats() {
+        return self::countViewStats('hits' , 'D', 7);
+    }
+
+    public static function monthlyViewStats() {
+        return self::countViewStats('hits' , 'D', 30);
+    }
+
+    public static function yearlyViewStats() {
+        return self::countViewStats('hits' , 'M', 12);
+    }
+
+    public static function weeklyBounceRateStats() {
+        return self::countViewStats('bounceHits' , 'D', 7);
+    }
+
+    public static function monthlyBounceRateStats() {
+        return self::countViewStats('bounceHits' , 'D', 30);
+    }
+
+    public static function yearlyBounceRateStats() {
+        return self::countViewStats('bounceHits' , 'M', 12);
+    }
+
+    public static function weeklyBotStats() {
+        return self::countViewStats('botHits' , 'D', 7);
+    }
+
+    public static function monthlyBotStats() {
+        return self::countViewStats('botHits' , 'D', 30);
+    }
+
+    public static function yearlyBotStats() {
+        return self::countViewStats('botHits' , 'M', 12);
+    }
 
     public function behaviors() {
         return [

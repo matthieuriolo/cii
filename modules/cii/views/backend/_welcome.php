@@ -5,58 +5,9 @@ use cii\Helpers\Html;
 use cii\widgets\RowColumnView;
 ?>
 
-<?php
-$user = Yii::$app->getUser()->getIdentity();
-?>
-<div class="row">
-    <div class="col-md-6"><?= Yii::p('cii', 'Username: {username}', [
-            'username' => 
-                Yii::$app->getUser()->can(['cii', Permission::MANAGE_USER])
-                ? Html::a($user->username, [Yii::$app->seo->relativeAdminRoute('modules/cii/user/view'), 'id' => $user->id])
-                : Yii::$app->formatter->asText($user->username)
-        ]); ?>
-    </div>
-    <div class="col-md-6"><?= Yii::p('cii', 'Email: {email}', [
-            'email' => Yii::$app->formatter->asEmail($user->email)
-        ]); ?>
-    </div>
-</div>
-
-<hr>
-
-<?php if(Yii::$app->getUser()->can(['cii', Permission::MANAGE_ADMIN])) { ?>
-    <div class="row">
-        <div class="col-md-6"><?= Yii::p('cii', 'PHP version: {version}', ['version' => phpversion()]); ?></div>
-        <div class="col-md-6"><?= Yii::p('cii', 'Cii version: {version}', ['version' => Yii::$app->getModule('cii')->getVersion()]); ?></div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6"><?= Yii::p('cii', 'Yii version: {version}', ['version' => Yii::getVersion()]); ?></div>
-        <div class="col-md-6"><?= Yii::p('cii', 'Yii debug: {bool}', ['bool' => Yii::$app->formatter->asBoolean(defined('YII_DEBUG') && YII_DEBUG)]); ?></div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6"><?= Yii::p('cii', 'GD version: {version}', [
-            'version' =>
-                function_exists('gd_info') && ($info = gd_info())
-                ? $info['GD Version'] 
-                : Yii::$app->formatter->asText(null)
-            ]); ?>
-        </div>
-
-        <div class="col-md-6"><?= Yii::p('cii', 'Imagick version: {version}', [
-            'version' => 
-                class_exists('Imagick') 
-                ? Imagick::getVersion() 
-                : Yii::$app->formatter->asText(null)
-        ]); ?>
-        </div>
-    </div>
-    
-    <hr>
-<?php } ?>
-
 <?php 
+
+echo $this->render('_application_information');
 
 echo RowColumnView::widget([
     'items' => [
