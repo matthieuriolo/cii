@@ -12,8 +12,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-view">
     <p class="pull-right">
-        <?= Html::a(Yii::p('cii', 'Update'), [Yii::$app->seo->relativeAdminRoute('modules/cii/group/update'), 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::p('cii', 'Delete'), [Yii::$app->seo->relativeAdminRoute('modules/cii/group/delete'), 'id' => $model->id], [
+        <?= Html::a(Yii::p('cii', 'Update'), [Yii::$app->seo->relativeAdminRoute('group/update'), 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::p('cii', 'Delete'), [Yii::$app->seo->relativeAdminRoute('group/delete'), 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => Yii::p('cii', 'Are you sure you want to delete this item?'),

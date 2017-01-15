@@ -32,7 +32,7 @@ echo EditView::widget([
 		echo $form->field($model, 'type', [
 			'inputOptions' => [
 				'data-controller' => 'lazy-create',
-				'data-url' => Url::toRoute(Yii::$app->seo->relativeAdminRoute('modules/cii/route/lazy'), true),
+				'data-url' => Url::toRoute(Yii::$app->seo->relativeAdminRoute('route/lazy'), true),
 				'data-tabs' => 1,
 				'class' => 'form-control'
 			]

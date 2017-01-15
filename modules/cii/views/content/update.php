@@ -13,11 +13,11 @@ $this->title = Yii::p('cii', 'Update {modelClass} - ', [
 ]) . $model->name;
 $this->params['breadcrumbs'][] = [
 	'label' => Yii::p('cii', 'Contents'),
-	'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/content/index')]
+	'url' => [Yii::$app->seo->relativeAdminRoute('content/index')]
 ];
 $this->params['breadcrumbs'][] = [
 	'label' => $model->name,
-	'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/content/view'), 'id' => $model->id]
+	'url' => [Yii::$app->seo->relativeAdminRoute('content/view'), 'id' => $model->id]
 ];
 $this->params['breadcrumbs'][] = Yii::p('cii', 'Update');
 
@@ -37,7 +37,7 @@ if($pjaxid) {
 <div class="content-update">
 	<?php $form = ActiveForm::begin([
         'action' => [
-            Yii::$app->seo->relativeAdminRoute('modules/cii/content/update'),
+            Yii::$app->seo->relativeAdminRoute('content/update'),
             'id' => $model->id,
         ] + ($pjaxid ? ['pjaxid' => $pjaxid] : []),
         'options' => [
@@ -50,7 +50,7 @@ if($pjaxid) {
 		echo Html::a(
             Yii::p('cii', 'Cancel'),
             [
-                \Yii::$app->seo->relativeAdminRoute('modules/cii/content/index')
+                \Yii::$app->seo->relativeAdminRoute('content/index')
             ] + ($pjaxid ? ['pjaxid' => $pjaxid]: []),
             ['class' => 'btn btn-warning']
         ),

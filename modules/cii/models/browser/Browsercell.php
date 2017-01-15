@@ -18,7 +18,7 @@ class Browsercell extends Model {
 
     public function init() {
         if(!$this->baseUrl && Yii::$app->seo) {
-            $this->baseUrl = Yii::$app->seo->relativeAdminRoute('modules/cii/browser');
+            $this->baseUrl = Yii::$app->seo->relativeAdminRoute('browser');
         }
     }
 

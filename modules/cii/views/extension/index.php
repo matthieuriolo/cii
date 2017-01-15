@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php echo Html::a(
     Yii::p('cii', 'Install Extension'),
-    [\Yii::$app->seo->relativeAdminRoute('modules/cii/extension/install')],
+    [\Yii::$app->seo->relativeAdminRoute('extension/install')],
     ['class' => 'btn btn-success pull-right']
 ); ?>
 
@@ -43,7 +43,7 @@ echo GridView::widget([
             'class' => 'cii\grid\ActionColumn',
             'headerOptions' => ['class' => 'action-column column-width-3'],
 
-            'appendixRoute' => 'modules/cii/extension',
+            'appendixRoute' => 'extension',
             'template' => '{view} {disable}{enable} {delete}',
             'visibleButtons' => [
                 'disable' => function ($model, $key, $index) {

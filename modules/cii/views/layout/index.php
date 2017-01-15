@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-index">
     <?php echo Html::a(
         Yii::p('cii', 'Install Layout'),
-        [\Yii::$app->seo->relativeAdminRoute('modules/cii/layout/install')],
+        [\Yii::$app->seo->relativeAdminRoute('layout/install')],
         ['class' => 'btn btn-success pull-right']
     ); ?>
     
@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'cii\grid\ActionColumn',
                 'template' => '{view} {disable}{enable} {delete}',
-                'appendixRoute' => 'modules/cii/layout',
+                'appendixRoute' => 'layout',
                 'headerOptions' => ['class' => 'action-column column-width-3'],
                 'visibleButtons' => [
                     'disable' => function($model, $key, $index) {

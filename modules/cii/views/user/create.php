@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 $this->title = Yii::p('cii', 'Create User');
 $this->params['breadcrumbs'][] = [
 	'label' => Yii::p('cii', 'Users'),
-	'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/user/index')]
+	'url' => [Yii::$app->seo->relativeAdminRoute('user/index')]
 ];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="form-group pull-right">
 		<?php echo Html::a(
 	        Yii::p('cii', 'Cancel'),
-	        [Yii::$app->seo->relativeAdminRoute('modules/cii/user/index')],
+	        [Yii::$app->seo->relativeAdminRoute('user/index')],
 	        ['class' => 'btn btn-warning']
 	    ); ?>
 

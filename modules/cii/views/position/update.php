@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 $this->title = Yii::p('cii', 'Update Position');
 $this->params['breadcrumbs'][] = [
     'label' => Yii::p('cii', 'Positions'),
-    'url' => [\Yii::$app->seo->relativeAdminRoute('modules/cii/position/index')]
+    'url' => [\Yii::$app->seo->relativeAdminRoute('position/index')]
 ];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
         echo Html::a(
             Yii::p('cii', 'Cancel'),
-            [\Yii::$app->seo->relativeAdminRoute('modules/cii/position/index')],
+            [\Yii::$app->seo->relativeAdminRoute('position/index')],
             ['class' => 'btn btn-warning']
         ),
         '&nbsp;',

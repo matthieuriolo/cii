@@ -8,7 +8,7 @@ $this->title = Yii::p('cii', 'Groups');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= Html::a(Yii::p('cii', 'Create Group'), [Yii::$app->seo->relativeAdminRoute('modules/cii/group/create')], ['class' => 'btn btn-success pull-right']) ?>
+<?= Html::a(Yii::p('cii', 'Create Group'), [Yii::$app->seo->relativeAdminRoute('group/create')], ['class' => 'btn btn-success pull-right']) ?>
 
 <h1><?= Html::encode($this->title) ?></h1>
 
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'cii\grid\ActionColumn',
                 'headerOptions' => ['class' => 'action-column column-width-3'],
-                'appendixRoute' => 'modules/cii/group',
+                'appendixRoute' => 'group',
             ],
         ],
     ]); ?>

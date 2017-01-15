@@ -11,7 +11,7 @@ $this->title = Yii::p('cii', 'Users');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= Html::a(Yii::p('cii', 'Create User'), [Yii::$app->seo->relativeAdminRoute('modules/cii/user/create')], ['class' => 'btn btn-success pull-right']) ?>
+<?= Html::a(Yii::p('cii', 'Create User'), [Yii::$app->seo->relativeAdminRoute('user/create')], ['class' => 'btn btn-success pull-right']) ?>
 <h1><?= Html::encode($this->title) ?></h1>
 
 <p class="lead"><?= Html::encode(Yii::p('cii', 'User managment')); ?></p>
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return !$model->superadmin;
                     }
                 ],
-                'appendixRoute' => 'modules/cii/user'
+                'appendixRoute' => 'user'
             ],
         ],
     ]); ?>

@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::activeLabel($model, 'extension_id'); ?>
             <p class="form-control-static"><?= 
                 Html::a($model->extension->name, [
-                    Yii::$app->seo->relativeAdminRoute('modules/cii/extension'),
+                    Yii::$app->seo->relativeAdminRoute('extension'),
                     'id' => $model->extension->id
                 ]);
             ?></p>

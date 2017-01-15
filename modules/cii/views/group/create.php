@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 $this->title = Yii::p('cii', 'Create Group');
 $this->params['breadcrumbs'][] = [
 	'label' => Yii::p('cii', 'Groups'),
-	'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/group/index')]
+	'url' => [Yii::$app->seo->relativeAdminRoute('group/index')]
 ];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="form-group pull-right">
 		<?php echo Html::a(
 	        Yii::p('cii', 'Cancel'),
-	        [Yii::$app->seo->relativeAdminRoute('modules/cii/group/index')],
+	        [Yii::$app->seo->relativeAdminRoute('group/index')],
 	        ['class' => 'btn btn-warning']
 	    ); ?>
 

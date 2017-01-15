@@ -38,7 +38,7 @@ Pjax::begin(); ?>
             [
                 'class' => 'cii\grid\ActionColumn',
                 'headerOptions' => ['class' => 'action-column column-width-5'],
-                'appendixRoute' => 'modules/cii/position',
+                'appendixRoute' => 'position',
                 'template' => '{view} {update} {delete} {up} {down}',
 
                 'visibleButtons' => [

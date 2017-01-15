@@ -10,7 +10,7 @@ use cii\widgets\DetailView;
         [
         	'attribute' => 'content.name',
         	'format' => 'html',
-        	'value' => Html::a($model->content->name, [Yii::$app->seo->relativeAdminRoute('modules/cii/content/view'), 'id' => $model->content->id])
+        	'value' => Html::a($model->content->name, [Yii::$app->seo->relativeAdminRoute('content/view'), 'id' => $model->content->id])
         ],
 
         'keys',

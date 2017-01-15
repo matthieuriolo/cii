@@ -8,20 +8,20 @@ use yii\bootstrap\Tabs;
 $this->title = Yii::p('cii', 'User') . ' - ' . $model->username;
 $this->params['breadcrumbs'][] = [
     'label' => Yii::p('cii', 'Users'),
-    'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/user/index')]
+    'url' => [Yii::$app->seo->relativeAdminRoute('user/index')]
 ];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="user-view">
     <p class="pull-right">
-        <?= Html::a(Yii::p('cii', 'Update'), [Yii::$app->seo->relativeAdminRoute('modules/cii/user/update'), 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::p('cii', 'Send mail'), [Yii::$app->seo->relativeAdminRoute('modules/cii/user/mail'), 'id' => $model->id], ['class' => 'btn btn-default']) ?>
+        <?= Html::a(Yii::p('cii', 'Update'), [Yii::$app->seo->relativeAdminRoute('user/update'), 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::p('cii', 'Send mail'), [Yii::$app->seo->relativeAdminRoute('user/mail'), 'id' => $model->id], ['class' => 'btn btn-default']) ?>
         <?php if(!$model->superadmin) { ?>
             <?php if(Yii::$app->user->getIdentity()->id != $model->id) { ?>
-                <?= Html::a(Yii::p('cii', 'Login as'), [Yii::$app->seo->relativeAdminRoute('modules/cii/user/switch'), 'id' => $model->id], ['class' => 'btn btn-default']) ?>
+                <?= Html::a(Yii::p('cii', 'Login as'), [Yii::$app->seo->relativeAdminRoute('user/switch'), 'id' => $model->id], ['class' => 'btn btn-default']) ?>
             <?php } ?>
-            <?= Html::a(Yii::p('cii', 'Delete'), [Yii::$app->seo->relativeAdminRoute('modules/cii/user/delete'), 'id' => $model->id], [
+            <?= Html::a(Yii::p('cii', 'Delete'), [Yii::$app->seo->relativeAdminRoute('user/delete'), 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => Yii::p('cii', 'Are you sure you want to delete this item?'),

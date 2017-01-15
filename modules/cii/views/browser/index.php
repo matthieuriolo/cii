@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		$links = [
 			[
 	        	'label' => Yii::p('cii', 'Main'),
-	        	'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/browser/index')]
+	        	'url' => [Yii::$app->seo->relativeAdminRoute('browser/index')]
 	        ]
 		];
 
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				$subpath = implode('/', $subpath);
 				$links[] = [
 					'label' => $tks[$i],
-					'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/browser/index'), 'path' => $subpath]
+					'url' => [Yii::$app->seo->relativeAdminRoute('browser/index'), 'path' => $subpath]
 				];
 			}
 		}
@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		?>
 	
 		<?php $form = ActiveForm::begin([
-			'action' => [Yii::$app->seo->relativeAdminRoute('modules/cii/browser/upload'), 'path' => $path],
+			'action' => [Yii::$app->seo->relativeAdminRoute('browser/upload'), 'path' => $path],
 			'method' => 'post',
 			'options' => ['enctype' => 'multipart/form-data']
 		]); ?>
@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		]);
 
 		$form = ActiveForm::begin([
-			'action' => [Yii::$app->seo->relativeAdminRoute('modules/cii/browser/rename'), 'path' => $path],
+			'action' => [Yii::$app->seo->relativeAdminRoute('browser/rename'), 'path' => $path],
 			'method' => 'post',
 		]); ?>
 		<?php /*$form->field($renameModel, 'original')->hiddenInput()->label(false);*/ ?>

@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php 
 		echo Html::a(
             Yii::p('cii', 'Cancel'),
-            [\Yii::$app->seo->relativeAdminRoute('modules/cii/language/index')],
+            [\Yii::$app->seo->relativeAdminRoute('language/index')],
             ['class' => 'btn btn-warning']
         ),
         '&nbsp;',

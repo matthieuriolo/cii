@@ -15,7 +15,7 @@ $this->title = Yii::p('cii', 'Create Route');
 
 $this->params['breadcrumbs'][] = [
     'label' => Yii::p('cii', 'Routes'),
-    'url' => [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/index'), ['parent' => $parentId]]
+    'url' => [\Yii::$app->seo->relativeAdminRoute('route/index'), ['parent' => $parentId]]
 ];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -32,7 +32,7 @@ if($pjaxid) {
 
 	<div class="form-group pull-right">
 		<?php
-		$url = \Yii::$app->seo->relativeAdminRoute('modules/cii/route/index');
+		$url = \Yii::$app->seo->relativeAdminRoute('route/index');
 		if($parentId) {
 			$url = [$url, ['parent' => $parentId]];
 		}else {

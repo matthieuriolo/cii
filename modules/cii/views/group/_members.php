@@ -16,9 +16,9 @@ use yii\widgets\Pjax;
             [
                 'class' => 'cii\grid\ActionColumn',
                 'template' => '{view}',
-                'appendixRoute' => 'modules/cii/group',
+                'appendixRoute' => 'group',
                 'urlCreator' => function($action, $model, $key, $index) {
-                    $route = [\Yii::$app->seo->relativeAdminRoute('modules/cii/user/view'), ['id' => $model['user']['id']]];
+                    $route = [\Yii::$app->seo->relativeAdminRoute('user/view'), ['id' => $model['user']['id']]];
                     return \Yii::$app->urlManager->createUrl($route);
                 },
             ],

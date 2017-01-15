@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 $this->title = Yii::p('cii', 'Add Position');
 $this->params['breadcrumbs'][] = [
     'label' => Yii::p('cii', 'Positions'),
-    'url' => [\Yii::$app->seo->relativeAdminRoute('modules/cii/position/index')]
+    'url' => [\Yii::$app->seo->relativeAdminRoute('position/index')]
 ];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

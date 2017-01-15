@@ -11,11 +11,11 @@ $this->title = Yii::p('cii', 'Update {modelClass} - ', [
 ]) . $model->slug;
 $this->params['breadcrumbs'][] = [
 	'label' => Yii::p('cii', 'Routes'),
-	'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/route/index')]
+	'url' => [Yii::$app->seo->relativeAdminRoute('route/index')]
 ];
 $this->params['breadcrumbs'][] = [
 	'label' => $model->slug,
-	'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/route/view'), 'id' => $model->id]
+	'url' => [Yii::$app->seo->relativeAdminRoute('route/view'), 'id' => $model->id]
 ];
 $this->params['breadcrumbs'][] = Yii::p('cii', 'Update');
 ?>
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = Yii::p('cii', 'Update');
 	<div class="form-group pull-right">
 		<?php echo Html::a(
 	        Yii::p('cii', 'Cancel'),
-	        [Yii::$app->seo->relativeAdminRoute('modules/cii/route/index')],
+	        [Yii::$app->seo->relativeAdminRoute('route/index')],
 	        ['class' => 'btn btn-warning']
 	    ); ?>
 

@@ -31,7 +31,7 @@ if($view = $layout->getOverviewView()) {
 
 ?>
 
-<?= Html::a(Yii::p('cii', 'Add Position'), [Yii::$app->seo->relativeAdminRoute('modules/cii/position/create')], ['class' => 'btn btn-success pull-right']) ?>
+<?= Html::a(Yii::p('cii', 'Add Position'), [Yii::$app->seo->relativeAdminRoute('position/create')], ['class' => 'btn btn-success pull-right']) ?>
 <h1><?= Html::encode($this->title) ?></h1>
 
 <p class="lead"><?= Html::encode(Yii::p('cii', 'Position managment')); ?></p>

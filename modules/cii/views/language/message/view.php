@@ -10,12 +10,12 @@ $reflection = $model->getReflection();
 $this->title = Yii::p('cii', 'Language Message') . ' - ' . $reflection->getDisplayName();
 $this->params['breadcrumbs'][] = [
     'label' => Yii::p('cii', 'Languages'),
-    'url' => [\Yii::$app->seo->relativeAdminRoute('modules/cii/language/index')]
+    'url' => [\Yii::$app->seo->relativeAdminRoute('language/index')]
 ];
 
 $this->params['breadcrumbs'][] = [
     'label' => Yii::p('cii', 'Language') . ' - ' . $model->language->name,
-    'url' => [\Yii::$app->seo->relativeAdminRoute('modules/cii/language/view'), 'id' => $model->language_id]
+    'url' => [\Yii::$app->seo->relativeAdminRoute('language/view'), 'id' => $model->language_id]
 ];
 
 $this->params['breadcrumbs'][] = $this->title;
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => '<i class="glyphicon glyphicon-cog"></i> ' . Yii::p('cii', 'Settings'),
                     'content' => $this->render('/setting/_list', [
                         'data' => $settings,
-                        'packageURL' => [Yii::$app->seo->relativeAdminRoute('modules/cii/language/message')],
+                        'packageURL' => [Yii::$app->seo->relativeAdminRoute('language/message')],
                     ]),
                     'headerOptions' => [
                         'class' => count($settings->allModels) ? '' : 'disabled'

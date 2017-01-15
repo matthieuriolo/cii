@@ -28,7 +28,7 @@ if($pjaxid) {
         <?php echo Html::a(
             Yii::p('cii', 'Create Route'),
             [
-                \Yii::$app->seo->relativeAdminRoute('modules/cii/route/create'),
+                \Yii::$app->seo->relativeAdminRoute('route/create'),
                 ['parent' => $parent ? $parent->id : null]
             ],
             ['class' => 'btn btn-success pull-right']
@@ -49,7 +49,7 @@ if($pjaxid) {
         $links = array_map(function($route) {
             return [
                 'label' => $route->slug,
-                'url' => [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/index'), [
+                'url' => [\Yii::$app->seo->relativeAdminRoute('route/index'), [
                         'parent' => $route->id
                     ]
                 ]
@@ -61,7 +61,7 @@ if($pjaxid) {
         echo Breadcrumbs::widget([
             'homeLink' => [
                 'label' => $_SERVER['SERVER_NAME'],
-                'url' => [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/index')],
+                'url' => [\Yii::$app->seo->relativeAdminRoute('route/index')],
             ],
             'links' => $links
         ]);
@@ -78,7 +78,7 @@ if($pjaxid) {
             return [
                 'data-value' => $model->id,
                 'data-url' => Url::to([
-                    Yii::$app->seo->relativeAdminRoute('modules/cii/route/view'),
+                    Yii::$app->seo->relativeAdminRoute('route/view'),
                     'id' => $model->id
                 ]),
                 'data-name' => Html::encode($model->slug),
@@ -111,13 +111,13 @@ if($pjaxid) {
                 
                 'urlCreator' => function($action, $model, $key, $index) use($pjaxid) {
                     if($action == 'view') {
-                        $route = [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/view'), ['id' => $model['id']]];
+                        $route = [\Yii::$app->seo->relativeAdminRoute('route/view'), ['id' => $model['id']]];
                     }else if($action == 'children') {
-                        $route = [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/index'), ['parent' => $model['id']]];
+                        $route = [\Yii::$app->seo->relativeAdminRoute('route/index'), ['parent' => $model['id']]];
                     }else if($action == 'delete') {
-                        $route = [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/delete'), ['id' => $model['id']]];
+                        $route = [\Yii::$app->seo->relativeAdminRoute('route/delete'), ['id' => $model['id']]];
                     }else if($action == 'update') {
-                        $route = [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/update'), ['id' => $model['id']]];
+                        $route = [\Yii::$app->seo->relativeAdminRoute('route/update'), ['id' => $model['id']]];
                     }
 
                     return \Yii::$app->urlManager->createUrl($route);

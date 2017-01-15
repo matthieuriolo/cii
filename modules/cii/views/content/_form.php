@@ -14,7 +14,7 @@ use cii\widgets\Toggler;
 		<?php echo $form->field($model, 'type', [
 			'inputOptions' => [
 				'data-controller' => 'lazy-create',
-				'data-url' => Url::toRoute(Yii::$app->seo->relativeAdminRoute('modules/cii/content/lazy'), true),
+				'data-url' => Url::toRoute(Yii::$app->seo->relativeAdminRoute('content/lazy'), true),
 				'data-tabs' => 1,
 				'class' => 'form-control'
 			]

@@ -30,7 +30,7 @@ if($pjaxid) {
 <div class="content-index">
     <?php if($editable) { ?>
         <?= Html::a(Yii::p('cii', 'Create Content'), [
-            \Yii::$app->seo->relativeAdminRoute('modules/cii/content/create')
+            \Yii::$app->seo->relativeAdminRoute('content/create')
             ] + ($pjaxid ? ['pjaxid' => $pjaxid] : []), [
                 'class' => 'btn btn-success pull-right'
             ]) ?>
@@ -53,7 +53,7 @@ if($pjaxid) {
                 return [
                     'data-value' => $model->id,
                     'data-url' => Url::to([
-                        Yii::$app->seo->relativeAdminRoute('modules/cii/content/view'),
+                        Yii::$app->seo->relativeAdminRoute('content/view'),
                         'id' => $model->id
                     ]),
                     'data-name' => Html::encode($model->name),
@@ -81,7 +81,7 @@ if($pjaxid) {
                     'headerOptions' => ['class' => 'action-column ' . ($editable ? 'column-width-3' : 'column-width-1')],
                     'buttonOptions' => $pjaxid ? ['data-pjax' => '#' . $pjaxid] : [],
 
-                    'appendixRoute' => 'modules/cii/content',
+                    'appendixRoute' => 'content',
                     'optionsRoute' => $pjaxid ? ['pjaxid' => $pjaxid] : [],
                 ],
             ],

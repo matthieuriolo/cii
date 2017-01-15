@@ -11,7 +11,7 @@ use cii\widgets\PjaxBreadcrumbs;
 $this->title = Yii::p('cii', 'Create Content');
 $this->params['breadcrumbs'][] = [
 	'label' => Yii::p('cii', 'Contents'),
-	'url' => [\Yii::$app->seo->relativeAdminRoute('modules/cii/content/index')]
+	'url' => [\Yii::$app->seo->relativeAdminRoute('content/index')]
 ];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -27,7 +27,7 @@ if($pjaxid) {
 <div class="content-create">
 	<?php $form = ActiveForm::begin([
         'action' => [
-            Yii::$app->seo->relativeAdminRoute('modules/cii/content/create'),
+            Yii::$app->seo->relativeAdminRoute('content/create'),
         ],
         'options' => [
             'data-pjax' => (bool)$pjaxid
@@ -38,7 +38,7 @@ if($pjaxid) {
 		echo Html::a(
             Yii::p('cii', 'Cancel'),
             [
-                \Yii::$app->seo->relativeAdminRoute('modules/cii/content/index')
+                \Yii::$app->seo->relativeAdminRoute('content/index')
             ],
             ['class' => 'btn btn-warning']
         ),

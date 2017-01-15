@@ -14,7 +14,7 @@ use app\modules\cii\Permission;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = [
     'label' => Yii::p('cii', 'Contents'),
-    'url' => [Yii::$app->seo->relativeAdminRoute('modules/cii/content/index')
+    'url' => [Yii::$app->seo->relativeAdminRoute('content/index')
 ]];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -72,13 +72,13 @@ if($pjaxid) {
     <?php if($editable) { ?>
         <p class="pull-right">
             <?= Html::a(Yii::p('cii', 'Update'), [
-                Yii::$app->seo->relativeAdminRoute('modules/cii/content/update'),
+                Yii::$app->seo->relativeAdminRoute('content/update'),
                 'id' => $model->id
             ], [
                 'class' => 'btn btn-primary'
             ]) ?>
             <?= Html::a(Yii::p('cii', 'Delete'), [
-                Yii::$app->seo->relativeAdminRoute('modules/cii/content/delete'),
+                Yii::$app->seo->relativeAdminRoute('content/delete'),
                 'id' => $model->id
             ], [
                 'class' => 'btn btn-danger',

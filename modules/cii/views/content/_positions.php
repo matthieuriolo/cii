@@ -68,7 +68,7 @@ if($multilanguage) {
                 'class' => 'cii\grid\ActionColumn',
                 'template' => '{delete} {up} {down}',
                 'headerOptions' => ['class' => 'action-column column-width-3'],
-                'appendixRoute' => 'modules/cii/content/position',
+                'appendixRoute' => 'content/position',
                 'visibleButtons' => [
                     'up' => function($model) {
                         return $model->previous();

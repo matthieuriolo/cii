@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = Yii::p('cii', 'Update');
 	<div class="form-group pull-right">
         <?php echo Html::a(
                 Yii::p('cii', 'Cancel'),
-                [\Yii::$app->seo->relativeAdminRoute('modules/cii/language/view'), ['id' => $model->id]],
+                [\Yii::$app->seo->relativeAdminRoute('language/view'), ['id' => $model->id]],
                 ['class' => 'btn btn-warning']
             ),
             '&nbsp;',

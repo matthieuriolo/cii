@@ -9,8 +9,8 @@ $this->title = Yii::p('cii', 'Languages');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pull-right">
-    <?= Html::a(Yii::p('cii', 'Install Message'), [\Yii::$app->seo->relativeAdminRoute('modules/cii/language/install')], ['class' => 'btn btn-primary']) ?>
-    <?= Html::a(Yii::p('cii', 'Create Language'), [\Yii::$app->seo->relativeAdminRoute('modules/cii/language/create')], ['class' => 'btn btn-success']) ?>
+    <?= Html::a(Yii::p('cii', 'Install Message'), [\Yii::$app->seo->relativeAdminRoute('language/install')], ['class' => 'btn btn-primary']) ?>
+    <?= Html::a(Yii::p('cii', 'Create Language'), [\Yii::$app->seo->relativeAdminRoute('language/create')], ['class' => 'btn btn-success']) ?>
 </div>
 
 <h1><?= Html::encode($this->title) ?></h1>
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'cii\grid\ActionColumn',
                 'headerOptions' => ['class' => 'action-column column-width-4'],
-                'appendixRoute' => 'modules/cii/language',
+                'appendixRoute' => 'language',
                 'template' => '{view} {update} {enable}{disable} {delete}',
                 'visibleButtons' => [
                     'enable' => function($model, $key, $index) {

@@ -34,9 +34,9 @@ use yii\helpers\Html;
             [
                 'class' => 'cii\grid\ActionColumn',
                 'template' => '{delete}',
-                'appendixRoute' => 'modules/cii/group',
+                'appendixRoute' => 'group',
                 'urlCreator' => function($action, $model, $key, $index) {
-                    $route = [\Yii::$app->seo->relativeAdminRoute('modules/cii/group/deletepermission'), ['id' => $model['id']]];
+                    $route = [\Yii::$app->seo->relativeAdminRoute('group/deletepermission'), ['id' => $model['id']]];
                     return \Yii::$app->urlManager->createUrl($route);
                 },
             ],

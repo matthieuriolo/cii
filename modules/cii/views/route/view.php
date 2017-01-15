@@ -15,7 +15,7 @@ $this->title = Yii::p('cii', 'Route') . ' - ' . $model->slug;
 
 $this->params['breadcrumbs'][] = [
     'label' => Yii::p('cii', 'Routes'),
-    'url' => [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/index'), ['parent' => $model->parent_id]]
+    'url' => [\Yii::$app->seo->relativeAdminRoute('route/index'), ['parent' => $model->parent_id]]
 ];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -57,14 +57,14 @@ if(SPL::hasInterface($outbox, 'app\modules\cii\base\LazyModelInterface') && $inf
 <div class="site-index">
 	<p class="pull-right">
         <?= Html::a(Yii::p('cii', 'Update'), [
-            Yii::$app->seo->relativeAdminRoute('modules/cii/route/update'),
+            Yii::$app->seo->relativeAdminRoute('route/update'),
             'id' => $model->id
             ],
             [
                 'class' => 'btn btn-primary'
         ]) ?>
         <?= Html::a(Yii::p('cii', 'Delete'), [
-            Yii::$app->seo->relativeAdminRoute('modules/cii/route/delete'),
+            Yii::$app->seo->relativeAdminRoute('route/delete'),
             'id' => $model->id
         ], [
             'class' => 'btn btn-danger',
