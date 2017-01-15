@@ -5,6 +5,9 @@ namespace app\modules\cii\models\auth;
 use Yii;
 use yii\base\Security;
 
+use app\modules\cii\models\extension\Language;
+use app\modules\cii\models\extension\Layout;
+
 class UserCreateForm extends User {
     public $password_field;
     public $password_repeat;
