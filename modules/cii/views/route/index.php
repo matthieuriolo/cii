@@ -50,14 +50,19 @@ if($pjaxid) {
             return [
                 'label' => $route->slug,
                 'url' => [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/index'), [
-                        'parent' => $route->parent_id
+                        'parent' => $route->id
                     ]
                 ]
             ];
         }, $slugs);
 
+        $links[count($links) - 1]['url'] = null;
+
         echo Breadcrumbs::widget([
-            'homeLink' => false,
+            'homeLink' => [
+                'label' => $_SERVER['SERVER_NAME'],
+                'url' => [\Yii::$app->seo->relativeAdminRoute('modules/cii/route/index')],
+            ],
             'links' => $links
         ]);
     }
