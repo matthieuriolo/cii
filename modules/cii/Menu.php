@@ -39,7 +39,7 @@ class Menu {
                 ],
 
                 [
-                    'name' => 'Web media & access',
+                    'name' => Yii::p('cii', 'Web media & access'),
                     'icon' => 'glyphicon glyphicon-globe',
                     'visible' => self::visible($module, [Permission::MANAGE_ADMIN, Permission::MANAGE_ROUTE, Permission::MANAGE_CONTENT]),
                     

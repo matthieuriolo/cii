@@ -8,14 +8,6 @@ use app\modules\cii\models\common\Route;
 use cii\helpers\Plotter;
 use cii\helpers\Html;
 
-?>
-<div class="form-group text-right">
-<?php
-echo Html::a(Yii::p('cii', 'Routes'), [Yii::$app->seo->relativeAdminRoute('modules/cii/route/index')], ['class' => 'btn btn-sm btn-success']);
-?>
-</div>
-<?php
-
 echo TabbedPanel::widget([
     'title' => Yii::p('cii', 'Accesses'),
     'content' => Yii::p('cii', 'Shows the view and bounce progress of the whole application'),

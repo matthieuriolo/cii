@@ -13,15 +13,6 @@ use cii\grid\GridView;
 use yii\data\ActiveDataProvider;
 
 
-?>
-<div class="form-group text-right">
-<?php
-echo Html::a(Yii::p('cii', 'Groups'), [Yii::$app->seo->relativeAdminRoute('modules/cii/group/index')], ['class' => 'btn btn-sm btn-success'])
-    , '&nbsp;'
-    , Html::a(Yii::p('cii', 'Users'), [Yii::$app->seo->relativeAdminRoute('modules/cii/user/index')], ['class' => 'btn btn-sm btn-success']);
-?>
-</div>
-<?php
 echo TabbedPanel::widget([
     'title' => Yii::p('cii', 'Creation'),
     'content' => Yii::p('cii', 'Shows the creation progress of users'),

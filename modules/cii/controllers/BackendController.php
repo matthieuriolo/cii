@@ -59,6 +59,14 @@ class BackendController extends Controller {
         return $this->render('application');
     }
 
+    public function actionData() {
+        return $this->render('data');
+    }
+
+    public function actionAuthentication() {
+        return $this->render('authentication');
+    }
+
     public function actionCreatebackup() {
         $dumper = DbDumper::getInstance(Yii::$app->db);
         if($dumper->exportToFile(Yii::$app->runtimePath . '/database.sql')) {
