@@ -66,6 +66,13 @@ class GroupMember extends \yii\db\ActiveRecord
             [
                 'class' => 'cii\behavior\DatetimeBehavior',
                 'create' => 'created'
+            ],
+
+            [
+                'class' => 'cii\behavior\CounterSubBehavior',
+                'counterAttribute' => 'countMembers',
+                'modelAttribute' => 'group_id',
+                'model' => Group::className(),
             ]
         ];
     }
