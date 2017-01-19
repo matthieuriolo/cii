@@ -232,15 +232,18 @@ echo TabbedPanel::widget([
                             'data-controller' => 'singlerowclick'
                         ],
                         
-                        
-                        'dataProvider' => new ActiveDataProvider(['query' => Group::find()->orderBy('created')->limit(10)]),
+                        'showHeader' => false,
+                        'summary' => false,
+
+                        'dataProvider' => new ActiveDataProvider(['query' => Group::find()->orderBy('countMembers')->limit(10)]),
                         'columns' => [
                             'name',
+                            'countMembers:integer',
                             
                             [
                                 'class' => 'cii\grid\ActionColumn',
                                 'template' => '{view}',
-                                'headerOptions' => ['class' => 'action-column column-width-1'],
+                                'contentOptions' => ['class' => 'action-column column-width-1'],
                                 'appendixRoute' => 'modules/cii/group'
                             ],
                         ],
