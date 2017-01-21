@@ -283,4 +283,36 @@ class User extends ActiveRecord implements IdentityInterface {
 
         return $data;
     }
+
+    public static function toptenCreated() {
+        $cache = Yii::$app->cache;
+        $key = get_called_class() . '_toptenCreated';
+        
+        if($data = $cache->get($key)) {
+            return $data;
+        }
+
+        $data = self::find()->orderBy('created')->limit(10)->all();
+        
+        $cache->set($data, 60 * 60);
+        return $data;
+    }
+
+    public static function toptenLastLogin() {
+        $cache = Yii::$app->cache;
+        $key = get_called_class() . '_toptenLastLogin';
+        
+        if($data = $cache->get($key)) {
+            return $data;
+        }
+
+        $data = self::find()
+            ->where('last_login IS NOT NULL')
+            ->orderBy('last_login')
+            ->limit(10)
+            ->all();
+        
+        $cache->set($data, 60 * 60);
+        return $data;
+    }
 }

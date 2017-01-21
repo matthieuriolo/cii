@@ -113,6 +113,10 @@ class Route extends ActiveRecord {
 
 
 
+
+
+
+
     public function getDailyHits() {
         return $this->countHits('1D');
     }
@@ -129,6 +133,20 @@ class Route extends ActiveRecord {
         return $this->countHits('1Y');
     }
 
+
+    public function getWeeklyBounces() {
+        return $this->countHits('7D', 'sum', 'bounceHits');
+    }
+
+    public function getMonthlyBounces() {
+        return $this->countHits('1M', 'sum', 'bounceHits');
+    }
+
+    public function getYearlyBounces() {
+        return $this->countHits('1Y', 'sum', 'bounceHits');
+    }
+
+
     public function getAverageHits() {
         return $this->avgHits();
     }
@@ -137,7 +155,7 @@ class Route extends ActiveRecord {
         return $this->countHits($sub, 'average');
     }
 
-    protected function countHits($sub = null, $func = 'sum') {
+    protected function countHits($sub, $func = 'sum', $column = 'hits') {
         $query = CountAccess::find()->where(['route_id' => $this->id]);
         if(!is_null($sub)) {
             $date = new \DateTime("now", new \DateTimeZone('UTC'));
@@ -145,7 +163,7 @@ class Route extends ActiveRecord {
             $query->andWhere('created >= :date', [':date' => $date->format('Y-m-d')]);
         }
 
-        return $query->$func('hits') ?: 0;
+        return $query->$func($column) ?: 0;
     }
 
     protected static function countViewStats($column, $range, $steps) {
@@ -201,6 +219,57 @@ class Route extends ActiveRecord {
 
     public static function yearlyBotStats() {
         return self::countViewStats('botHits' , 'M', 12);
+    }
+
+
+
+    public static function toptenWeeklyViews() {
+        return self::toptenViews('1W');
+    }
+
+    public static function toptenMonthlyViews() {
+        return self::toptenViews('1M');
+    }
+
+    public static function toptenYearlyViews() {
+        return self::toptenViews('1Y');
+    }
+
+
+    public static function toptenWeeklyBounces() {
+        return self::toptenViews('1W', 'bounceHits');
+    }
+
+    public static function toptenMonthlyBounces() {
+        return self::toptenViews('1M', 'bounceHits');
+    }
+
+    public static function toptenYearlyBounces() {
+        return self::toptenViews('1Y', 'bounceHits');
+    }
+
+    protected static function toptenViews($sub, $column = 'hits') {
+        $date = new \DateTime("now", new \DateTimeZone('UTC'));
+        $date->sub(new \DateInterval('P' . $sub));
+        
+        $cache = Yii::$app->cache;
+        $key = get_called_class() . '_toptenCreated_' . $sub;
+        
+        if($data = $cache->get($key)) {
+            return $data;
+        }
+
+        $data = Route::find()
+            ->select('SUM(countaccess.' . $column . ') as count, ' . self::tableName() . '.*')
+            ->joinWith('accesses as countaccess')
+            ->andWhere('countaccess.created >= :date', ['date' => $date->format('Y-m-d')])
+            ->having('count > 0')
+            ->orderBy('count desc')
+            ->groupBy(self::tableName() . '.id')
+            ->limit(10)
+            ->all();
+        $cache->set($data, 60 * 60);
+        return $data;
     }
 
     public function behaviors() {

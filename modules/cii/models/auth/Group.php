@@ -51,6 +51,37 @@ class Group extends \yii\db\ActiveRecord {
         return $this->hasMany(Permission::className(), ['group_id' => 'id']);
     }
 
+    public static function toptenCreated() {
+        $cache = Yii::$app->cache;
+        $key = get_called_class() . '_toptenCreated';
+        
+        if($data = $cache->get($key)) {
+            return $data;
+        }
+
+        $data = self::find()->orderBy('created')->limit(10)->all();
+        
+        $cache->set($data, 60 * 60);
+        return $data;
+    }
+
+    public static function toptenCountMembers() {
+        $cache = Yii::$app->cache;
+        $key = get_called_class() . '_toptenCountMembers';
+        
+        if($data = $cache->get($key)) {
+            return $data;
+        }
+
+        $data = self::find()
+            ->orderBy('countMembers')
+            ->limit(10)
+            ->all();
+        
+        $cache->set($data, 60 * 60);
+        return $data;
+    }
+
     public function behaviors() {
         return [
             [

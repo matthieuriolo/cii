@@ -8,6 +8,9 @@ use app\modules\cii\models\common\Route;
 use cii\helpers\Plotter;
 use cii\helpers\Html;
 
+use cii\grid\GridView;
+use yii\data\ArrayDataProvider;
+
 echo TabbedPanel::widget([
     'title' => Yii::p('cii', 'Accesses'),
     'content' => Yii::p('cii', 'Shows the view and bounce progress of the whole application'),
@@ -85,28 +88,89 @@ echo TabbedPanel::widget([
 
 <div class="row">
     <div class="col-md-6"><?php
+
         echo TabbedPanel::widget([
-            'title' => Yii::p('cii', 'Top ten (hit rates)'),
+            'title' => Yii::p('cii', 'Top ten (hits)'),
 
             'items' => [
                 [
                     'label' => Yii::p('cii', 'Weekly'),
-                    'content' => PieFlot::widget([
-                        'segments' => Plotter::transformToFlotDatetime(Route::yearlyViewStats())
+                    'content' => GridView::widget([
+                        'tableOptions' => [
+                            'class' => "table table-striped table-bordered table-hover",
+                            'data-controller' => 'singlerowclick'
+                        ],
+                        
+                        'summary' => false,
+                        'showHeader' => false,
+
+                        'dataProvider' => new ArrayDataProvider(['key' => 'id', 'allModels' => Route::toptenWeeklyViews()]),
+                        
+                        'columns' => [
+                            'id:route',
+                            'weeklyHits:integer',
+
+                            [
+                                'class' => 'cii\grid\ActionColumn',
+                                'template' => '{view}',
+                                'contentOptions' => ['class' => 'action-column column-width-1'],
+                                'appendixRoute' => 'route'
+                            ],
+                        ],
                     ]),
                 ],
 
                 [
                     'label' => Yii::p('cii', 'Monthly'),
-                    'content' => PieFlot::widget([
-                        'segments' => Plotter::transformToFlotDatetime(Route::yearlyViewStats())
+                    'content' => GridView::widget([
+                        'tableOptions' => [
+                            'class' => "table table-striped table-bordered table-hover",
+                            'data-controller' => 'singlerowclick'
+                        ],
+                        
+                        'summary' => false,
+                        'showHeader' => false,
+
+                        'dataProvider' => new ArrayDataProvider(['key' => 'id', 'allModels' => Route::toptenMonthlyViews()]),
+                        
+                        'columns' => [
+                            'id:route',
+                            'monthlyHits:integer',
+                            
+                            [
+                                'class' => 'cii\grid\ActionColumn',
+                                'template' => '{view}',
+                                'contentOptions' => ['class' => 'action-column column-width-1'],
+                                'appendixRoute' => 'route'
+                            ],
+                        ],
                     ]),
                 ],
 
                 [
                     'label' => Yii::p('cii', 'Yearly'),
-                    'content' => PieFlot::widget([
-                        'segments' => Plotter::transformToFlotDatetime(Route::yearlyViewStats())
+                    'content' => GridView::widget([
+                        'tableOptions' => [
+                            'class' => "table table-striped table-bordered table-hover",
+                            'data-controller' => 'singlerowclick'
+                        ],
+                        
+                        'summary' => false,
+                        'showHeader' => false,
+
+                        'dataProvider' => new ArrayDataProvider(['key' => 'id', 'allModels' => Route::toptenYearlyViews()]),
+                        
+                        'columns' => [
+                            'id:route',
+                            'yearlyHits:integer',
+                            
+                            [
+                                'class' => 'cii\grid\ActionColumn',
+                                'template' => '{view}',
+                                'contentOptions' => ['class' => 'action-column column-width-1'],
+                                'appendixRoute' => 'route'
+                            ],
+                        ],
                     ]),
                 ],
             ]
@@ -115,27 +179,87 @@ echo TabbedPanel::widget([
     </div>
     <div class="col-md-6"><?php
         echo TabbedPanel::widget([
-            'title' => Yii::p('cii', 'Top ten (bounce rates)'),
+            'title' => Yii::p('cii', 'Top ten (bounces)'),
             
             'items' => [
                 [
                     'label' => Yii::p('cii', 'Weekly'),
-                    'content' => PieFlot::widget([
-                        'segments' => Plotter::transformToFlotDatetime(Route::yearlyViewStats())
+                    'content' => GridView::widget([
+                        'tableOptions' => [
+                            'class' => "table table-striped table-bordered table-hover",
+                            'data-controller' => 'singlerowclick'
+                        ],
+                        
+                        'summary' => false,
+                        'showHeader' => false,
+
+                        'dataProvider' => new ArrayDataProvider(['key' => 'id', 'allModels' => Route::toptenWeeklyBounces()]),
+                        
+                        'columns' => [
+                            'id:route',
+                            'weeklyBounces:integer',
+                            
+                            [
+                                'class' => 'cii\grid\ActionColumn',
+                                'template' => '{view}',
+                                'contentOptions' => ['class' => 'action-column column-width-1'],
+                                'appendixRoute' => 'route'
+                            ],
+                        ],
                     ]),
                 ],
 
                 [
                     'label' => Yii::p('cii', 'Monthly'),
-                    'content' => PieFlot::widget([
-                        'segments' => Plotter::transformToFlotDatetime(Route::yearlyViewStats())
+                    'content' => GridView::widget([
+                        'tableOptions' => [
+                            'class' => "table table-striped table-bordered table-hover",
+                            'data-controller' => 'singlerowclick'
+                        ],
+                        
+                        'summary' => false,
+                        'showHeader' => false,
+
+                        'dataProvider' => new ArrayDataProvider(['key' => 'id', 'allModels' => Route::toptenMonthlyBounces()]),
+                        
+                        'columns' => [
+                            'id:route',
+                            'monthlyBounces:integer',
+                            
+                            [
+                                'class' => 'cii\grid\ActionColumn',
+                                'template' => '{view}',
+                                'contentOptions' => ['class' => 'action-column column-width-1'],
+                                'appendixRoute' => 'route'
+                            ],
+                        ],
                     ]),
                 ],
 
                 [
                     'label' => Yii::p('cii', 'Yearly'),
-                    'content' => PieFlot::widget([
-                        'segments' => Plotter::transformToFlotDatetime(Route::yearlyViewStats())
+                    'content' => GridView::widget([
+                        'tableOptions' => [
+                            'class' => "table table-striped table-bordered table-hover",
+                            'data-controller' => 'singlerowclick'
+                        ],
+                        
+                        'summary' => false,
+                        'showHeader' => false,
+
+                        'dataProvider' => new ArrayDataProvider(['key' => 'id', 'allModels' => Route::toptenYearlyBounces()]),
+                        
+                        'columns' => [
+                            'id:route',
+                            'yearlyBounces:integer',
+                            
+                            [
+                                'class' => 'cii\grid\ActionColumn',
+                                'template' => '{view}',
+                                'contentOptions' => ['class' => 'action-column column-width-1'],
+                                'appendixRoute' => 'route'
+                            ],
+                        ],
                     ]),
                 ],
             ],

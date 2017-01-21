@@ -10,7 +10,7 @@ use cii\helpers\Plotter;
 use cii\helpers\Html;
 
 use cii\grid\GridView;
-use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 
 
 echo TabbedPanel::widget([
@@ -139,7 +139,7 @@ echo TabbedPanel::widget([
                             'data-controller' => 'singlerowclick'
                         ],
                         
-                        'dataProvider' => new ActiveDataProvider(['query' => User::find()->orderBy('created')->limit(10)]),
+                        'dataProvider' => new ArrayDataProvider(['key' => 'id', 'allModels' => User::toptenCreated()]),
                         'rowOptions' => function($model, $key, $index, $grid) {
                             return $model->superadmin ? ['class' => "warning"] : [];
                         },
@@ -149,13 +149,13 @@ echo TabbedPanel::widget([
 
                         'columns' => [
                             'username',
-                            'created:datetime',
+                            'created:relativeTime',
                             
                             [
                                 'class' => 'cii\grid\ActionColumn',
                                 'template' => '{view}',
                                 'contentOptions' => ['class' => 'action-column column-width-1'],
-                                'appendixRoute' => 'modules/cii/user'
+                                'appendixRoute' => 'user'
                             ],
                         ],
                     ]),
@@ -172,20 +172,20 @@ echo TabbedPanel::widget([
                         'summary' => false,
                         'showHeader' => false,
 
-                        'dataProvider' => new ActiveDataProvider(['query' => User::find()->orderBy('last_login')->limit(10)]),
+                        'dataProvider' => new ArrayDataProvider(['key' => 'id', 'allModels' => User::toptenLastLogin()]),
                         'rowOptions' => function($model, $key, $index, $grid) {
                             return $model->superadmin ? ['class' => "warning"] : [];
                         },
 
                         'columns' => [
                             'username',
-                            'last_login:datetime',
+                            'last_login:relativeTime',
 
                             [
                                 'class' => 'cii\grid\ActionColumn',
                                 'template' => '{view}',
                                 'contentOptions' => ['class' => 'action-column column-width-1'],
-                                'appendixRoute' => 'modules/cii/user'
+                                'appendixRoute' => 'user'
                             ],
                         ],
                     ]),
@@ -209,16 +209,16 @@ echo TabbedPanel::widget([
                         'showHeader' => false,
                         'summary' => false,
                         
-                        'dataProvider' => new ActiveDataProvider(['query' => Group::find()->orderBy('created')->limit(10)]),
+                        'dataProvider' => new ArrayDataProvider(['key' => 'id', 'allModels' => Group::toptenCreated()]),
                         'columns' => [
                             'name',
-                            'created:datetime',
+                            'created:relativeTime',
 
                             [
                                 'class' => 'cii\grid\ActionColumn',
                                 'template' => '{view}',
                                 'contentOptions' => ['class' => 'action-column column-width-1'],
-                                'appendixRoute' => 'modules/cii/group'
+                                'appendixRoute' => 'group'
                             ],
                         ],
                     ]),
@@ -235,16 +235,16 @@ echo TabbedPanel::widget([
                         'showHeader' => false,
                         'summary' => false,
 
-                        'dataProvider' => new ActiveDataProvider(['query' => Group::find()->orderBy('countMembers')->limit(10)]),
+                        'dataProvider' => new ArrayDataProvider(['key' => 'id', 'allModels' => Group::toptenCountMembers()]),
                         'columns' => [
                             'name',
                             'countMembers:integer',
-                            
+
                             [
                                 'class' => 'cii\grid\ActionColumn',
                                 'template' => '{view}',
                                 'contentOptions' => ['class' => 'action-column column-width-1'],
-                                'appendixRoute' => 'modules/cii/group'
+                                'appendixRoute' => 'group'
                             ],
                         ],
                     ]),
